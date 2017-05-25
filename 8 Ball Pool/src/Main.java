@@ -3,13 +3,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +29,15 @@ public class Main {
 		});
 
 	}
+	
+	public static JButton button(String name) {
+        JButton newButton = new JButton(name);
+        newButton.setFocusPainted(false);
+        newButton.setFont(new Font("Arial", Font.BOLD, 16));
+        newButton.setBackground(Color.white);
+        newButton.setMaximumSize(new Dimension(300, 30));
+        return newButton;
+    }
 
 	public Main() {
 		JFrame splashScreen = new JFrame();
@@ -70,11 +83,13 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		mainScreen.getContentPane().setLayout(new BorderLayout(5, 5));
+		mainScreen.getContentPane().setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel pressExit=new JLabel("Press 'e' to Exit");
 		pressExit.setFont(new Font("Impact",Font.PLAIN,22));
 		pressExit.setForeground(Color.WHITE);
-		mainScreen.getContentPane().add(pressExit,BorderLayout.PAGE_START);
+		mainScreen.getContentPane().add(pressExit,c);
+		mainScreen.setFocusable(true);
 		mainScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyChar()== 'e') {
@@ -92,10 +107,17 @@ public class Main {
 		});
 		
 		JPanel menuPane=new JPanel();
-		menuPane.setBackground(Color.white);
-		menuPane.setMaximumSize(new Dimension(400,500));
-		mainScreen.getContentPane().add(menuPane, BorderLayout.CENTER);
-
+		menuPane.setBackground(Color.black);
+		menuPane.setLayout(new BoxLayout(menuPane,BoxLayout.Y_AXIS));
+		c.gridx=10;
+		c.gridy=10;
+		c.weightx=1.0;
+		c.weighty=1.0; 
+		menuPane.setPreferredSize(new Dimension(400,550));
+		mainScreen.getContentPane().add(menuPane,c);
+		JButton play=button("Play");
+		menuPane.add(play);
+		
 	}
 
 }
