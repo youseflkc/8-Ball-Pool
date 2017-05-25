@@ -50,7 +50,7 @@ public class Main {
 		mainScreen.setVisible(false);
 		try {
 			splashScreen
-					.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool SplashScreen.jpg")))));
+					.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Pictures/8 Ball Pool SplashScreen.jpg")))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -77,11 +77,11 @@ public class Main {
 
 		splashScreen.pack();
 
-//		try {
-//			mainScreen.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("pool-2.jpg")))));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			mainScreen.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Pictures/pool-2.jpg")))));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
