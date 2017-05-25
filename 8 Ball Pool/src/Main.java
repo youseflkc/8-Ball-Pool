@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Main {
 
@@ -69,27 +71,30 @@ public class Main {
 		}
 
 		mainScreen.getContentPane().setLayout(new BorderLayout(5, 5));
-		JLabel pressExit=new JLabel("Press 'e' to exit");
+		JLabel pressExit=new JLabel("Press 'e' to Exit");
 		pressExit.setFont(new Font("Impact",Font.PLAIN,22));
 		pressExit.setForeground(Color.WHITE);
-		mainScreen.getContentPane().add(pressExit, BorderLayout.PAGE_START);
+		mainScreen.getContentPane().add(pressExit,BorderLayout.PAGE_START);
 		mainScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyChar() == 'e') {
+				if (e.getKeyChar()== 'e') {
 					if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
 							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						System.exit(0);
 					}
 				}
 			}
-
+			
 			public void keyTyped(KeyEvent e) {
 			}
 			public void keyReleased(KeyEvent e) {
 			}
 		});
 		
-		
+		JPanel menuPane=new JPanel();
+		menuPane.setBackground(Color.white);
+		menuPane.setMaximumSize(new Dimension(400,500));
+		mainScreen.getContentPane().add(menuPane, BorderLayout.CENTER);
 
 	}
 
