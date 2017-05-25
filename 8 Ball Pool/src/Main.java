@@ -54,18 +54,7 @@ public class Main {
 
 			}
 		});
-		try{
-			for (int x = 0; x < 6; x++) {
-				if (x % 2 == 0) {
-					anyKeyLabel.setVisible(true);
-				}else{
-					anyKeyLabel.setVisible(false);
-				}
-				Thread.sleep(1000);
-			}
-		}catch(InterruptedException e){
-			
-		}
+		
 		splashScreen.pack();
 
 	}
