@@ -77,11 +77,11 @@ public class Main {
 
 		splashScreen.pack();
 
-		try {
-			mainScreen.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("pool-2.jpg")))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			mainScreen.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("pool-2.jpg")))));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
