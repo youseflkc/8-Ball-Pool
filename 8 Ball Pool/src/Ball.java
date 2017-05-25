@@ -1,41 +1,6 @@
 
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.geom.Ellipse2D;
-
-public class Ball {
-	private double x;
-	private double y;
-	private double radius = 10;
-	private double mass = 1;
-	private Speed speed;
-	
-	public static final Color lighter[] = {new Color (239, 41, 41), new Color (114, 159, 207),
-	                                       new Color (252, 234, 79), new Color (252, 175, 62),
-	                                       new Color (138, 226, 52), new Color (173, 127, 168),
-	                                       new Color (136, 138, 133), new Color (233, 185, 110)};
-	public static final Color colors[] = {new Color (204, 0, 0), new Color (52, 101, 164),
-	                                      new Color (237, 212, 0), new Color (245, 121, 0),
-	                                      new Color (115, 210, 22), new Color (117, 80, 123),
-	                                      new Color (85, 87, 83), new Color (193, 125, 17)};
-	public static final Color darker[] = {new Color (164, 0, 0), new Color (32, 74, 135),
-	                                      new Color (196, 160, 0), new Color (206, 92, 0),
-	                                      new Color (78, 154, 6), new Color (92, 53, 102),
-	                                      new Color (46, 52, 54), new Color (143, 89, 2)};
-	
-	private static final int COLOR_DELAY = 20;
-	private static int color_count = 0;
-	private int color = 0;
-	
-	// Constructor
-	public Ball (double x, double y, double radius, double mass, Speed speed) {
-		this.x = x;
-		this.y = y;
-		setRadius (radius);
-		setMass (mass);
-		this.speed = speed;
+peed = speed;
 		this.color = color_count ++ % 8;
 	}
 	
