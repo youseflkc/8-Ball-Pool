@@ -70,8 +70,8 @@ public class Main {
 
 		mainScreen.getContentPane().setLayout(new BorderLayout(5, 5));
 		JLabel pressExit=new JLabel("Press 'e' to exit");
-		pressExit.setFont(new Font("Roboto",Font.PLAIN,26));
-		pressExit.setVisible(true);
+		pressExit.setFont(new Font("Impact",Font.PLAIN,22));
+		pressExit.setForeground(Color.WHITE);
 		mainScreen.getContentPane().add(pressExit, BorderLayout.PAGE_START);
 		mainScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
