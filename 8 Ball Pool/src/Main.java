@@ -40,10 +40,10 @@ public class Main {
     }
 
 	public Main() {
-		JFrame splashScreen = new JFrame();
+		final JFrame splashScreen = new JFrame();
 		splashScreen.setSize(1366, 768);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		JFrame mainScreen = new JFrame();
+		final JFrame mainScreen = new JFrame();
 		mainScreen.setSize(1366, 768);
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
