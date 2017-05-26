@@ -67,7 +67,7 @@ public class Main {
 
 		try {
 			splashScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("./8 Ball Pool SplashScreen.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg")))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,9 +95,9 @@ public class Main {
 
 		try {
 			mainScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("./main menu background.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg")))));
 		} catch (IOException e) {
-			//e.printStackTrace();     Commented out the exception because it was annoying seeing it every 
+			e.printStackTrace();     //Commented out the exception because it was annoying seeing it every 
 									// time i go to the next screen 
 		}
 
