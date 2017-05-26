@@ -59,7 +59,7 @@ public class Main {
 
 		try {
 			splashScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("Pictures/8 Ball Pool SplashScreen.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/Pictures/8 Ball Pool SplashScreen.jpg")))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +87,7 @@ public class Main {
 
 		try {
 			mainScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("Pictures/main menu background.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/Pictures/main menu background.jpg")))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
