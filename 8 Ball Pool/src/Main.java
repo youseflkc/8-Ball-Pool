@@ -141,13 +141,13 @@ public class Main {
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JTextArea helpText = new JTextArea();
-				helpText.setText("How to Play 8 Ball Pool\n\n There are seven solid-colored balls numbered 1 through 7,"
-						+ "\nseven striped balls numbered 9 through 15, an 8 ball, and a cue ball. One of the players is "
+				helpText.setText("How to Play 8 Ball Pool\n\n There are seven\nsolid-colored balls numbered 1 through 7,"
+						+ "\nseven striped balls numbered 9 through 15,\nan 8 ball, and a cue ball. One of the playersis "
 						+ "\nrandomly chosen to break (hit the cue ball against the setup of balls) at the start.\nA player (or team)"
 						+ "\nwill continue to shoot until committing a foul"
-						+ ",\nor failing to legally pocket an object ball (whether intentionally or not). Thereupon it is the turn of the opposing "
+						+ ",\nor failing to legally pocket an object ball (whether intentionally or not). \nThereupon it is the turn of the opposing "
 						+ "\nplayer(s). Play alternates in this manner for the remainder of the game. Following a foul, the incoming"
-						+ "\nplayer has ball-in-hand anywhere on the table, unless the foul occurred on the break shot, as noted previously.");
+						+ "\nplayer has ball-in-hand anywhere on the table, \nunless the foul occurred on the break shot, as noted previously.");
 				
 				helpText.setEditable(false);
 				helpText.setFont(new Font("Roboto",Font.PLAIN,16));
