@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,7 +27,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class Main {
-
+	
+	private Overlay overlay;
+	private Billiard content;
+	
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();//Grabs screen resolution and fixes the size of the JFrame
+	double width = screenSize.getWidth();
+	double height = screenSize.getHeight();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,10 +56,10 @@ public class Main {
 
 	public Main() {
 		final JFrame splashScreen = new JFrame();
-		splashScreen.setSize(1366, 768);
+		splashScreen.setSize((int) width, (int) height);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		final JFrame mainScreen = new JFrame();
-		mainScreen.setSize(1366, 768);
+		mainScreen.setSize((int) width, (int) height);
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
@@ -59,7 +67,7 @@ public class Main {
 
 		try {
 			splashScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/Pictures/8 Ball Pool SplashScreen.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("./8 Ball Pool SplashScreen.jpg")))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,9 +95,10 @@ public class Main {
 
 		try {
 			mainScreen.setContentPane(
-					new JLabel(new ImageIcon(ImageIO.read(new File("8 Ball Pool/Pictures/main menu background.jpg")))));
+					new JLabel(new ImageIcon(ImageIO.read(new File("./main menu background.jpg")))));
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();     Commented out the exception because it was annoying seeing it every 
+									// time i go to the next screen 
 		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
@@ -119,6 +128,20 @@ public class Main {
 		JButton playButton = button("Play");
 		playButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(playButton);
+		
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				content = new Billiard ();
+				mainScreen.setContentPane (content);
+				
+				
+				overlay = new Overlay ();
+				mainScreen.setGlassPane (overlay);
+				mainScreen.getGlassPane ().setVisible (true);
+			}	
+		});
+		
+		
 
 		menuPane.add(Box.createRigidArea(new Dimension(0, 75)));
 

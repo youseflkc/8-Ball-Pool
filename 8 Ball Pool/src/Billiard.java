@@ -20,7 +20,7 @@ public class Billiard extends JPanel {
 	private Ball first;
 	private Ball second;
 	
-	private static boolean paused = true;
+	private static boolean paused = false;
 	private static boolean queued_collision_update = false;
 	
 	// Constructor
