@@ -102,7 +102,7 @@ public class Main {
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
-		JPanel helpPane = new JPanel();
+		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
 		helpPane.setBackground(new Color(0, 0, 0, 25));
