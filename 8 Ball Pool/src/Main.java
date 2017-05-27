@@ -47,9 +47,9 @@ public class Main {
 	public static JButton button(String name) {
 		JButton newButton = new JButton(name);
 		newButton.setFocusPainted(false);
-		newButton.setFont(new Font("Harrington", Font.BOLD, 26));
+		newButton.setFont(new Font("Magneto", Font.BOLD, 26));
 		newButton.setFocusable(false);
-		newButton.setBackground(Color.green);
+		newButton.setBackground(new Color(30,175,30));
 		newButton.setMaximumSize(new Dimension(225, 50));
 		return newButton;
 	}
@@ -75,11 +75,12 @@ public class Main {
 		splashScreen.setUndecorated(true);
 		splashScreen.setVisible(true);
 
-		JLabel anyKeyLabel = new JLabel("PRESS ANY KEY TO CONTINUE...");
-		anyKeyLabel.setFont(new Font("Roboto", Font.PLAIN, 40));
-		anyKeyLabel.setForeground(Color.white);
+		BlinkLabel anyKeyLabel = new BlinkLabel("PRESS ANY KEY TO CONTINUE...");
+		anyKeyLabel.setForeground(Color.WHITE);
+		anyKeyLabel.setFont(new Font("Impact", Font.PLAIN, 40));
 		splashScreen.getContentPane().add(anyKeyLabel, BorderLayout.PAGE_END);
-
+		anyKeyLabel.startBlinking();
+		
 		splashScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
@@ -106,7 +107,7 @@ public class Main {
 
 
 		JPanel menuPane = new JPanel();
-		menuPane.setBackground(new Color(0, 0, 0, 90));
+		menuPane.setBackground(new Color(0, 0, 0, 100));
 		menuPane.setPreferredSize(new Dimension(400, 600));
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
@@ -114,19 +115,20 @@ public class Main {
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
-		helpPane.setBackground(new Color(0, 0, 0, 25));
-		helpPane.setPreferredSize(new Dimension(400, 600));
+		helpPane.setBackground(new Color(0, 0, 0, 0));
+		helpPane.setPreferredSize(new Dimension(600, 600));
 
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 200);
+		c.insets = new Insets(0, 0, 0, 150);
 		mainScreen.getContentPane().add(menuPane, c);
-		c.insets = new Insets(0, 200, 0, 0);
+		c.insets = new Insets(0, 150, 0, 0);
 		c.gridx = 1;
 		mainScreen.getContentPane().add(helpPane, c);
 
 		JButton playButton = button("Play");
 		playButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
+		menuPane.add(Box.createRigidArea(new Dimension(0, 50)));
 		menuPane.add(playButton);
 		
 		playButton.addActionListener(new ActionListener() {
@@ -163,21 +165,28 @@ public class Main {
 
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				helpPane.setBackground(new Color(0, 0, 0, 150));
+				helpPane.setVisible(true);
 				JTextArea helpText = new JTextArea();
-				helpText.setText("How to Play 8 Ball Pool\n\n There are seven\nsolid-colored balls numbered 1 through 7,"
-						+ "\nseven striped balls numbered 9 through 15,\nan 8 ball, and a cue ball. One of the playersis "
-						+ "\nrandomly chosen to break (hit the cue ball against the setup of balls) at the start.\nA player (or team)"
-						+ "\nwill continue to shoot until committing a foul"
-						+ ",\nor failing to legally pocket an object ball (whether intentionally or not). \nThereupon it is the turn of the opposing "
-						+ "\nplayer(s). Play alternates in this manner for the remainder of the game. Following a foul, the incoming"
-						+ "\nplayer has ball-in-hand anywhere on the table, \nunless the foul occurred on the break shot, as noted previously.");
+				helpText.setText("\t        How to Play 8 Ball Pool\n\n -There are 7 solid, and 7 striped balls, "
+						+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
+						+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
+						+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
+						+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
+						+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last—sinking it before then will result"
+						+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
+						+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
+						+ " or the cue ball must touch a side of the table");
 				
 				helpText.setEditable(false);
-				helpText.setFont(new Font("Roboto",Font.PLAIN,16));
+				helpText.setFont(new Font("High Tower Text",Font.PLAIN,20));
 				helpText.setForeground(Color.WHITE);
-				helpText.setBackground(Color.BLACK);
+				helpText.setBackground(new Color(0,0,0,0));
+				helpText.setLineWrap(true);
+				helpText.setWrapStyleWord(true);
 				helpPane.add(helpText);
 				mainScreen.revalidate();
+				mainScreen.repaint();
 			}	
 		});
 		
