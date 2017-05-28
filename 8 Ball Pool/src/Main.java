@@ -115,17 +115,15 @@ public class Main implements ActionListener{
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
-				
-				//It got annoying -Lazar
-//				try {
-//					playMusic();
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				} catch (Throwable e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
+				try {
+					playMusic();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Throwable e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 			public void keyReleased(KeyEvent e) {
