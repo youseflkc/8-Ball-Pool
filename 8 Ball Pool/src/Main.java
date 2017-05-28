@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-
 public class Main implements ActionListener{
 
 	private Billiard content;
@@ -40,7 +40,7 @@ public class Main implements ActionListener{
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
 			+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
-			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last�sinking it before then will result"
+			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last sinking it before then will result"
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";

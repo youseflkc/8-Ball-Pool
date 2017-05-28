@@ -17,7 +17,7 @@ public class Billiard extends JPanel {
 	public static final int HEIGHT = (int) screenSize.getHeight();//600;
 	
 	
-	public static final int BALLS = 16;
+	public static final int BALLS = 2;
 	public static Ball ball[] = new Ball[BALLS];
 	
 	private double next_collision;
@@ -52,16 +52,101 @@ public class Billiard extends JPanel {
                 init_mass,
                 new Speed (0, 0));
 		
-		for (int i = 0; i <= 14; i++) {//Adjusted for the one ball ahead
-			ball[i] = new Ball (
-					ball[i-1].getX(),
-					HEIGHT/2,
-	                init_radius,
-	                init_mass,
-	                new Speed (0, 0));
-		}
+//		for (int i = 0; i <= 14; i++) {//Adjusted for the one ball ahead
+//			ball[i] = new Ball (
+//					ball[i-1].getX(),
+//					HEIGHT/2,
+//	                init_radius,
+//	                init_mass,
+//	                new Speed (0, 0));
+//		}
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+//		balls.removeAllElements();
+//	    int diameter = 0;
+
+//	    CueBall c = new CueBall(borderWidth, borderWidth, playingWidth, playingHeight);
+//	    c.setVertex(borderWidth + (0.25 * playingWidth), 
+//			borderWidth + (0.50 * playingHeight));
+	    
+//	    diameter = (int) (ball[1].getRadius() * 2);
+//
+//	    int balls_in_row = 1;
+//	    int counter = 0;
+//	    int rownum = 1;
+//	    int current_x = borderWidth + (playingWidth * 3 / 4);
+//	    int current_y = 0;
+//	    Ball b;
+//		/* set of loops and offset calculations to lay
+//	     * the balls out in a triangle */
+//	    for (rownum = 1; rownum <= RACK_SIZE; rownum++) {
+//	    	
+//	      current_y = borderWidth + ((int) playingHeight / 2) +
+//		((balls_in_row - 1) * diameter / 2);
+//	      
+//	      for (counter = 0; counter < balls_in_row; counter++) {
+////		  b = new SolidBall(ballColors[rownum - 1][counter], 
+////				    borderWidth, 
+////				    borderWidth, 
+////				    playingWidth, 
+////				    playingHeight);
+//		}
+//		else {
+//			ball[i] = new Ball (
+//					WIDTH,
+//					HEIGHT/2,
+//	                init_radius,
+//	                init_mass,
+//	                new Speed (0, 0));
+//			
+////		  b = new StripedBall(ballColors[rownum - 1][counter], 
+////				    borderWidth, 
+////				    borderWidth, 
+////				    playingWidth, 
+////				    playingHeight);	  
+//		}
+//		drawsolid = ! drawsolid;
+//		b.setVertex(current_x, current_y);
+//		balls.addElement(b);
+//		current_y -= diameter;
+//	      }
+		
+		
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 		//Fix ball placement, then maybe start working on adding spins, etc, 
 	}
 	
