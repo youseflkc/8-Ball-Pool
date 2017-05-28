@@ -1,19 +1,23 @@
-import java.util.Iterator;
 
 import javax.swing.JPanel;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
+import java.awt.Toolkit;
 
 public class Billiard extends JPanel {
 	// Members
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
 	
-	public static final int BALLS = 11;
+	//Sets the bounds for the balls (the walls the ball hits)
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int WIDTH = (int) screenSize.getWidth();//800;
+	public static final int HEIGHT = (int) screenSize.getHeight();//600;
+	
+	
+	public static final int BALLS = 16;
 	public static Ball ball[] = new Ball[BALLS];
 	
 	private double next_collision;
@@ -30,31 +34,35 @@ public class Billiard extends JPanel {
 		setOpaque (true);
 		setBackground (new Color (255, 255, 255));		
 		
-		double init_radius = 25;
-		double radius_step = 2;
+		double init_radius = 24;
 		double init_mass = 5;
-		double mass_step = 4;
 		
-		int rows = (int)Math.sqrt (BALLS);
-		int columns = (int)Math.ceil ((double)BALLS / rows);
-		int first_row = BALLS - (rows - 1) * columns;
-		int count = 0;
+		//Start/White ball
+		ball[0] = new Ball (400,
+				HEIGHT/2,
+		        init_radius,
+		        init_mass,
+		        new Speed (0, 0));
 		
-		for (int i = 0; i < rows; i++) {
-			int j = 0;
-			if (i == 0)
-				j = columns - first_row;
-			
-			for (; j < columns; j++) {
-				ball[count++] = new Ball ((j+0.5) * WIDTH / columns,
-				                          (i+0.5) * HEIGHT / rows,
-				                          init_radius,
-				                          init_mass,
-				                          new Speed (Math.random()*8-4, Math.random()*8-4));
-				init_radius += radius_step;
-				init_mass += mass_step;
-			}
+		//First ball in the triangle needs to be in a certain spot so the other 15 balls line up properly
+		ball[1] = new Ball (
+				WIDTH-500,
+				HEIGHT/2,
+                init_radius,
+                init_mass,
+                new Speed (0, 0));
+		
+		for (int i = 0; i <= 14; i++) {//Adjusted for the one ball ahead
+			ball[i] = new Ball (
+					ball[i-1].getX(),
+					HEIGHT/2,
+	                init_radius,
+	                init_mass,
+	                new Speed (0, 0));
 		}
+		
+		
+		//Fix ball placement, then maybe start working on adding spins, etc, 
 	}
 	
 	// Draw

@@ -10,20 +10,21 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,19 +34,19 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
-	private Overlay overlay;
 	private Billiard content;
 	String helpString = "\t        How to Play 8 Ball Pool\n\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
 			+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
-			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last-sinking it before then will result"
+			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last�sinking it before then will result"
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
-	
+
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
 
@@ -55,7 +56,6 @@ public class Main implements ActionListener {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				@SuppressWarnings("unused")
 				Main start = new Main();
 			}
 		});
@@ -85,6 +85,7 @@ public class Main implements ActionListener {
 			splashScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg"))
 							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,24 +99,17 @@ public class Main implements ActionListener {
 		splashScreen.getContentPane().add(anyKeyLabel, BorderLayout.PAGE_END);
 		anyKeyLabel.startBlinking();
 
-		Sound bgMusic = new Sound();
-		bgMusic.setVolume(-10);
-
-		try {
-			bgMusic.loadSound("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (Throwable e1) {
-			e1.printStackTrace();
-		}
-
 		splashScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					bgMusic.playSound();
+					playMusic();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				} catch (Throwable e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -132,7 +126,9 @@ public class Main implements ActionListener {
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg"))
 							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); // Commented out the exception because it was
+									// annoying seeing it every
+									// time i go to the next screen
 		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
@@ -147,9 +143,8 @@ public class Main implements ActionListener {
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
+		helpPane.setBackground(new Color(0, 0, 0, 0));
 		helpPane.setPreferredSize(new Dimension(600, 600));
-		helpPane.setBackground(new Color(0, 0, 0, 125));
-		helpPane.setOpaque(false);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -166,6 +161,7 @@ public class Main implements ActionListener {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				// Removes shutter issue (check method header for details)
 				startBalls();
 			}
@@ -191,58 +187,20 @@ public class Main implements ActionListener {
 
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				helpPane.removeAll();
-				helpPane.setOpaque(true);
+				helpPane.setBackground(new Color(0, 0, 0, 150));
+				helpPane.setVisible(true);
 				JTextArea helpText = new JTextArea();
 				helpText.setText(helpString);
 				helpText.setEditable(false);
 				helpText.setFont(new Font("High Tower Text", Font.PLAIN, 20));
 				helpText.setForeground(Color.WHITE);
-				helpText.setHighlighter(null);
-				helpText.setOpaque(false);
+				helpText.setBackground(new Color(0, 0, 0, 0));
 				helpText.setLineWrap(true);
 				helpText.setWrapStyleWord(true);
 				helpPane.add(helpText);
 
 				mainScreen.revalidate();
 				mainScreen.repaint();
-			}
-		});
-
-		JCheckBox checkMusic = new JCheckBox("Music");
-		checkMusic.setSelected(true);
-
-		settingsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				helpPane.removeAll();
-				helpPane.setOpaque(true);
-
-				checkMusic.setBackground(Color.black);
-				checkMusic.setForeground(Color.white);
-				checkMusic.setFont(new Font("Impact", Font.PLAIN, 28));
-				checkMusic.setAlignmentX(helpPane.CENTER_ALIGNMENT);
-				checkMusic.setFocusPainted(false);
-				checkMusic.setMargin(new Insets(0, 20, 0, 20));
-
-				helpPane.add(Box.createRigidArea(new Dimension(0, 75)));
-				helpPane.add(checkMusic);
-				mainScreen.revalidate();
-				mainScreen.repaint();
-
-			}
-		});
-
-		checkMusic.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (checkMusic.isSelected() == true) {
-					try {
-						bgMusic.playSound();
-					} catch (Throwable e1) {
-						e1.printStackTrace();
-					}
-				} else if (checkMusic.isSelected() == false) {
-					bgMusic.stopSound();
-				}
 			}
 		});
 
@@ -257,23 +215,33 @@ public class Main implements ActionListener {
 	}
 
 	/**
+	 * Plays music in the background
+	 * 
+	 * @throws Throwable
+	 * @throws IOException
+	 */
+	public void playMusic() throws Throwable, IOException {
+		Clip clip = AudioSystem.getClip();
+		AudioInputStream inputStream = AudioSystem
+				.getAudioInputStream(new File("8 Ball Pool/resource/Music/This City Prod. David Wud.wav"));
+		clip.open(inputStream);
+		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		volume.setValue(-10); // increase or decrease volume in decibals
+		clip.start();
+	}
+
+	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
 	 * inside of the addActionListener of the play button
 	 */
 	public void startBalls() {
 		mainScreen.pack();
 
-		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
-		// mainScreen.getInsets ().right,
-		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
-		// ().bottom);
+		mainScreen.setSize(Billiard.WIDTH + mainScreen.getInsets().left + mainScreen.getInsets().right,
+				Billiard.HEIGHT + mainScreen.getInsets().top + mainScreen.getInsets().bottom);
 
 		content = new Billiard();
 		mainScreen.setContentPane(content);
-
-		overlay = new Overlay();
-		mainScreen.setGlassPane(overlay);
-		mainScreen.getGlassPane().setVisible(true);
 
 		Timer timer = new Timer(20, this);
 		timer.start();
