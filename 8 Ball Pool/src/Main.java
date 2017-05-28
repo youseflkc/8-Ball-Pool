@@ -29,9 +29,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 
-public class Main {
+public class Main implements ActionListener{
 
 	private Overlay overlay;
 	private Billiard content;
@@ -56,7 +57,17 @@ public class Main {
 																		// JFrame
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
+	
+	final JFrame splashScreen = new JFrame();
+	final JFrame mainScreen = new JFrame();
 
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -77,10 +88,8 @@ public class Main {
 	}
 
 	public Main() {
-		final JFrame splashScreen = new JFrame();
 		splashScreen.setSize((int) width, (int) height);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		final JFrame mainScreen = new JFrame();
 		mainScreen.setSize((int) width, (int) height);
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -164,12 +173,9 @@ public class Main {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//Starts the ball physics
-				JFrame window = new BilliardWindow ();
-				window.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-				window.setVisible (true);
-				
+
+				//Removes shutter issue (check method header for details)
+				startBalls();	
 			}
 		});
 
@@ -232,5 +238,35 @@ public class Main {
 	        FloatControl volume=(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 	        volume.setValue(-10); //increase or decrease volume in decibals
 	        clip.start(); 
+	}
+	
+	
+	
+	/**
+	 * Method is used to avoid shutter when code inside of this method is placed inside of the addActionListener
+	 * of the play button
+	 */
+	public void startBalls() {
+		mainScreen.pack ();
+		
+		//mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
+		  //       Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
+		
+		content = new Billiard ();
+		mainScreen.setContentPane (content);
+		
+		overlay = new Overlay ();
+		mainScreen.setGlassPane (overlay);
+		mainScreen.getGlassPane ().setVisible (true);
+
+		Timer timer = new Timer (20, this);
+		timer.start ();
+	}
+	
+	
+	//Added when Lazar added "implements ActionListener" to this class
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		mainScreen.repaint ();
 	}
 }
