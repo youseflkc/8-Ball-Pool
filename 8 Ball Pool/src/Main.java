@@ -9,16 +9,14 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -95,14 +93,23 @@ public class Main {
 		splashScreen.getContentPane().add(anyKeyLabel, BorderLayout.PAGE_END);
 		anyKeyLabel.startBlinking();
 
+		Sound bgMusic = new Sound();
+		bgMusic.setVolume(-10);
+		
+		try {
+			bgMusic.loadSound("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (Throwable e1) {
+			e1.printStackTrace();
+		}
+
 		splashScreen.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					playMusic("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
-				} catch (IOException e1) {
-					e1.printStackTrace();
+					bgMusic.playSound();
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
@@ -119,7 +126,7 @@ public class Main {
 			mainScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg")))));
 		} catch (IOException e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
@@ -152,12 +159,11 @@ public class Main {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//Starts the ball physics
-				JFrame window = new BilliardWindow ();
-				window.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-				window.setVisible (true);
-				
+
+				// Starts the ball physics
+				JFrame window = new BilliardWindow();
+				window.setVisible(true);
+
 			}
 		});
 
@@ -197,26 +203,41 @@ public class Main {
 				mainScreen.repaint();
 			}
 		});
-		
-		settingsButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+
+		JCheckBox checkMusic = new JCheckBox("Music");
+		checkMusic.setSelected(true);
+		settingsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
-				helpPane.setBackground(new Color(0,0,0,125));
-				
-				
-				JCheckBox checkMusic= new JCheckBox("Music");
-				checkMusic.setOpaque(false);
+				helpPane.setBackground(new Color(0, 0, 0, 125));
+
+				checkMusic.setBackground(Color.black);
 				checkMusic.setForeground(Color.white);
-				checkMusic.setFont(new Font("Impact",Font.PLAIN, 28));
+				checkMusic.setFont(new Font("Impact", Font.PLAIN, 28));
 				checkMusic.setAlignmentX(helpPane.CENTER_ALIGNMENT);
-				
+				checkMusic.setFocusPainted(false);
+
 				helpPane.add(checkMusic);
 				mainScreen.revalidate();
 				mainScreen.repaint();
-				
+
 			}
 		});
-		
+
+		checkMusic.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e){
+				if (checkMusic.isSelected()==true) {
+					try {
+						bgMusic.playSound();
+					} catch (Throwable e1) {
+						e1.printStackTrace();
+					}
+				}else if(checkMusic.isSelected()==false){
+					bgMusic.stopSound();
+				}
+			}
+		});
+
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
@@ -227,22 +248,4 @@ public class Main {
 		});
 	}
 
-	/**
-	 * Plays music in the background
-	 * 
-	 * @param filePath
-	 *            -file path of the audio file you want to play
-	 * @throws Throwable
-	 *             
-	 * @throws IOException
-	 *             - song isn't found
-	 */
-	public void playMusic(String filePath) throws Throwable, IOException {
-		Clip clip = AudioSystem.getClip();
-		AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(filePath));
-		clip.open(inputStream);
-		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		volume.setValue(-10); // increase or decrease volume in decibals
-		clip.start();
-	}
 }
