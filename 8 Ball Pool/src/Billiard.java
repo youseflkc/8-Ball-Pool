@@ -77,55 +77,62 @@ public class Billiard extends JPanel {
 		
 		
 		
-//		
-//		balls.removeAllElements();
-//	    int diameter = 0;
+		
+		//balls.removeAllElements();
+	    int diameter = 0;
 
 //	    CueBall c = new CueBall(borderWidth, borderWidth, playingWidth, playingHeight);
 //	    c.setVertex(borderWidth + (0.25 * playingWidth), 
 //			borderWidth + (0.50 * playingHeight));
 	    
-//	    diameter = (int) (ball[1].getRadius() * 2);
-//
-//	    int balls_in_row = 1;
-//	    int counter = 0;
-//	    int rownum = 1;
-//	    int current_x = borderWidth + (playingWidth * 3 / 4);
-//	    int current_y = 0;
-//	    Ball b;
-//		/* set of loops and offset calculations to lay
-//	     * the balls out in a triangle */
-//	    for (rownum = 1; rownum <= RACK_SIZE; rownum++) {
-//	    	
-//	      current_y = borderWidth + ((int) playingHeight / 2) +
-//		((balls_in_row - 1) * diameter / 2);
-//	      
-//	      for (counter = 0; counter < balls_in_row; counter++) {
-////		  b = new SolidBall(ballColors[rownum - 1][counter], 
-////				    borderWidth, 
-////				    borderWidth, 
-////				    playingWidth, 
-////				    playingHeight);
-//		}
-//		else {
-//			ball[i] = new Ball (
-//					WIDTH,
-//					HEIGHT/2,
-//	                init_radius,
-//	                init_mass,
-//	                new Speed (0, 0));
-//			
-////		  b = new StripedBall(ballColors[rownum - 1][counter], 
-////				    borderWidth, 
-////				    borderWidth, 
-////				    playingWidth, 
-////				    playingHeight);	  
-//		}
-//		drawsolid = ! drawsolid;
-//		b.setVertex(current_x, current_y);
-//		balls.addElement(b);
-//		current_y -= diameter;
-//	      }
+	    diameter = Ball.getRadius() * 2;
+
+	    int balls_in_row = 1;
+	    int counter = 0;
+	    int rownum = 1;
+	    int current_x = WIDTH + (HEIGHT * 3 / 4);
+	    int current_y = 0;
+	    Ball b;
+//	    Color ballColors[][] = {
+//	      {Color.red},
+//	      {Color.red, Color.blue}, 
+//	      {Color.blue, Color.black, Color.yellow},
+//	      {Color.yellow, color_brown, color_brown, color_orange},
+//	      {color_orange, color_purple, color_purple, Color.green, Color.green}
+//	    };
+
+	    /* set of loops and offset calculations to lay
+	     * the balls out in a triangle */
+		boolean drawsolid = true;
+		for (rownum = 1; rownum <= RACK_SIZE; rownum++) {
+
+			current_y = borderWidth + ((int) playingHeight / 2) + ((balls_in_row - 1) * diameter / 2);
+
+			for (counter = 0; counter < balls_in_row; counter++) {
+				if (drawsolid == true) {
+
+					
+					
+//					b = new SolidBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
+//							playingHeight);
+				} else {
+					
+					
+					
+//					b = new StripedBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
+//							playingHeight);
+				}
+
+				drawsolid = !drawsolid;
+				b.setVertex(current_x, current_y);
+				
+				current_y -= diameter;
+			}
+	      
+	      
+	      balls_in_row++;
+	      current_x += diameter;
+	    }
 		
 		
 	    
