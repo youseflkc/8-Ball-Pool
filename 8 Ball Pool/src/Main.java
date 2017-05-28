@@ -44,6 +44,7 @@ public class Main implements ActionListener {
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
+	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
@@ -83,7 +84,7 @@ public class Main implements ActionListener {
 		try {
 			splashScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg"))
-							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
+							.getScaledInstance((int) width, (int) height, Image.SCALE_DEFAULT))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
