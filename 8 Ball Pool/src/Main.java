@@ -84,7 +84,7 @@ public class Main implements ActionListener {
 		try {
 			splashScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg"))
-							.getScaledInstance((int) width, (int) height, Image.SCALE_DEFAULT))));
+							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
