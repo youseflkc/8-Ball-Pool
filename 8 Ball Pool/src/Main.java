@@ -34,7 +34,6 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener{
 
-	private Overlay overlay;
 	private Billiard content;
 	String helpString = "\t        How to Play 8 Ball Pool\n\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
@@ -116,15 +115,17 @@ public class Main implements ActionListener{
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
-				try {
-					playMusic();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (Throwable e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
+				//It got annoying -Lazar
+//				try {
+//					playMusic();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (Throwable e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -249,15 +250,12 @@ public class Main implements ActionListener{
 	public void startBalls() {
 		mainScreen.pack ();
 		
-		//mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
-		  //       Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
+		mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
+		         Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
 		
 		content = new Billiard ();
 		mainScreen.setContentPane (content);
 		
-		overlay = new Overlay ();
-		mainScreen.setGlassPane (overlay);
-		mainScreen.getGlassPane ().setVisible (true);
 
 		Timer timer = new Timer (20, this);
 		timer.start ();
