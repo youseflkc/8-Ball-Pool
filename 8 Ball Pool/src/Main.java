@@ -24,12 +24,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
 
 public class Main {
 
@@ -44,22 +44,14 @@ public class Main {
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// Grabs
-																		// screen
-																		// resolution
-																		// and
-																		// fixes
-																		// the
-																		// size
-																		// of
-																		// the
-																		// JFrame
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				@SuppressWarnings("unused")
 				Main start = new Main();
 			}
 		});
@@ -108,12 +100,10 @@ public class Main {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					playMusic();
+					playMusic("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (Throwable e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -129,9 +119,7 @@ public class Main {
 			mainScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg")))));
 		} catch (IOException e) {
-			e.printStackTrace(); // Commented out the exception because it was
-									// annoying seeing it every
-									// time i go to the next screen
+			e.printStackTrace(); 
 		}
 
 		mainScreen.getContentPane().setLayout(new GridBagLayout());
@@ -193,8 +181,8 @@ public class Main {
 
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				helpPane.removeAll();
 				helpPane.setBackground(new Color(0, 0, 0, 150));
-				helpPane.setVisible(true);
 				JTextArea helpText = new JTextArea();
 				helpText.setText(helpString);
 				helpText.setEditable(false);
@@ -209,7 +197,26 @@ public class Main {
 				mainScreen.repaint();
 			}
 		});
-
+		
+		settingsButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				helpPane.removeAll();
+				helpPane.setBackground(new Color(0,0,0,125));
+				
+				
+				JCheckBox checkMusic= new JCheckBox("Music");
+				checkMusic.setOpaque(false);
+				checkMusic.setForeground(Color.white);
+				checkMusic.setFont(new Font("Impact",Font.PLAIN, 28));
+				checkMusic.setAlignmentX(helpPane.CENTER_ALIGNMENT);
+				
+				helpPane.add(checkMusic);
+				mainScreen.revalidate();
+				mainScreen.repaint();
+				
+			}
+		});
+		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
@@ -219,19 +226,24 @@ public class Main {
 			}
 		});
 	}
-	
+
 	/**
 	 * Plays music in the background
+	 * 
+	 * @param filePath
+	 *            -file path of the audio file you want to play
 	 * @throws Throwable
+	 *             
 	 * @throws IOException
+	 *             - song isn't found
 	 */
-	public void playMusic() throws Throwable, IOException {
-		 Clip clip = AudioSystem.getClip();
-	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("8 Ball Pool/resource/Music/This City Prod. David Wud.wav"));
-	        clip.open(inputStream);
-	        FloatControl volume=(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-	        volume.setValue(-10); //increase or decrease volume in decibals
-	        clip.start(); 
+	public void playMusic(String filePath) throws Throwable, IOException {
+		Clip clip = AudioSystem.getClip();
+		AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(filePath));
+		clip.open(inputStream);
+		FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		volume.setValue(-10); // increase or decrease volume in decibals
+		clip.start();
 	}
 
 }
