@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-public class Main implements ActionListener{
+public class Main implements ActionListener {
 
 	private Overlay overlay;
 	private Billiard content;
@@ -39,24 +40,17 @@ public class Main implements ActionListener{
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
 			+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
-			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last�sinking it before then will result"
+			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last-sinking it before then will result"
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
-	
+
 	final JFrame splashScreen = new JFrame();
 	final JFrame mainScreen = new JFrame();
 
-	
-	
-	
-	
-	
-	
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -88,7 +82,8 @@ public class Main implements ActionListener{
 
 		try {
 			splashScreen.setContentPane(new JLabel(
-					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg")))));
+					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg"))
+							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -104,7 +99,7 @@ public class Main implements ActionListener{
 
 		Sound bgMusic = new Sound();
 		bgMusic.setVolume(-10);
-		
+
 		try {
 			bgMusic.loadSound("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
 		} catch (IOException e1) {
@@ -133,7 +128,8 @@ public class Main implements ActionListener{
 
 		try {
 			mainScreen.setContentPane(new JLabel(
-					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg")))));
+					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg"))
+							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -150,8 +146,9 @@ public class Main implements ActionListener{
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
-		helpPane.setBackground(new Color(0, 0, 0, 0));
 		helpPane.setPreferredSize(new Dimension(600, 600));
+		helpPane.setBackground(new Color(0, 0, 0, 125));
+		helpPane.setOpaque(false);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -168,8 +165,8 @@ public class Main implements ActionListener{
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Removes shutter issue (check method header for details)
-				startBalls();	
+				// Removes shutter issue (check method header for details)
+				startBalls();
 			}
 		});
 
@@ -194,13 +191,14 @@ public class Main implements ActionListener{
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
-				helpPane.setBackground(new Color(0, 0, 0, 150));
+				helpPane.setOpaque(true);
 				JTextArea helpText = new JTextArea();
 				helpText.setText(helpString);
 				helpText.setEditable(false);
 				helpText.setFont(new Font("High Tower Text", Font.PLAIN, 20));
 				helpText.setForeground(Color.WHITE);
-				helpText.setBackground(new Color(0, 0, 0, 0));
+				helpText.setHighlighter(null);
+				helpText.setOpaque(false);
 				helpText.setLineWrap(true);
 				helpText.setWrapStyleWord(true);
 				helpPane.add(helpText);
@@ -212,17 +210,20 @@ public class Main implements ActionListener{
 
 		JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
+
 		settingsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
-				helpPane.setBackground(new Color(0, 0, 0, 125));
+				helpPane.setOpaque(true);
 
 				checkMusic.setBackground(Color.black);
 				checkMusic.setForeground(Color.white);
 				checkMusic.setFont(new Font("Impact", Font.PLAIN, 28));
 				checkMusic.setAlignmentX(helpPane.CENTER_ALIGNMENT);
 				checkMusic.setFocusPainted(false);
+				checkMusic.setMargin(new Insets(0, 20, 0, 20));
 
+				helpPane.add(Box.createRigidArea(new Dimension(0, 75)));
 				helpPane.add(checkMusic);
 				mainScreen.revalidate();
 				mainScreen.repaint();
@@ -230,15 +231,15 @@ public class Main implements ActionListener{
 			}
 		});
 
-		checkMusic.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e){
-				if (checkMusic.isSelected()==true) {
+		checkMusic.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (checkMusic.isSelected() == true) {
 					try {
 						bgMusic.playSound();
 					} catch (Throwable e1) {
 						e1.printStackTrace();
 					}
-				}else if(checkMusic.isSelected()==false){
+				} else if (checkMusic.isSelected() == false) {
 					bgMusic.stopSound();
 				}
 			}
@@ -253,32 +254,33 @@ public class Main implements ActionListener{
 			}
 		});
 	}
-	
+
 	/**
-	 * Method is used to avoid shutter when code inside of this method is placed inside of the addActionListener
-	 * of the play button
+	 * Method is used to avoid shutter when code inside of this method is placed
+	 * inside of the addActionListener of the play button
 	 */
 	public void startBalls() {
-		mainScreen.pack ();
-		
-		//mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
-		  //       Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
-		
-		content = new Billiard ();
-		mainScreen.setContentPane (content);
-		
-		overlay = new Overlay ();
-		mainScreen.setGlassPane (overlay);
-		mainScreen.getGlassPane ().setVisible (true);
+		mainScreen.pack();
 
-		Timer timer = new Timer (20, this);
-		timer.start ();
+		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
+		// mainScreen.getInsets ().right,
+		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
+		// ().bottom);
+
+		content = new Billiard();
+		mainScreen.setContentPane(content);
+
+		overlay = new Overlay();
+		mainScreen.setGlassPane(overlay);
+		mainScreen.getGlassPane().setVisible(true);
+
+		Timer timer = new Timer(20, this);
+		timer.start();
 	}
-	
-	
-	//Added when Lazar added "implements ActionListener" to this class
+
+	// Added when Lazar added "implements ActionListener" to this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainScreen.repaint ();
+		mainScreen.repaint();
 	}
 }
