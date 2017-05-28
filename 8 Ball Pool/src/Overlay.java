@@ -175,91 +175,124 @@ public class Overlay extends JPanel implements MouseListener, MouseMotionListene
 	}
 	
 	public void paintComponent (Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setRenderingHint (RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-		g2d.setRenderingHint (RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
-		super.paintComponent (g);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint (RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+			g2d.setRenderingHint (RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
+			super.paintComponent (g);
+			
+			g2d.setFont (font);
+			
+			// Draw the selector
+			drawSelector (g2d);
+			
+			// FPS
+			Calendar now = Calendar.getInstance();
+			if (now.get(Calendar.SECOND) != second) {
+				second = now.get(Calendar.SECOND);
+				fps = count;
+				count = 0;
+			}
+			
+			count ++;
+			
+			g2d.setColor (new Color (0, 0, 0));
+			g2d.drawString (fps+" FPS", 5, Billiard.HEIGHT - 5);
+			
+			// Draw widget
+			g2d.setColor (new Color (0, 0, 0, 150));
+			g2d.fill (shapes[0]);
+			
+			g2d.setColor (new Color (255, 255, 255, 200));
+			g2d.fill (shapes[1]);
+			g2d.fill (shapes[2]);
+			g2d.fill (shapes[4]);
+			g2d.fill (shapes[5]);
+			g2d.fill (shapes[6]);
+			g2d.fill (shapes[7]);
+			g2d.fill (shapes[8]);
+			g2d.fill (shapes[9]);
+			g2d.fill (shapes[10]);
+			g2d.fill (shapes[11]);
+			g2d.fill (shapes[12]);
+			g2d.fill (shapes[13]);
+			
+			g2d.setColor (new Color (255, 0, 0));
+			g2d.fill (shapes[3]);
+			
+			g2d.setColor (new Color (255, 255, 255));
+			g2d.draw (shapes[3]);
+			
+			g2d.drawString ("Color", (int)shapes[4].getBounds2D().getMinX(), (int)shapes[4].getBounds2D().getMinY() - 5);
+			g2d.drawString ("Speed (X, Y)", (int)shapes[6].getBounds2D().getMinX(), (int)shapes[6].getBounds2D().getMinY() - 5);
+			g2d.drawString ("Mass", (int)shapes[10].getBounds2D().getMinX(), (int)shapes[10].getBounds2D().getMinY() - 5);
+			g2d.drawString ("Radius", (int)shapes[12].getBounds2D().getMinX(), (int)shapes[12].getBounds2D().getMinY() - 5);
+			
+			g2d.setColor (new Color (0, 0, 0));
+			drawStringFromCenter (g2d, "Prev", shapes[1].getBounds2D().getCenterX(), shapes[1].getBounds2D().getCenterY() - 2);
+			drawStringFromCenter (g2d, "Next", shapes[2].getBounds2D().getCenterX(), shapes[2].getBounds2D().getCenterY() - 2);
+			
+			// Play/pause
+			if (Billiard.is_paused ()) {
+				g2d.setColor (new Color (138, 226, 52));
+				g2d.fill (shapes[14]);
+				g2d.setColor (Color.WHITE);
+				g2d.fill (shapes[16]);
+			}
+			else {
+				g2d.setColor (new Color (239, 41, 41));
+				g2d.fill (shapes[14]);
+				g2d.setColor (Color.WHITE);
+				g2d.fill (shapes[15]);
+			}
+			
+			// Show data
+			g2d.setColor (new Color (255, 255, 255));
+			drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getSpeed().getX()*100)/100.0+"",
+			                      shapes[6].getBounds2D().getMaxX() + 22.5, shapes[6].getBounds2D().getCenterY() - 2);
+			drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getSpeed().getY()*-100)/100.0+"",
+			                      shapes[8].getBounds2D().getMaxX() + 22.5, shapes[8].getBounds2D().getCenterY() - 2);
+			drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getMass()*100)/100.0+"",
+			                      shapes[10].getBounds2D().getMaxX() + 22.5, shapes[10].getBounds2D().getCenterY() - 2);
+			drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getRadius()*100)/100.0+"",
+			                      shapes[12].getBounds2D().getMaxX() + 22.5, shapes[12].getBounds2D().getCenterY() - 2);
+			
+			g2d.setColor (Ball.colors[Billiard.ball[active_ball].getColorId()]);
+			g2d.fill (shapes[3]);
 		
-		g2d.setFont (font);
-		
-		// Draw the selector
-		drawSelector (g2d);
-		
-		// FPS
-		Calendar now = Calendar.getInstance();
-		if (now.get(Calendar.SECOND) != second) {
-			second = now.get(Calendar.SECOND);
-			fps = count;
-			count = 0;
-		}
-		
-		count ++;
-		
-		g2d.setColor (new Color (0, 0, 0));
-		g2d.drawString (fps+" FPS", 5, Billiard.HEIGHT - 5);
-		
-		// Draw widget
-		g2d.setColor (new Color (0, 0, 0, 150));
-		g2d.fill (shapes[0]);
-		
-		g2d.setColor (new Color (255, 255, 255, 200));
-		g2d.fill (shapes[1]);
-		g2d.fill (shapes[2]);
-		g2d.fill (shapes[4]);
-		g2d.fill (shapes[5]);
-		g2d.fill (shapes[6]);
-		g2d.fill (shapes[7]);
-		g2d.fill (shapes[8]);
-		g2d.fill (shapes[9]);
-		g2d.fill (shapes[10]);
-		g2d.fill (shapes[11]);
-		g2d.fill (shapes[12]);
-		g2d.fill (shapes[13]);
-		
-		g2d.setColor (new Color (255, 0, 0));
-		g2d.fill (shapes[3]);
-		
-		g2d.setColor (new Color (255, 255, 255));
-		g2d.draw (shapes[3]);
-		
-		g2d.drawString ("Color", (int)shapes[4].getBounds2D().getMinX(), (int)shapes[4].getBounds2D().getMinY() - 5);
-		g2d.drawString ("Speed (X, Y)", (int)shapes[6].getBounds2D().getMinX(), (int)shapes[6].getBounds2D().getMinY() - 5);
-		g2d.drawString ("Mass", (int)shapes[10].getBounds2D().getMinX(), (int)shapes[10].getBounds2D().getMinY() - 5);
-		g2d.drawString ("Radius", (int)shapes[12].getBounds2D().getMinX(), (int)shapes[12].getBounds2D().getMinY() - 5);
-		
-		g2d.setColor (new Color (0, 0, 0));
-		drawStringFromCenter (g2d, "Prev", shapes[1].getBounds2D().getCenterX(), shapes[1].getBounds2D().getCenterY() - 2);
-		drawStringFromCenter (g2d, "Next", shapes[2].getBounds2D().getCenterX(), shapes[2].getBounds2D().getCenterY() - 2);
-		
-		// Play/pause
-		if (Billiard.is_paused ()) {
-			g2d.setColor (new Color (138, 226, 52));
-			g2d.fill (shapes[14]);
-			g2d.setColor (Color.WHITE);
-			g2d.fill (shapes[16]);
-		}
-		else {
-			g2d.setColor (new Color (239, 41, 41));
-			g2d.fill (shapes[14]);
-			g2d.setColor (Color.WHITE);
-			g2d.fill (shapes[15]);
-		}
-		
-		// Show data
-		g2d.setColor (new Color (255, 255, 255));
-		drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getSpeed().getX()*100)/100.0+"",
-		                      shapes[6].getBounds2D().getMaxX() + 22.5, shapes[6].getBounds2D().getCenterY() - 2);
-		drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getSpeed().getY()*-100)/100.0+"",
-		                      shapes[8].getBounds2D().getMaxX() + 22.5, shapes[8].getBounds2D().getCenterY() - 2);
-		drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getMass()*100)/100.0+"",
-		                      shapes[10].getBounds2D().getMaxX() + 22.5, shapes[10].getBounds2D().getCenterY() - 2);
-		drawStringFromCenter (g2d, (int)(Billiard.ball[active_ball].getRadius()*100)/100.0+"",
-		                      shapes[12].getBounds2D().getMaxX() + 22.5, shapes[12].getBounds2D().getCenterY() - 2);
-		
-		g2d.setColor (Ball.colors[Billiard.ball[active_ball].getColorId()]);
-		g2d.fill (shapes[3]);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void mousePressed (MouseEvent e) {
 		if (shapes[1].contains (e.getX(), e.getY())) {

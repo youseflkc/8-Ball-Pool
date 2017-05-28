@@ -40,7 +40,7 @@ public class Main {
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
 			+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
-			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last—sinking it before then will result"
+			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk lastï¿½sinking it before then will result"
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
@@ -152,12 +152,12 @@ public class Main {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				content = new Billiard();
-				mainScreen.setContentPane(content);
-
-				overlay = new Overlay();
-				mainScreen.setGlassPane(overlay);
-				mainScreen.getGlassPane().setVisible(true);
+				
+				//Starts the ball physics
+				JFrame window = new BilliardWindow ();
+				window.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+				window.setVisible (true);
+				
 			}
 		});
 
@@ -245,5 +245,4 @@ public class Main {
 		volume.setValue(-10); // increase or decrease volume in decibals
 		clip.start();
 	}
-
 }
