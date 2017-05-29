@@ -43,7 +43,7 @@ public class Main implements ActionListener {
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
-	
+
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = screenSize.getWidth();
 	double height = screenSize.getHeight();
@@ -262,10 +262,10 @@ public class Main implements ActionListener {
 	public void startBalls() {
 		mainScreen.pack();
 
-//		 mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
-//		 mainScreen.getInsets ().right,
-//		 Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
-//		 ().bottom);
+		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
+		// mainScreen.getInsets ().right,
+		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
+		// ().bottom);
 
 		content = new Billiard();
 		mainScreen.setContentPane(content);
