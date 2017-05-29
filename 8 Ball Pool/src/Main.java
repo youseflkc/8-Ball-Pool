@@ -248,8 +248,8 @@ public class Main implements ActionListener{
 	public void startBalls() {
 		mainScreen.pack ();
 		
-		mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
-		         Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
+		//mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left + mainScreen.getInsets ().right,
+		         //Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets ().bottom);
 		
 		content = new Billiard ();
 		mainScreen.setContentPane (content);
