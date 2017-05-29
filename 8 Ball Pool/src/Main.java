@@ -97,7 +97,7 @@ public class Main implements ActionListener {
 		splashScreen.getContentPane().add(anyKeyLabel, BorderLayout.PAGE_END);
 		anyKeyLabel.startBlinking();
 
-		Sound bgMusic = new Sound();
+		final Sound bgMusic = new Sound();
 		bgMusic.setVolume(-10);
 
 		try {
@@ -208,7 +208,7 @@ public class Main implements ActionListener {
 			}
 		});
 
-		JCheckBox checkMusic = new JCheckBox("Music");
+		final JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
 
 		settingsButton.addActionListener(new ActionListener() {
