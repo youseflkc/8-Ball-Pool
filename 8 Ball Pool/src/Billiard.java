@@ -75,7 +75,7 @@ public class Billiard extends JPanel {
 		
 		
 		
-		/*
+		
 		
 		
 		//balls.removeAllElements();
@@ -101,8 +101,8 @@ public class Billiard extends JPanel {
 //	      {color_orange, color_purple, color_purple, Color.green, Color.green}
 //	    };
 
-	     //set of loops and offset calculations to lay
-	     //the balls out in a triangle 
+	    /* set of loops and offset calculations to lay
+	     * the balls out in a triangle */
 		boolean drawsolid = true;
 		for (rownum = 1; rownum <= BALLS; rownum++) {
 
@@ -124,7 +124,7 @@ public class Billiard extends JPanel {
 				}
 
 				drawsolid = !drawsolid;
-				b.setVertex(current_x, current_y);
+				//b.setVertex(current_x, current_y);
 				
 				current_y -= diameter;
 			}
@@ -133,7 +133,7 @@ public class Billiard extends JPanel {
 	      balls_in_row++;
 	      current_x += diameter;
 	    }
-		*/
+		
 		
 	    
 	    
