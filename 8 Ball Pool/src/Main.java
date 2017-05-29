@@ -101,7 +101,7 @@ public class Main implements ActionListener {
 		bgMusic.setVolume(-10);
 
 		try {
-			bgMusic.loadSound("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
+			bgMusic.loadSound("8 Ball Pool/resource/Music/Old Traditional Singing Ojkavica.wav");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (Throwable e1) {
