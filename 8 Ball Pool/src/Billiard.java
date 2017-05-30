@@ -23,7 +23,7 @@ public class Billiard extends JPanel {
 	public static final int HEIGHT = (int) screenSize.getHeight();//600;
 	
 	
-	public static final int BALLS = 2;
+	public static final int BALLS = 16;
 	public static Ball ball[] = new Ball[BALLS];
 	
 	private double next_collision;
@@ -32,6 +32,41 @@ public class Billiard extends JPanel {
 	
 	private static boolean paused = false;
 	private static boolean queued_collision_update = false;
+	
+	
+	double init_radius = 4;
+	double init_mass = 5;
+	
+
+	
+	
+	
+//	public static final Color YELLOW = new Color(225, 175, 0);
+//	public static final Color BLUE = new Color(1, 78, 146);
+//	public static final Color RED = new Color(247, 0, 55);
+//	public static final Color PURPLE = new Color(77, 30, 110);
+//	public static final Color ORANGE = new Color(255, 97, 36);
+//	public static final Color GREEN = new Color(16, 109, 62);
+//	public static final Color BROWN = new Color(129, 30, 33);
+//	public static final Color BLACK = new Color(20, 20, 20);
+//	public static final Color WHITE = new Color(255, 255, 255);
+//	public static final Color DARK_RED = new Color(63, 5, 14);
+
+	
+	
+	
+	double METER_TO_PIXEL = (800 / 2.84);
+	int TABLE_WIDTH = (int) (1.624 * METER_TO_PIXEL);//PLay with values to figure out 
+													 //exactly how to get the balls ordered
+	int TABLE_HEIGHT = (int) (3.048 * METER_TO_PIXEL);
+	int PLAY_WIDTH = (int) (1.42 * METER_TO_PIXEL);
+	int PLAY_HEIGHT = (int) (2.84 * METER_TO_PIXEL);
+	int WIDTH_GAP = (TABLE_WIDTH - PLAY_WIDTH);
+	int HEIGHT_GAP = (TABLE_HEIGHT - PLAY_HEIGHT);
+	
+	
+	double dx = WIDTH_GAP / 6 + init_radius;
+	double dy = HEIGHT_GAP / 6 + init_radius;
 	
 	// Constructor
 	public Billiard () {
@@ -61,103 +96,85 @@ public class Billiard extends JPanel {
 		setOpaque (true);
 		setBackground (new Color (255, 255, 255));		
 		
-		double init_radius = 24;
-		double init_mass = 5;
-		
-		//Start/White ball
-		ball[0] = new Ball (400,
-				HEIGHT/2,
-		        init_radius,
-		        init_mass,
-		        new Speed (0, 0));
-		
-		//First ball in the triangle needs to be in a certain spot so the other 15 balls line up properly
-		ball[1] = new Ball (
-				WIDTH-500,
-				HEIGHT/2,
-                init_radius,
-                init_mass,
-                new Speed (0, 0));
-		
-//		for (int i = 0; i <= 14; i++) {//Adjusted for the one ball ahead
-//			ball[i] = new Ball (
-//					ball[i-1].getX(),
-//					HEIGHT/2,
-//	                init_radius,
-//	                init_mass,
-//	                new Speed (0, 0));
-//		}
 		
 		
+		// initializing the cue ball
+		double centerX = WIDTH_GAP / 2 + PLAY_WIDTH / 2;
+		double centerY = HEIGHT_GAP / 2 + PLAY_HEIGHT / 2;
+		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, init_radius, init_mass, new Speed(0, 0));
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//balls.removeAllElements();
-	    int diameter = 0;
+		double initialPosX = centerX;
+		double initialPosY = centerY - PLAY_HEIGHT / 4;
 
-//	    CueBall c = new CueBall(borderWidth, borderWidth, playingWidth, playingHeight);
-//	    c.setVertex(borderWidth + (0.25 * playingWidth), 
-//			borderWidth + (0.50 * playingHeight));
-	    
-	    //diameter = Ball.getRadius() * 2;
+		dx = Math.sin(30.0 / 180.0 * Math.PI) * init_radius * 2;
+		dy = Math.cos(30.0 / 180.0 * Math.PI) * init_radius * 2;		
+		
+		
+		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0));
 
-	    int balls_in_row = 1;
-	    int counter = 0;
-	    int rownum = 1;
-	    int current_x = WIDTH + (HEIGHT * 3 / 4);
-	    int current_y = 0;
-	    Ball b;
-//	    Color ballColors[][] = {
-//	      {Color.red},
-//	      {Color.red, Color.blue}, 
-//	      {Color.blue, Color.black, Color.yellow},
-//	      {Color.yellow, color_brown, color_brown, color_orange},
-//	      {color_orange, color_purple, color_purple, Color.green, Color.green}
-//	    };
+		ball[2] = new Ball(initialPosX - dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0));
+		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0));
+		
+		ball[4] = new Ball(initialPosX - 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[5] = new Ball(initialPosX, initialPosY - 2 * dy, init_mass, init_radius, new Speed(0, 0));
+		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
 
-	    /* set of loops and offset calculations to lay
-	     * the balls out in a triangle */
-		boolean drawsolid = true;
-		for (rownum = 1; rownum <= BALLS; rownum++) {
+		ball[7] = new Ball(initialPosX - 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[8] = new Ball(initialPosX - dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[9] = new Ball(initialPosX + dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
 
-			current_y = WIDTH + ((int) HEIGHT / 2) + ((balls_in_row - 1) * diameter / 2);
-
-			for (counter = 0; counter < balls_in_row; counter++) {
-				if (drawsolid == true) {
-
-					
-					
-//					b = new SolidBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
-//							playingHeight);
-				} else {
-					
-//					b = new StripedBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
-//							playingHeight);
-				}
-
-				drawsolid = !drawsolid;
-				//b.setVertex(current_x, current_y);
-				
-				current_y -= diameter;
-			}
-	      
-	      
-	      balls_in_row++;
-	      current_x += diameter;
-	    }
+		ball[11] = new Ball(initialPosX - 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[12] = new Ball(initialPosX - 2 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[13] = new Ball(initialPosX, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[14] = new Ball(initialPosX + 2 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//	    int diameter = 0;
+//
+//	    int balls_in_row = 1;
+//	    int counter = 0;
+//	    int rownum = 1;
+//	    int current_x = WIDTH + (HEIGHT * 3 / 4);
+//	    int current_y = 0;
+//	    Ball b;
+//
+//	    /* set of loops and offset calculations to lay
+//	     * the balls out in a triangle */
+//		boolean drawsolid = true;
+//		for (rownum = 1; rownum <= BALLS; rownum++) {
+//
+//			current_y = WIDTH + ((int) HEIGHT / 2) + ((balls_in_row - 1) * diameter / 2);
+//
+//			for (counter = 0; counter < balls_in_row; counter++) {
+//				
+//				ball[counter] = new Ball (
+//						current_x,
+//						current_y,
+//		                init_radius,
+//		                init_mass,
+//		                new Speed (0, 0));
+//				
+//				drawsolid = !drawsolid;
+//				//b.setVertex(current_x, current_y);
+//				
+//				current_y -= diameter;
+//			}
+//	      
+//	      
+//	      balls_in_row++;
+//	      current_x += diameter;
+//	    }
 		
 		
 	    

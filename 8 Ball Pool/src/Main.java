@@ -121,6 +121,11 @@ public class Main implements ActionListener {
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
+				
+				
+//				int keyCode = e.getKeyCode();
+//				if (keyCode == KeyEvent.VK_SPACE)
+//					System.exit(0);
 			}
 
 			public void keyReleased(KeyEvent e) {
