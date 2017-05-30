@@ -80,15 +80,8 @@ public class Billiard extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					SwingUtilities.getWindowAncestor(Billiard.this).dispose();// grabs
-																				// the
-																				// parent
-																				// of
-																				// this
-																				// panel
-																				// and
-																				// closes
-																				// it
+					SwingUtilities.getWindowAncestor(Billiard.this).dispose();
+					//grabs the parent of the panel and closes it
 				}
 			}
 		});
