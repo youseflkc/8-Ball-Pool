@@ -1,19 +1,18 @@
 
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public class Billiard extends JPanel {
 	// Members
@@ -30,25 +29,38 @@ public class Billiard extends JPanel {
 	private double next_collision;
 	private Ball first;
 	private Ball second;
+	
 	private static boolean paused = false;
 	private static boolean queued_collision_update = false;
 	
 	// Constructor
 	public Billiard () {
 		super ();
+		
 		setLayout(new FlowLayout(FlowLayout.RIGHT));
 		JButton exit= Main.button("Exit");
-		setOpaque (true);
-		setBackground (new Color (255, 255, 255));		
+		
 		add(exit);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					SwingUtilities.getWindowAncestor(Billiard.this).dispose();//grabs the parent of this panel and closes it
+					SwingUtilities.getWindowAncestor(Billiard.this).dispose();// grabs
+																				// the
+																				// parent
+																				// of
+																				// this
+																				// panel
+																				// and
+																				// closes
+																				// it
 				}
 			}
 		});
+		
+		setOpaque (true);
+		setBackground (new Color (255, 255, 255));		
+		
 		double init_radius = 24;
 		double init_mass = 5;
 		
@@ -131,8 +143,6 @@ public class Billiard extends JPanel {
 //					b = new SolidBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
 //							playingHeight);
 				} else {
-					
-					
 					
 //					b = new StripedBall(ballColors[rownum - 1][counter], borderWidth, borderWidth, playingWidth,
 //							playingHeight);
