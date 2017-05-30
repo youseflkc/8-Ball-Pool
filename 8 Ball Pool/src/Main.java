@@ -49,7 +49,9 @@ public class Main implements ActionListener {
 	double height = screenSize.getHeight();
 
 	final JFrame splashScreen = new JFrame();
-	final JFrame mainScreen = new JFrame();
+	public final JFrame mainScreen = new JFrame();
+	public final JFrame playScreen= new JFrame();
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -75,6 +77,8 @@ public class Main implements ActionListener {
 		splashScreen.setSize((int) width, (int) height);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setSize((int) width, (int) height);
+		playScreen.setVisible(false);
+
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
@@ -101,7 +105,7 @@ public class Main implements ActionListener {
 		bgMusic.setVolume(-10);
 
 		try {
-			bgMusic.loadSound("8 Ball Pool/resource/Music/Old Traditional Singing Ojkavica.wav");
+			bgMusic.loadSound("8 Ball Pool/resource/Music/This City Prod. David Wud.wav");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (Throwable e1) {
@@ -260,17 +264,18 @@ public class Main implements ActionListener {
 	 * inside of the addActionListener of the play button
 	 */
 	public void startBalls() {
-		mainScreen.pack();
-
+		playScreen.setUndecorated(true);
+		playScreen.setVisible(true);
+		playScreen.setSize((int)width,(int) height);
 		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
 		// mainScreen.getInsets ().right,
 		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
 		// ().bottom);
 
 		content = new Billiard();
-		mainScreen.setContentPane(content);
+		playScreen.setContentPane(content);
 
-		mainScreen.getGlassPane().setVisible(true);
+		playScreen.getGlassPane().setVisible(true);
 
 		Timer timer = new Timer(20, this);
 		timer.start();
@@ -279,6 +284,6 @@ public class Main implements ActionListener {
 	// Added when Lazar added "implements ActionListener" to this class
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainScreen.repaint();
+		playScreen.repaint();
 	}
 }
