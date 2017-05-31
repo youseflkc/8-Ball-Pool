@@ -148,14 +148,14 @@ public class Main implements ActionListener {
 
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(new Color(0, 0, 0, 100));
-		menuPane.setPreferredSize(new Dimension(400, 600));
+		menuPane.setPreferredSize(new Dimension((int)width/3, (int)height-(int)height/5));
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
-		helpPane.setPreferredSize(new Dimension(600, 600));
+		helpPane.setPreferredSize(new Dimension((int)width/3, (int)height-(int)height/5));
 		helpPane.setBackground(new Color(0, 0, 0, 125));
 		helpPane.setOpaque(false);
 
