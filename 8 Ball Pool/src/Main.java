@@ -28,13 +28,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
 	private Billiard content;
-	String helpString = "\t        How to Play 8 Ball Pool\n\n -There are 7 solid, and 7 striped balls, "
+	
+	String helpString = "\nThere are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
@@ -56,13 +58,21 @@ public class Main implements ActionListener {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				@SuppressWarnings("unused")
 				Main start = new Main();
+				
 			}
 		});
 
 	}
 
+	/**
+	 * Button method gives buttons all the same attributes
+	 * ie. colour, size, font, etc...
+	 * @param name
+	 * -text written in the button
+	 * @return
+	 * - jbutton you created
+	 */
 	public static JButton button(String name) {
 		JButton newButton = new JButton(name);
 		newButton.setFocusPainted(false);
@@ -78,7 +88,6 @@ public class Main implements ActionListener {
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setSize((int) width, (int) height);
 		playScreen.setVisible(false);
-
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
@@ -156,9 +165,9 @@ public class Main implements ActionListener {
 
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 150);
+		c.insets = new Insets(0, 0, 0, 125);
 		mainScreen.getContentPane().add(menuPane, c);
-		c.insets = new Insets(0, 150, 0, 0);
+		c.insets = new Insets(0, 125, 0, 0);
 		c.gridx = 1;
 		mainScreen.getContentPane().add(helpPane, c);
 
@@ -192,26 +201,35 @@ public class Main implements ActionListener {
 		exitButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(exitButton);
 
+		
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
 				helpPane.setOpaque(true);
 				JTextArea helpText = new JTextArea();
+				JLabel helpTitle=new JLabel("How to Play 8-Ball Pool");
+				helpTitle.setFont(new Font("High Tower Text", Font.BOLD,24));
+				helpTitle.setForeground(Color.white);
+				helpTitle.setAlignmentX(helpPane.CENTER_ALIGNMENT);
 				helpText.setText(helpString);
 				helpText.setEditable(false);
 				helpText.setFont(new Font("High Tower Text", Font.PLAIN, 20));
 				helpText.setForeground(Color.WHITE);
 				helpText.setHighlighter(null);
-				helpText.setOpaque(false);
+				helpText.setBackground(new Color(0,0,0,0));
 				helpText.setLineWrap(true);
 				helpText.setWrapStyleWord(true);
-				helpPane.add(helpText);
+				JScrollPane helpScroll=new JScrollPane(helpText);
+				helpScroll.setOpaque(false);
+				helpPane.add(helpTitle);
+				helpPane.add(helpScroll);
 
 				mainScreen.revalidate();
 				mainScreen.repaint();
 			}
 		});
 
+		
 		final JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
 
@@ -282,8 +300,9 @@ public class Main implements ActionListener {
 	}
 
 	// Added when Lazar added "implements ActionListener" to this class
-	@Override
 	public void actionPerformed(ActionEvent e) {
+		mainScreen.repaint();
 		playScreen.repaint();
 	}
+	
 }
