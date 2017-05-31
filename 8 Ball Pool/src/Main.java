@@ -46,20 +46,23 @@ public class Main implements ActionListener {
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table";
 
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	double width = screenSize.getWidth();
-	double height = screenSize.getHeight();
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int WIDTH = (int) screenSize.getWidth();
+	public static final int HEIGHT = (int) screenSize.getHeight();
 
 	final JFrame splashScreen = new JFrame();
 	public final JFrame mainScreen = new JFrame();
 	public final JFrame playScreen= new JFrame();
 
+	// Thomas' variables
+	public final JFrame levelScreen = new JFrame();
+	private Level level;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				@SuppressWarnings("unused")
 				Main start = new Main();
-				
 			}
 		});
 
@@ -84,10 +87,11 @@ public class Main implements ActionListener {
 	}
 
 	public Main() {
-		splashScreen.setSize((int) width, (int) height);
+		splashScreen.setSize((int) WIDTH, (int) HEIGHT);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainScreen.setSize((int) width, (int) height);
+		mainScreen.setSize((int) WIDTH, (int) HEIGHT);
 		playScreen.setVisible(false);
+
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
@@ -96,7 +100,7 @@ public class Main implements ActionListener {
 		try {
 			splashScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/8 Ball Pool SplashScreen.jpg"))
-							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
+							.getScaledInstance((int) WIDTH, (int) HEIGHT, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -142,7 +146,7 @@ public class Main implements ActionListener {
 		try {
 			mainScreen.setContentPane(new JLabel(
 					new ImageIcon(ImageIO.read(new File("8 Ball Pool/resource/Images/main menu background.jpg"))
-							.getScaledInstance((int) width, (int) height, Image.SCALE_SMOOTH))));
+							.getScaledInstance((int) WIDTH, (int) HEIGHT, Image.SCALE_SMOOTH))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -152,14 +156,14 @@ public class Main implements ActionListener {
 
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(new Color(0, 0, 0, 100));
-		menuPane.setPreferredSize(new Dimension((int)width/3, (int)height-(int)height/5));
+		menuPane.setPreferredSize(new Dimension((int) WIDTH /3, (int) HEIGHT -(int) HEIGHT /5));
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
-		helpPane.setPreferredSize(new Dimension((int)width/3, (int)height-(int)height/5));
+		helpPane.setPreferredSize(new Dimension((int) WIDTH /3, (int) HEIGHT -(int) HEIGHT /5));
 		helpPane.setBackground(new Color(0, 0, 0, 125));
 		helpPane.setOpaque(false);
 
@@ -178,8 +182,12 @@ public class Main implements ActionListener {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// TO RUN LAZAR'S CODE, UNCOMMENT THE LINES BELOW
 				// Removes shutter issue (check method header for details)
-				startBalls();
+				// startBalls();
+
+				// TO RUN THOMAS' CODE, UNCOMMENT THE LINE BELOW
+				play();
 			}
 		});
 
@@ -201,7 +209,6 @@ public class Main implements ActionListener {
 		exitButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(exitButton);
 
-		
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
@@ -229,7 +236,6 @@ public class Main implements ActionListener {
 			}
 		});
 
-		
 		final JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
 
@@ -249,7 +255,6 @@ public class Main implements ActionListener {
 				helpPane.add(checkMusic);
 				mainScreen.revalidate();
 				mainScreen.repaint();
-
 			}
 		});
 
@@ -278,13 +283,29 @@ public class Main implements ActionListener {
 	}
 
 	/**
+	 * Method to run Thomas' pool
+	 *
+	 *
+	 */
+	public void play()
+	{
+		levelScreen.setUndecorated(true);
+		levelScreen.setVisible(true);
+		levelScreen.setSize((int) WIDTH,(int) HEIGHT);
+
+		level = new Level();
+		levelScreen.setContentPane(level);
+		levelScreen.getGlassPane().setVisible(true);
+	}
+
+	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
 	 * inside of the addActionListener of the play button
 	 */
 	public void startBalls() {
 		playScreen.setUndecorated(true);
 		playScreen.setVisible(true);
-		playScreen.setSize((int)width,(int) height);
+		playScreen.setSize((int) WIDTH,(int) HEIGHT);
 		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
 		// mainScreen.getInsets ().right,
 		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
@@ -300,9 +321,8 @@ public class Main implements ActionListener {
 	}
 
 	// Added when Lazar added "implements ActionListener" to this class
+	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainScreen.repaint();
 		playScreen.repaint();
 	}
-	
 }
