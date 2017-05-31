@@ -1,5 +1,8 @@
 package dataStructures;
 
+import engine.Graphic;
+import engine.primitives.Primitive;
+
 /**
  * Class represents an individual link in a linked list
  * 
@@ -8,14 +11,10 @@ package dataStructures;
  */
 public class Link {
     public Link nextLink;
-    public String word;
+    public Graphic graphic;
 
-    public Link(String word)
+    public Link(Graphic graphic)
     {
-        this.word = word;
-    }
-
-    public void printLink() {
-        System.out.print("{" + word + "} ");
+        this.graphic = graphic;
     }
 }

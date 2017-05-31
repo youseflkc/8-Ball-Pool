@@ -1,5 +1,7 @@
 package dataStructures;
 
+import engine.Graphic;
+
 /**
  * Class emulates a linked list data structure that can
  * dynamically grow in size
@@ -32,10 +34,10 @@ public class LinkList
     /**
      * Inserts an object into the linked list
      *
-     * @param word
+     * @param graphic
      */
-    public void insert(String word) {
-        Link newLink = new Link(word);
+    public void insert(Graphic graphic) {
+        Link newLink = new Link(graphic);
         newLink.nextLink = first;
         first = newLink;
         length += 1;
@@ -56,48 +58,11 @@ public class LinkList
 
         // Iterates through the list, moving elements into the array
         while (currentLink != null) {
-            array[index] = currentLink.word;
+//            array[index] = currentLink.word;
             index += 1;
             currentLink = currentLink.nextLink;
         }
 
         return array;
-    }
-
-    /**
-     * Searches for a word inside the linked list
-     *
-     * @param word takes in the word being searched for
-     * @return true if a match exists, false if a match does not exist
-     */
-    public boolean listContains(String word)
-    {
-        Link currentLink = first;
-
-        while (currentLink != null)
-        {
-            if (word.compareTo(currentLink.word) == 0)
-                return true;
-
-            currentLink = currentLink.nextLink;
-        }
-
-        return false;
-    }
-
-    /**
-     * Prints out the entire linked list
-     */
-    public void printList()
-    {
-        Link currentLink = first;
-
-        while (currentLink != null)
-        {
-            currentLink.printLink();
-            currentLink = currentLink.nextLink;
-        }
-
-        System.out.println();
     }
 }
