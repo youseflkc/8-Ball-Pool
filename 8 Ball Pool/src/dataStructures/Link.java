@@ -7,5 +7,15 @@ package dataStructures;
  *
  */
 public class Link {
-	// TODO
+    public Link nextLink;
+    public String word;
+
+    public Link(String word)
+    {
+        this.word = word;
+    }
+
+    public void printLink() {
+        System.out.print("{" + word + "} ");
+    }
 }
