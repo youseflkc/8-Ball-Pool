@@ -127,7 +127,7 @@ public class Level extends JPanel
 		
 
 		
-		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, 25, init_mass, new Speed(0, -10));
+		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, 25, init_mass, new Speed(-2, -13));
 		
 		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0));
 
@@ -135,7 +135,7 @@ public class Level extends JPanel
 		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0));
 		
 		ball[4] = new Ball(initialPosX - 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[5] = new Ball(initialPosX, initialPosY - 2 * dy, init_radius, init_mass, new Speed(1, 2));
+		ball[5] = new Ball(initialPosX, initialPosY - 2 * dy, init_radius, init_mass, new Speed(2, 4));
 		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
 
 		ball[7] = new Ball(initialPosX - 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
@@ -155,7 +155,7 @@ public class Level extends JPanel
 		
 
 	    
-		//fix area where balls bo off from, Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
+		//Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
     }
 
     public BufferedImage loadTextures(String path)
@@ -248,8 +248,13 @@ public class Level extends JPanel
 			              (int)(second.getY() + second.getSpeed().getY() * next_collision));
 		*/
 		
-		if (queued_collision_update)
+		if (queued_collision_update){
 			collision_update ();
+		}
+		
+		if (paused) {
+			
+		}
     }
     
     
