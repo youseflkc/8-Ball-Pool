@@ -35,7 +35,7 @@ import javax.swing.Timer;
 public class Main implements ActionListener {
 
 	private Billiard content;
-	
+
 	String helpString = "\nThere are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
@@ -52,7 +52,7 @@ public class Main implements ActionListener {
 
 	final JFrame splashScreen = new JFrame();
 	public final JFrame mainScreen = new JFrame();
-	public final JFrame playScreen= new JFrame();
+	public final JFrame playScreen = new JFrame();
 
 	// Thomas' variables
 	public final JFrame levelScreen = new JFrame();
@@ -69,12 +69,12 @@ public class Main implements ActionListener {
 	}
 
 	/**
-	 * Button method gives buttons all the same attributes
-	 * ie. colour, size, font, etc...
+	 * Button method gives buttons all the same attributes ie. colour, size,
+	 * font, etc...
+	 * 
 	 * @param name
-	 * -text written in the button
-	 * @return
-	 * - jbutton you created
+	 *            -text written in the button
+	 * @return - jbutton you created
 	 */
 	public static JButton button(String name) {
 		JButton newButton = new JButton(name);
@@ -91,7 +91,6 @@ public class Main implements ActionListener {
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setSize((int) WIDTH, (int) HEIGHT);
 		playScreen.setVisible(false);
-
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		mainScreen.setUndecorated(true);
@@ -156,16 +155,27 @@ public class Main implements ActionListener {
 
 		JPanel menuPane = new JPanel();
 		menuPane.setBackground(new Color(0, 0, 0, 100));
-		menuPane.setPreferredSize(new Dimension((int) WIDTH /3, (int) HEIGHT -(int) HEIGHT /5));
+		menuPane.setPreferredSize(new Dimension((int) WIDTH / 3, (int) HEIGHT - (int) HEIGHT / 5));
 		menuPane.setLayout(new BoxLayout(menuPane, BoxLayout.Y_AXIS));
 		menuPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
 		final JPanel helpPane = new JPanel();
 		helpPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		helpPane.setLayout(new BoxLayout(helpPane, BoxLayout.Y_AXIS));
-		helpPane.setPreferredSize(new Dimension((int) WIDTH /3, (int) HEIGHT -(int) HEIGHT /5));
+		helpPane.setPreferredSize(new Dimension((int) WIDTH / 3, (int) HEIGHT - (int) HEIGHT / 5));
 		helpPane.setBackground(new Color(0, 0, 0, 125));
 		helpPane.setOpaque(false);
+
+		JLabel logoLabel;
+		try {
+			logoLabel = new JLabel(new ImageIcon(ImageIO.read((new File("8 Ball Pool/resource/Images/logo.png")))));
+			logoLabel.setBackground(new Color(0,0,0,0));
+			helpPane.add(logoLabel);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -214,8 +224,8 @@ public class Main implements ActionListener {
 				helpPane.removeAll();
 				helpPane.setOpaque(true);
 				JTextArea helpText = new JTextArea();
-				JLabel helpTitle=new JLabel("How to Play 8-Ball Pool");
-				helpTitle.setFont(new Font("High Tower Text", Font.BOLD,24));
+				JLabel helpTitle = new JLabel("How to Play 8-Ball Pool");
+				helpTitle.setFont(new Font("High Tower Text", Font.BOLD, 24));
 				helpTitle.setForeground(Color.white);
 				helpTitle.setAlignmentX(helpPane.CENTER_ALIGNMENT);
 				helpText.setText(helpString);
@@ -223,10 +233,10 @@ public class Main implements ActionListener {
 				helpText.setFont(new Font("High Tower Text", Font.PLAIN, 20));
 				helpText.setForeground(Color.WHITE);
 				helpText.setHighlighter(null);
-				helpText.setBackground(new Color(0,0,0,0));
+				helpText.setBackground(new Color(0, 0, 0, 0));
 				helpText.setLineWrap(true);
 				helpText.setWrapStyleWord(true);
-				JScrollPane helpScroll=new JScrollPane(helpText);
+				JScrollPane helpScroll = new JScrollPane(helpText);
 				helpScroll.setOpaque(false);
 				helpPane.add(helpTitle);
 				helpPane.add(helpScroll);
@@ -287,11 +297,10 @@ public class Main implements ActionListener {
 	 *
 	 *
 	 */
-	public void play()
-	{
+	public void play() {
 		levelScreen.setUndecorated(true);
 		levelScreen.setVisible(true);
-		levelScreen.setSize((int) WIDTH,(int) HEIGHT);
+		levelScreen.setSize((int) WIDTH, (int) HEIGHT);
 
 		level = new Level();
 		levelScreen.setContentPane(level);
@@ -305,7 +314,7 @@ public class Main implements ActionListener {
 	public void startBalls() {
 		playScreen.setUndecorated(true);
 		playScreen.setVisible(true);
-		playScreen.setSize((int) WIDTH,(int) HEIGHT);
+		playScreen.setSize((int) WIDTH, (int) HEIGHT);
 		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
 		// mainScreen.getInsets ().right,
 		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
