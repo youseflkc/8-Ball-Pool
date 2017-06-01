@@ -61,23 +61,23 @@ public class Level extends JPanel
     {
         super.paintComponent(g);
 
-        // Borders
-        g.drawImage(wooden_tile, 0, 0, Main.WIDTH, 100, this);
-        g.drawImage(wooden_tile, 0, Main.HEIGHT - 100, Main.WIDTH, 100, this);
-        g.drawImage(wooden_tile_rotated90, 0, 0, 100, Main.HEIGHT, this);
-        g.drawImage(wooden_tile_rotated90, Main.WIDTH - 100, 0, 100, Main.HEIGHT, this);
-
-        // Table Grass
-        g.drawImage(table_grass, 100, 100, Main.WIDTH - 200, Main.HEIGHT - 200, this);
-
-        // Top Holes
-        g.drawImage(black_dot, 50, 50, 100, 100, this);
-        g.drawImage(black_dot, (Main.WIDTH / 2) - 50, 50, 100, 100, this);
-        g.drawImage(black_dot, Main.WIDTH - 150, 50, 100, 100, this);
-
-        // Bottom Holes
-        g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
-        g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
-        g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
+//        // Borders
+//        g.drawImage(wooden_tile, 0, 0, Main.WIDTH, 100, this);
+//        g.drawImage(wooden_tile, 0, Main.HEIGHT - 100, Main.WIDTH, 100, this);
+//        g.drawImage(wooden_tile_rotated90, 0, 0, 100, Main.HEIGHT, this);
+//        g.drawImage(wooden_tile_rotated90, Main.WIDTH - 100, 0, 100, Main.HEIGHT, this);
+//
+//        // Table Grass
+//        g.drawImage(table_grass, 100, 100, Main.WIDTH - 200, Main.HEIGHT - 200, this);
+//
+//        // Top Holes
+//        g.drawImage(black_dot, 50, 50, 100, 100, this);
+//        g.drawImage(black_dot, (Main.WIDTH / 2) - 50, 50, 100, 100, this);
+//        g.drawImage(black_dot, Main.WIDTH - 150, 50, 100, 100, this);
+//
+//        // Bottom Holes
+//        g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
+//        g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
+//        g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
     }
 }

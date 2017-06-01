@@ -125,101 +125,17 @@ public class Billiard extends JPanel {
 		ball[14] = new Ball(initialPosX + 2 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
 		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
 		
+
 		
 		
 		
 		
 		
 		
-//	    int diameter = 0;
-//
-//	    int balls_in_row = 1;
-//	    int counter = 0;
-//	    int rownum = 1;
-//	    int current_x = WIDTH + (HEIGHT * 3 / 4);
-//	    int current_y = 0;
-//	    Ball b;
-//
-//	    /* set of loops and offset calculations to lay
-//	     * the balls out in a triangle */
-//		boolean drawsolid = true;
-//		for (rownum = 1; rownum <= BALLS; rownum++) {
-//
-//			current_y = WIDTH + ((int) HEIGHT / 2) + ((balls_in_row - 1) * diameter / 2);
-//
-//			for (counter = 0; counter < balls_in_row; counter++) {
-//				
-//				ball[counter] = new Ball (
-//						current_x,
-//						current_y,
-//		                init_radius,
-//		                init_mass,
-//		                new Speed (0, 0));
-//				
-//				drawsolid = !drawsolid;
-//				//b.setVertex(current_x, current_y);
-//				
-//				current_y -= diameter;
-//			}
-//	      
-//	      
-//	      balls_in_row++;
-//	      current_x += diameter;
-//	    }
-		
 		
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-		//slowDown();
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-		//Fix ball placement, then maybe start working on adding spins, etc, 
-	}
-	
-	 
-	
-	
-	
-//	public void slowDown() {
-//		double moreMass = ball[0].getMass();
-//		boolean flag = true;
-//		int i = 0;
-//
-//		while (flag) {
-//			
-//			for (int j = 0; j < ball.length; j++) {
-//				ball[j].slowDown();
-//			}
-//
-//			if (moreMass == 999) {
-//				flag = false;
-//			}
-//
-//			System.out.println(moreMass);
-//		}
-//	}
-//	
-	
-	
-	
-	
-	
-	
-	
+		//Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
+	}	
 	
 	
 	
