@@ -34,7 +34,7 @@ public class Billiard extends JPanel {
 	private static boolean queued_collision_update = false;
 	
 	
-	double init_radius = 4;
+	double init_radius = 7;
 	double init_mass = 5;
 	
 
@@ -68,6 +68,17 @@ public class Billiard extends JPanel {
 	double dx = WIDTH_GAP / 6 + init_radius;
 	double dy = HEIGHT_GAP / 6 + init_radius;
 	
+	
+	// initializing the cue ball
+	double centerX = WIDTH_GAP / 2 + PLAY_WIDTH / 2;
+	double centerY = HEIGHT_GAP / 2 + PLAY_HEIGHT / 2;
+	
+	double initialPosX = centerX;
+	double initialPosY = centerY - PLAY_HEIGHT / 4;
+
+	//dx = Math.sin(30.0 / 180.0 * Math.PI) * init_radius * 2;
+	//dy = Math.cos(30.0 / 180.0 * Math.PI) * init_radius * 2;
+	
 	// Constructor
 	public Billiard () {
 		super ();
@@ -78,7 +89,7 @@ public class Billiard extends JPanel {
 		add(exit);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					SwingUtilities.getWindowAncestor(Billiard.this).dispose();
 					//grabs the parent of the panel and closes it
@@ -87,21 +98,12 @@ public class Billiard extends JPanel {
 		});
 		
 		setOpaque (true);
-		setBackground (new Color (255, 255, 255));		
+		setBackground (new Color (255, 255, 255));	
 		
 		
 		
-		// initializing the cue ball
-		double centerX = WIDTH_GAP / 2 + PLAY_WIDTH / 2;
-		double centerY = HEIGHT_GAP / 2 + PLAY_HEIGHT / 2;
-		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, init_radius, init_mass, new Speed(0, 0));
 		
-		double initialPosX = centerX;
-		double initialPosY = centerY - PLAY_HEIGHT / 4;
-
-		dx = Math.sin(30.0 / 180.0 * Math.PI) * init_radius * 2;
-		dy = Math.cos(30.0 / 180.0 * Math.PI) * init_radius * 2;		
-		
+		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, 25, init_mass, new Speed(0, -10));
 		
 		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0));
 
@@ -109,7 +111,7 @@ public class Billiard extends JPanel {
 		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0));
 		
 		ball[4] = new Ball(initialPosX - 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[5] = new Ball(initialPosX, initialPosY - 2 * dy, init_mass, init_radius, new Speed(0, 0));
+		ball[5] = new Ball(initialPosX, initialPosY - 2 * dy, init_radius, init_mass, new Speed(1, 2));
 		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
 
 		ball[7] = new Ball(initialPosX - 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
@@ -123,6 +125,7 @@ public class Billiard extends JPanel {
 		ball[14] = new Ball(initialPosX + 2 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
 		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
 		
+
 		
 		
 		
@@ -130,67 +133,13 @@ public class Billiard extends JPanel {
 		
 		
 		
-		
-		
-		
-//	    int diameter = 0;
-//
-//	    int balls_in_row = 1;
-//	    int counter = 0;
-//	    int rownum = 1;
-//	    int current_x = WIDTH + (HEIGHT * 3 / 4);
-//	    int current_y = 0;
-//	    Ball b;
-//
-//	    /* set of loops and offset calculations to lay
-//	     * the balls out in a triangle */
-//		boolean drawsolid = true;
-//		for (rownum = 1; rownum <= BALLS; rownum++) {
-//
-//			current_y = WIDTH + ((int) HEIGHT / 2) + ((balls_in_row - 1) * diameter / 2);
-//
-//			for (counter = 0; counter < balls_in_row; counter++) {
-//				
-//				ball[counter] = new Ball (
-//						current_x,
-//						current_y,
-//		                init_radius,
-//		                init_mass,
-//		                new Speed (0, 0));
-//				
-//				drawsolid = !drawsolid;
-//				//b.setVertex(current_x, current_y);
-//				
-//				current_y -= diameter;
-//			}
-//	      
-//	      
-//	      balls_in_row++;
-//	      current_x += diameter;
-//	    }
-		
-		
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-		//Fix ball placement, then maybe start working on adding spins, etc, 
-	}
+		//Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
+	}	
+	
+	
+	
+	
 	
 	// Draw
 	public void paintComponent (Graphics g) {
@@ -257,7 +206,7 @@ public class Billiard extends JPanel {
 	
 	// Update
 	public static void queue_collision_update () {
-		queued_collision_update = true;
+		queued_collision_update = true;//
 	}
 	
 	public void collision_update () {

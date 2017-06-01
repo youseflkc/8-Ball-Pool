@@ -64,8 +64,12 @@ public class Ball {
 	}
 	
 	public void setMass (double mass) {
-		if (mass > 0)
-			this.mass = mass;
+		this.mass = mass;
+	}
+	
+	public void slowDown() {
+		speed.subtractX (-2 * speed.getX ());
+		speed.subtractY (-2 * speed.getY ());
 	}
 	
 	public int getColorId () {
