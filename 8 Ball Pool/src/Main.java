@@ -33,7 +33,7 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
-	private Billiard content;
+	private Level content;
 	String helpString = "\t        How to Play 8 Ball Pool\n\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
@@ -52,9 +52,7 @@ public class Main implements ActionListener {
 	public final JFrame mainScreen = new JFrame();
 	public final JFrame playScreen= new JFrame();
 
-	// Thomas' variables
-	public final JFrame levelScreen = new JFrame();
-	private Level level;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -178,9 +176,8 @@ public class Main implements ActionListener {
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Removes shutter issue (check method header for details)
-//				startBalls();
+				startBalls();
 
-				play();
 			}
 		});
 
@@ -269,16 +266,7 @@ public class Main implements ActionListener {
 		});
 	}
 
-	public void play()
-	{
-		levelScreen.setUndecorated(true);
-		levelScreen.setVisible(true);
-		levelScreen.setSize((int) WIDTH,(int) HEIGHT);
 
-		level = new Level();
-		levelScreen.setContentPane(level);
-		levelScreen.getGlassPane().setVisible(true);
-	}
 
 	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
@@ -293,7 +281,7 @@ public class Main implements ActionListener {
 		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
 		// ().bottom);
 
-		content = new Billiard();
+		content = new Level();
 		playScreen.setContentPane(content);
 
 		playScreen.getGlassPane().setVisible(true);
