@@ -27,6 +27,14 @@ class Speed {
 	public void addY (double speed) {
 		y += speed;
 	}
+
+	public void subtractX (double speed) {
+		x -= speed;
+	}
+	
+	public void subtractY (double speed) {
+		y -= speed;
+	}
 	
 	public void addComponent (double theta, double speed) {
 		x += Math.cos (theta) * speed;

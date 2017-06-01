@@ -131,10 +131,6 @@ public class Billiard extends JPanel {
 		
 		
 		
-		
-		
-		
-		
 //	    int diameter = 0;
 //
 //	    int balls_in_row = 1;
@@ -183,7 +179,7 @@ public class Billiard extends JPanel {
 	    
 	    
 	    
-	    
+		//slowDown();
 	    
 	    
 	    
@@ -193,6 +189,41 @@ public class Billiard extends JPanel {
 	    
 		//Fix ball placement, then maybe start working on adding spins, etc, 
 	}
+	
+	 
+	
+	
+	
+//	public void slowDown() {
+//		double moreMass = ball[0].getMass();
+//		boolean flag = true;
+//		int i = 0;
+//
+//		while (flag) {
+//			
+//			for (int j = 0; j < ball.length; j++) {
+//				ball[j].slowDown();
+//			}
+//
+//			if (moreMass == 999) {
+//				flag = false;
+//			}
+//
+//			System.out.println(moreMass);
+//		}
+//	}
+//	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// Draw
 	public void paintComponent (Graphics g) {
@@ -259,7 +290,7 @@ public class Billiard extends JPanel {
 	
 	// Update
 	public static void queue_collision_update () {
-		queued_collision_update = true;
+		queued_collision_update = true;//
 	}
 	
 	public void collision_update () {
