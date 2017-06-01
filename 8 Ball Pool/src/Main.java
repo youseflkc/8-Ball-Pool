@@ -247,6 +247,7 @@ public class Main implements ActionListener {
 			}
 		});
 
+		
 		final JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
 
