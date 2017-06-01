@@ -22,7 +22,7 @@ public class Sound {
 	
 	
 	public void playSound() throws Throwable{
-		clip.start();
+		//clip.start();   so i dont hear the same song 200000 times
 	}
 	
 	public void stopSound(){

@@ -116,7 +116,10 @@ public class Level extends JPanel
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					SwingUtilities.getWindowAncestor(Level.this).dispose();
+					
+					System.exit(0);//Makes my life easy
+					
+					//SwingUtilities.getWindowAncestor(Level.this).dispose();
 					//grabs the parent of the panel and closes it
 				}
 			}
@@ -152,7 +155,7 @@ public class Level extends JPanel
 		
 
 	    
-		//Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
+		//fix area where balls bo off from, Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
     }
 
     public BufferedImage loadTextures(String path)
@@ -204,7 +207,6 @@ public class Level extends JPanel
 		g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
-		
 		
 		
 		
