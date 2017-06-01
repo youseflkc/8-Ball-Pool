@@ -3,6 +3,8 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
+import com.sun.java.browser.dom.DOMUnsupportedException;
+
 public class Ball {
 	private double x;
 	private double y;
@@ -64,8 +66,12 @@ public class Ball {
 	}
 	
 	public void setMass (double mass) {
-		if (mass > 0)
-			this.mass = mass;
+		this.mass = mass;
+	}
+	
+	public void slowDown() {
+		speed.subtractX (-2 * speed.getX ());
+		speed.subtractY (-2 * speed.getY ());
 	}
 	
 	public int getColorId () {
@@ -85,28 +91,38 @@ public class Ball {
 		this.x += x;
 		this.y += y;
 		
-		if (this.x < radius) {
-			this.x = 2 * radius - this.x;
+		int distence = 100;//this sets the boundaries for the balls to bounce 
+						   //off the walls inside of the playing area and not the JFrame.
+		
+		double playX = this.x - distence;
+		double playY = this.y - distence;
+		
+		double playX2 = Main.WIDTH - distence;
+		double playY2 = Main.HEIGHT - distence;
+		
+		
+		if (playX < radius) {//Left wall
+			playX = 2 * radius - playX;
 			speed.addX (-2 * speed.getX ());
-			Billiard.queue_collision_update ();
+			Level.queue_collision_update ();
 		}
 		
-		if (this.x > Billiard.WIDTH - radius) {
-			this.x = 2 * (Billiard.WIDTH - radius) - this.x;
+		if (this.x > playX2 - radius) {//Right wall
+			this.x = 2 * (playX2 - radius) - this.x;
 			speed.addX (-2 * speed.getX ());
-			Billiard.queue_collision_update ();
+			Level.queue_collision_update ();
 		}
 		
-		if (this.y < radius) {
-			this.y = 2 * radius - this.y;
+		if (playY < radius) {//Top wall
+			playY = 2 * radius - playY;
 			speed.addY (-2 * speed.getY ());
-			Billiard.queue_collision_update ();
+			Level.queue_collision_update ();
 		}
 		
-		if (this.y > Billiard.HEIGHT - radius) {
-			this.y = 2 * (Billiard.HEIGHT - radius) - this.y;
+		if (this.y > playY2 - radius) {//Bottom wall
+			this.y = 2 * (playY2 - radius) - this.y;
 			speed.addY (-2 * speed.getY ());
-			Billiard.queue_collision_update ();
+			Level.queue_collision_update ();
 		}
 	}
 	

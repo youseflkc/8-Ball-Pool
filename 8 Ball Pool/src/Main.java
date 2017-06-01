@@ -34,9 +34,9 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
-	private Billiard content;
+	private Level content;
 
-	String helpString = "\nThere are 7 solid, and 7 striped balls, "
+	String helpString = "\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
@@ -133,6 +133,10 @@ public class Main implements ActionListener {
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
+
+				// int keyCode = e.getKeyCode();
+				// if (keyCode == KeyEvent.VK_SPACE)
+				// System.exit(0);
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -168,14 +172,14 @@ public class Main implements ActionListener {
 
 		JLabel logoLabel;
 		try {
-			logoLabel = new JLabel(new ImageIcon(ImageIO.read((new File("8 Ball Pool/resource/Images/logo.png")))));
-			logoLabel.setBackground(new Color(0,0,0,0));
+			logoLabel = new JLabel(new ImageIcon(ImageIO.read((new File("8 Ball Pool/resource/Images/logo.png")))
+					.getScaledInstance((int) WIDTH / 3 - 30, (int) HEIGHT / 5, Image.SCALE_SMOOTH)));
+			logoLabel.setBackground(new Color(0, 0, 0, 0));
 			helpPane.add(logoLabel);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -192,12 +196,9 @@ public class Main implements ActionListener {
 
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TO RUN LAZAR'S CODE, UNCOMMENT THE LINES BELOW
 				// Removes shutter issue (check method header for details)
-				// startBalls();
+				startBalls();
 
-				// TO RUN THOMAS' CODE, UNCOMMENT THE LINE BELOW
-				play();
 			}
 		});
 
@@ -293,21 +294,6 @@ public class Main implements ActionListener {
 	}
 
 	/**
-	 * Method to run Thomas' pool
-	 *
-	 *
-	 */
-	public void play() {
-		levelScreen.setUndecorated(true);
-		levelScreen.setVisible(true);
-		levelScreen.setSize((int) WIDTH, (int) HEIGHT);
-
-		level = new Level();
-		levelScreen.setContentPane(level);
-		levelScreen.getGlassPane().setVisible(true);
-	}
-
-	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
 	 * inside of the addActionListener of the play button
 	 */
@@ -320,7 +306,7 @@ public class Main implements ActionListener {
 		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
 		// ().bottom);
 
-		content = new Billiard();
+		content = new Level();
 		playScreen.setContentPane(content);
 
 		playScreen.getGlassPane().setVisible(true);
