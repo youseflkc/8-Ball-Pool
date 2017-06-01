@@ -3,8 +3,6 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
-import com.sun.java.browser.dom.DOMUnsupportedException;
-
 public class Ball {
 	private double x;
 	private double y;
@@ -69,11 +67,6 @@ public class Ball {
 		this.mass = mass;
 	}
 	
-	public void slowDown() {
-		speed.subtractX (-2 * speed.getX ());
-		speed.subtractY (-2 * speed.getY ());
-	}
-	
 	public int getColorId () {
 		return color;
 	}
@@ -88,19 +81,34 @@ public class Ball {
 	}
 	
 	public void move (double x, double y) {
+		//Gets the ball to move
 		this.x += x;
 		this.y += y;
+		
+		
+		double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
 		
 		int distence = 100;//this sets the boundaries for the balls to bounce 
 						   //off the walls inside of the playing area and not the JFrame.
 		
+		
+		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
-		
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
 		
 		
+		//Following statements check the value of the X and Y values to slow down the ball accordingly 
+		if (speed.getX() > 0) speed.subtractX(slowDownSpeed);
+		if (speed.getX() < 0) speed.addX(slowDownSpeed);
+		if (speed.getY() > 0) speed.subtractY(slowDownSpeed);
+		if (speed.getY() < 0) speed.addY(slowDownSpeed);
+		
+			
+		
+		//Following statements check if the ball hits the play area boundaries to reverse the direction 
+		//as if it hit the wall, mimicking a wall bounce.
 		if (playX < radius) {//Left wall
 			playX = 2 * radius - playX;
 			speed.addX (-2 * speed.getX ());
@@ -126,8 +134,12 @@ public class Ball {
 		}
 	}
 	
+	
+	
+	
+	
 	// Paint
-	public void paint (Graphics2D g) {
+	public void paint (Graphics2D g) {//This is where i should make it stripped
 		g.setColor (colors[color]);
 		g.fill (new Ellipse2D.Double (x - radius, y - radius, 2 * radius, 2 * radius));
 	}
