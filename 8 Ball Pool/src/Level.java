@@ -21,7 +21,7 @@ public class Level extends JPanel
     
     
     
-    
+	Sound ballHit = new Sound();
     
     
     
@@ -250,10 +250,17 @@ public class Level extends JPanel
 		
 		if (queued_collision_update){
 			collision_update ();
-		}
-		
-		if (paused) {
 			
+			try {
+				ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
+				ballHit.playSound();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
     }
     
