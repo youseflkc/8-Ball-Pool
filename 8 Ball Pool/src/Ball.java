@@ -27,6 +27,19 @@ public class Ball {
 	private static int color_count = 0;
 	private int color = 0;
 	
+	
+	
+	
+	
+	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
+	
+	int distence = 100;//this sets the boundaries for the balls to bounce 
+					   //off the walls inside of the playing area and not the JFrame.
+	
+	
+	
+	
+	
 	// Constructor
 	public Ball (double x, double y, double radius, double mass, Speed speed) {
 		this.x = x;
@@ -86,10 +99,13 @@ public class Ball {
 		this.y += y;
 		
 		
-		double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
-		
-		int distence = 100;//this sets the boundaries for the balls to bounce 
-						   //off the walls inside of the playing area and not the JFrame.
+	    //Makes the balls slow down better and look more realistic
+		if (speed.getX() > 1 || speed.getY()  > 1) {
+			slowDownSpeed += 0.0008;
+		}
+		else{			
+			slowDownSpeed = 0.015;
+		}
 		
 		
 		//These 4 variables hold the play area for the balls

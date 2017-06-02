@@ -46,7 +46,7 @@ public class Level extends JPanel
 	private static boolean queued_collision_update = false;
 	
 	
-	double init_radius = 7;
+	double init_radius = 15;
 	double init_mass = 5;
 	
 
@@ -127,7 +127,7 @@ public class Level extends JPanel
 		
 
 		
-		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, 25, init_mass, new Speed(-2, -13));
+		ball[0] = new Ball(centerX, centerY + PLAY_HEIGHT / 4, 15, init_mass, new Speed(-2, -13));
 		
 		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0));
 
@@ -155,7 +155,7 @@ public class Level extends JPanel
 		
 
 	    
-		//Fix ball placement, add slow down method, then maybe start working on adding spins, etc, 
+		//Fix ball placement, fix the look of the balls, etc, 
     }
 
     public BufferedImage loadTextures(String path)
