@@ -53,16 +53,16 @@ public class Level extends JPanel
 	
 	
 	
-//	public static final Color YELLOW = new Color(225, 175, 0);
-//	public static final Color BLUE = new Color(1, 78, 146);
-//	public static final Color RED = new Color(247, 0, 55);
-//	public static final Color PURPLE = new Color(77, 30, 110);
-//	public static final Color ORANGE = new Color(255, 97, 36);
-//	public static final Color GREEN = new Color(16, 109, 62);
-//	public static final Color BROWN = new Color(129, 30, 33);
-//	public static final Color BLACK = new Color(20, 20, 20);
-//	public static final Color WHITE = new Color(255, 255, 255);
-//	public static final Color DARK_RED = new Color(63, 5, 14);
+	public static final Color YELLOW = new Color(225, 175, 0);
+	public static final Color BLUE = new Color(1, 78, 146);
+	public static final Color RED = new Color(247, 0, 55);
+	public static final Color PURPLE = new Color(77, 30, 110);
+	public static final Color ORANGE = new Color(255, 97, 36);
+	public static final Color GREEN = new Color(16, 109, 62);
+	public static final Color BROWN = new Color(129, 30, 33);
+	public static final Color BLACK = new Color(20, 20, 20);
+	public static final Color WHITE = new Color(255, 255, 255);
+	public static final Color DARK_RED = new Color(63, 5, 14);
 
 	
 	double METER_TO_PIXEL = (800 / 2.84);
@@ -123,28 +123,28 @@ public class Level extends JPanel
 
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(0, 0));
+		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(30, 1), WHITE);
 		
 		//First ball in the triangle
-		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0));
+		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW);
 
-		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, init_radius, init_mass, new Speed(0, 0));
-		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0));
+		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, init_radius, init_mass, new Speed(0, 0), PURPLE);
+		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0), RED);
 		
-		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0));
-		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), YELLOW);
+		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0), BLACK);
+		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), RED);
 		
-		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN);
+		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0), RED);
+		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0), BLUE);
+		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN);
 		
-		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, init_radius, init_mass, new Speed(0, 0));
-		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0));
-		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0));
+		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, init_radius, init_mass, new Speed(0, 0), ORANGE);
+		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), PURPLE);
+		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, init_radius, init_mass, new Speed(0, 0), ORANGE);
+		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), BLUE);
+		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0), RED);
 		
 	
 		
@@ -152,7 +152,7 @@ public class Level extends JPanel
 		
 
 	    
-		//Fix ball placement, fix the look of the balls, etc, 
+		//fix the look of the balls 
     }
 
     public BufferedImage loadTextures(String path)

@@ -23,9 +23,7 @@ public class Ball {
 	                                      new Color (78, 154, 6), new Color (92, 53, 102),
 	                                      new Color (46, 52, 54), new Color (143, 89, 2)};
 	
-	private static final int COLOR_DELAY = 20;
-	private static int color_count = 0;
-	private int color = 0;
+	private Color color;
 	
 	
 	
@@ -41,13 +39,13 @@ public class Ball {
 	
 	
 	// Constructor
-	public Ball (double x, double y, double radius, double mass, Speed speed) {
+	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor) {
 		this.x = x;
 		this.y = y;
 		setRadius (radius);
 		setMass (mass);
 		this.speed = speed;
-		this.color = color_count ++ % 8;
+		this.color = ballColor;
 	}
 	
 	// Getters and Setters
@@ -80,12 +78,12 @@ public class Ball {
 		this.mass = mass;
 	}
 	
-	public int getColorId () {
-		return color;
+	public void setColor (Color ballColor) {
+		this.color = ballColor;
 	}
 	
-	public void setColorId (int color_id) {
-		this.color = (color_id + 8) % 8;
+	public Color getColor () {
+		return color;
 	}
 	
 	// Move
@@ -156,7 +154,7 @@ public class Ball {
 	
 	// Paint
 	public void paint (Graphics2D g) {//This is where i should make it stripped
-		g.setColor (colors[color]);
+		g.setColor (this.color);
 		g.fill (new Ellipse2D.Double (x - radius, y - radius, 2 * radius, 2 * radius));
 	}
 	
