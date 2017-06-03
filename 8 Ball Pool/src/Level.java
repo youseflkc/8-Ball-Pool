@@ -17,12 +17,11 @@ public class Level extends JPanel
     private BufferedImage black_dot;
     private BufferedImage table_grass;
     
-    private Cue cue = new Cue();
     
     
     
 	Sound ballHit = new Sound();
-	//private Cue cue = new Cue();
+	private Cue cue = new Cue();
     
     
     
@@ -212,8 +211,8 @@ public class Level extends JPanel
 		
 		
         // RENDERING FOR CUE
-//         cue.update();
-//         cue.render(g2d);
+        cue.update();
+        cue.render(g2d);
 		
 		
 
