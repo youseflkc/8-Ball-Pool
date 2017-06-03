@@ -22,7 +22,7 @@ public class Level extends JPanel
     
     
 	Sound ballHit = new Sound();
-	private Cue cue = new Cue();
+	//private Cue cue = new Cue();
     
     
     
@@ -209,8 +209,8 @@ public class Level extends JPanel
 		
 		
         // RENDERING FOR CUE
-+        cue.update();
-         cue.render(g2d);
+//         cue.update();
+//         cue.render(g2d);
 		
 		
 
