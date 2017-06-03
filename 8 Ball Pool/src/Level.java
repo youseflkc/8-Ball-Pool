@@ -17,7 +17,7 @@ public class Level extends JPanel
     private BufferedImage black_dot;
     private BufferedImage table_grass;
     
-    
+    private Cue cue = new Cue();
     
     
     
@@ -186,7 +186,7 @@ public class Level extends JPanel
 		super.paintComponent (g2d);
 		
 		
-		
+		// RENDERING FOR BILLIARD TABLE
 		// Borders
 		g.drawImage(wooden_tile, 0, 0, Main.WIDTH, 100, this);
 		g.drawImage(wooden_tile, 0, Main.HEIGHT - 100, Main.WIDTH, 100, this);
@@ -205,7 +205,10 @@ public class Level extends JPanel
 		g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
-		
+
+        // RENDERING FOR CUE
+        cue.update();
+        cue.render(g2d);
 		
 		
         // RENDERING FOR CUE

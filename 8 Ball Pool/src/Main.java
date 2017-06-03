@@ -1,19 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -57,6 +43,8 @@ public class Main implements ActionListener {
 	// Thomas' variables
 	public final JFrame levelScreen = new JFrame();
 	private Level level;
+
+	private Input input = new Input(playScreen);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -247,7 +235,7 @@ public class Main implements ActionListener {
 			}
 		});
 
-		
+
 		final JCheckBox checkMusic = new JCheckBox("Music");
 		checkMusic.setSelected(true);
 
@@ -292,6 +280,8 @@ public class Main implements ActionListener {
 				}
 			}
 		});
+
+
 	}
 
 	/**
