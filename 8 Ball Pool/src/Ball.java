@@ -99,7 +99,7 @@ public class Ball {
 		
 	    //Makes the balls slow down better and look more realistic
 		if (speed.getX() > 1 || speed.getY()  > 1) {
-			slowDownSpeed += 0.0008;
+			slowDownSpeed += 0.008;
 		}
 		else{			
 			slowDownSpeed = 0.015;

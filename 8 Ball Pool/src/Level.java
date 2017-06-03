@@ -22,6 +22,7 @@ public class Level extends JPanel
     
     
 	Sound ballHit = new Sound();
+	private Cue cue = new Cue();
     
     
     
@@ -123,7 +124,7 @@ public class Level extends JPanel
 
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(30, 1), WHITE);
+		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(20, 1), WHITE);
 		
 		//First ball in the triangle
 		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW);
@@ -135,7 +136,7 @@ public class Level extends JPanel
 		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0), BLACK);
 		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), RED);
 		
-		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN);
+		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(1, 3), GREEN);
 		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0), RED);
 		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0), BLUE);
 		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN);
@@ -207,7 +208,9 @@ public class Level extends JPanel
 		
 		
 		
-		
+        // RENDERING FOR CUE
++        cue.update();
+         cue.render(g2d);
 		
 		
 
