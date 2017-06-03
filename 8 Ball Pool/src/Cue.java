@@ -20,6 +20,12 @@ public class Cue
         yPos = Main.HEIGHT / 2;
     }
 
+    public void update()
+    {
+        xPos = Input.MOUSE_X_POS - 400;
+        yPos = Input.MOUSE_Y_POS;
+    }
+
     public void render(Graphics2D g)
     {
         g.setColor(this.color);

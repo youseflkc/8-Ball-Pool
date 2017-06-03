@@ -206,6 +206,7 @@ public class Level extends JPanel
 		g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
 
         // RENDERING FOR CUE
+        cue.update();
         cue.render(g2d);
 		
 		
