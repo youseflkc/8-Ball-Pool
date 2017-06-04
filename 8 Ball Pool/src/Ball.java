@@ -15,6 +15,7 @@ public class Ball {
 	private Speed speed;	
 	private Color color;
 	private boolean solid;
+	private int ballNumber;
 	
 	
 	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
@@ -27,7 +28,7 @@ public class Ball {
 	
 	
 	// Constructor
-	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid) {
+	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid, int ballNumber) {
 		this.x = x;
 		this.y = y;
 		setRadius (radius);
@@ -35,6 +36,7 @@ public class Ball {
 		this.speed = speed;
 		this.color = ballColor;
 		this.solid = solid;
+		this.ballNumber = ballNumber;
 	}
 	
 	// Getters and Setters
@@ -83,6 +85,13 @@ public class Ball {
 		return solid;
 	}
 	
+	public void setBallNumber (int ballNumber) {
+		this.ballNumber = ballNumber;
+	}
+	
+	public int getBallNumber () {
+		return ballNumber;
+	}
 	
 	
 	// Move
@@ -164,6 +173,22 @@ public class Ball {
 			//What sets it as a stripe
 			g.setColor(this.color);
 			g.fillRoundRect((int) (x - 6.3), (int) (y - 15), 13, 31, 15, 5);
+		}
+		
+		//Avoid setting the cue ball number
+		if (ballNumber > 0 && ballNumber < 10) {
+			g.setColor(Color.WHITE);
+			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
+			
+			g.setColor(Color.BLACK);
+			g.drawString(String.valueOf(this.ballNumber), (int) (x - 6.3), (int) (y + 4));
+		
+		}else{//When the number is larger than 10 it messes up the position of the inner white circle to show off the number
+			g.setColor(Color.WHITE);
+			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
+			
+			g.setColor(Color.BLACK);
+			g.drawString(String.valueOf(this.ballNumber), (int) (x - 10), (int) (y + 4));
 		}
 	}
 	
