@@ -1,32 +1,20 @@
 
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Ball {
 	private double x;
 	private double y;
 	private double radius = 10;
 	private double mass = 1;
-	private Speed speed;
-	
-	public static final Color lighter[] = {new Color (239, 41, 41), new Color (114, 159, 207),
-	                                       new Color (252, 234, 79), new Color (252, 175, 62),
-	                                       new Color (138, 226, 52), new Color (173, 127, 168),
-	                                       new Color (136, 138, 133), new Color (233, 185, 110)};
-	public static final Color colors[] = {new Color (204, 0, 0), new Color (52, 101, 164),
-	                                      new Color (237, 212, 0), new Color (245, 121, 0),
-	                                      new Color (115, 210, 22), new Color (117, 80, 123),
-	                                      new Color (85, 87, 83), new Color (193, 125, 17)};
-	public static final Color darker[] = {new Color (164, 0, 0), new Color (32, 74, 135),
-	                                      new Color (196, 160, 0), new Color (206, 92, 0),
-	                                      new Color (78, 154, 6), new Color (92, 53, 102),
-	                                      new Color (46, 52, 54), new Color (143, 89, 2)};
-	
+	private Speed speed;	
 	private Color color;
-	
-	
-	
+	private boolean solid;
 	
 	
 	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
@@ -34,18 +22,19 @@ public class Ball {
 	int distence = 100;//this sets the boundaries for the balls to bounce 
 					   //off the walls inside of the playing area and not the JFrame.
 	
-	
+
 	
 	
 	
 	// Constructor
-	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor) {
+	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid) {
 		this.x = x;
 		this.y = y;
 		setRadius (radius);
 		setMass (mass);
 		this.speed = speed;
 		this.color = ballColor;
+		this.solid = solid;
 	}
 	
 	// Getters and Setters
@@ -86,6 +75,16 @@ public class Ball {
 		return color;
 	}
 	
+	public void setSolid (boolean solid) {
+		this.solid = solid;
+	}
+	
+	public boolean getSolid () {
+		return solid;
+	}
+	
+	
+	
 	// Move
 	public void move (double time) {
 		move (speed.getX () * time, speed.getY () * time);
@@ -99,7 +98,7 @@ public class Ball {
 		
 	    //Makes the balls slow down better and look more realistic
 		if (speed.getX() > 1 || speed.getY()  > 1) {
-			slowDownSpeed += 0.008;
+			slowDownSpeed += 0.0075;
 		}
 		else{			
 			slowDownSpeed = 0.015;
@@ -154,8 +153,18 @@ public class Ball {
 	
 	// Paint
 	public void paint (Graphics2D g) {//This is where i should make it stripped
-		g.setColor (this.color);
-		g.fill (new Ellipse2D.Double (x - radius, y - radius, 2 * radius, 2 * radius));
+		if (solid) {
+			g.setColor(this.color);
+			g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+			
+		}else{
+			g.setColor(Color.WHITE);
+			g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+			
+			//What sets it as a stripe
+			g.setColor(this.color);
+			g.fillRoundRect((int) (x - 6.3), (int) (y - 15), 13, 31, 15, 5);
+		}
 	}
 	
 	// Next collision

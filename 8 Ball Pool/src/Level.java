@@ -26,7 +26,7 @@ public class Level extends JPanel
     
     
     
-    
+     
     //Lazar variables
 	
 	//Sets the bounds for the balls (the walls the ball hits)
@@ -123,33 +123,33 @@ public class Level extends JPanel
 
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(20, 1), WHITE);
+		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(0, 0), WHITE, true);
 		
 		//First ball in the triangle
-		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW);
+		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW, false);
 
-		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, init_radius, init_mass, new Speed(0, 0), PURPLE);
-		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0), RED);
+		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, init_radius, init_mass, new Speed(0, 0), RED, true);
+		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0), PURPLE, false);
 		
-		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), YELLOW);
-		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0), BLACK);
-		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), RED);
+		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), RED, false);
+		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0), BLACK, true);
+		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), YELLOW, true);
 		
-		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(1, 3), GREEN);
-		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0), RED);
-		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0), BLUE);
-		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN);
+		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN, true);
+		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0), BLUE, false);
+		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0), RED, true);
+		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN, false);
 		
-		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, init_radius, init_mass, new Speed(0, 0), ORANGE);
-		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), PURPLE);
-		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, init_radius, init_mass, new Speed(0, 0), ORANGE);
-		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), BLUE);
-		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0), RED);
+		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, init_radius, init_mass, new Speed(0, 0), RED, false);
+		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), BLUE, true);
+		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, init_radius, init_mass, new Speed(0, 0), ORANGE, false);
+		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), PURPLE, true);
+		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0), ORANGE, true);
 		
 	
 		
 		repaint();
-		
+		//Fix the colors
 
 	    
 		//fix the look of the balls 
@@ -205,11 +205,6 @@ public class Level extends JPanel
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
 
-        // RENDERING FOR CUE
-        cue.update();
-        cue.render(g2d);
-		
-		
         // RENDERING FOR CUE
         cue.update();
         cue.render(g2d);
