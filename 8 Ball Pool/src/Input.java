@@ -1,12 +1,10 @@
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 /**
  * Created by Thomas on 2017-06-02.
  */
-public class Input implements MouseListener, MouseMotionListener {
+public class Input implements MouseListener, MouseMotionListener, KeyListener {
 
     private JFrame frame;
 
@@ -21,6 +19,7 @@ public class Input implements MouseListener, MouseMotionListener {
 
         frame.addMouseListener(this);
         frame.addMouseMotionListener(this);
+        frame.addKeyListener(this);
     }
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -57,5 +56,29 @@ public class Input implements MouseListener, MouseMotionListener {
     {
         MOUSE_X_POS = e.getX();
         MOUSE_Y_POS = e.getY();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //Right arrow key code
+        if (e.getKeyCode() == 39)
+        {
+            Cue.updateAngle(1);
+        }
+        //Left arrow key code
+        else if (e.getKeyCode() == 37)
+        {
+            Cue.updateAngle(-1);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

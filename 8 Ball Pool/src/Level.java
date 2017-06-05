@@ -123,7 +123,7 @@ public class Level extends JPanel
 
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(20, 1), WHITE, true, 0);
+		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(0, 0), WHITE, true, 0);
 		
 		//First ball in the triangle
 		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW, false, 9);
@@ -149,9 +149,10 @@ public class Level extends JPanel
 	
 		
 		repaint();
+		//Fix the colors
 
 	    
-		//fix the slow movement 
+		//fix the look of the balls 
     }
 
     public BufferedImage loadTextures(String path)
