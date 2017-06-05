@@ -175,7 +175,8 @@ public class Ball {
 			g.fillRoundRect((int) (x - 6.3), (int) (y - 15), 13, 31, 15, 5);
 		}
 		
-		//Avoid setting the cue ball number
+		
+		//Setting the numbers for each ball
 		if (ballNumber > 0 && ballNumber < 10) {
 			g.setColor(Color.WHITE);
 			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
@@ -183,7 +184,7 @@ public class Ball {
 			g.setColor(Color.BLACK);
 			g.drawString(String.valueOf(this.ballNumber), (int) (x - 6.3), (int) (y + 4));
 		
-		}else{//When the number is larger than 10 it messes up the position of the inner white circle to show off the number
+		}else if(ballNumber >= 10){//When the number is larger than 10 it messes up the position of the inner white circle to show off the number, also its making sure the cue ball doesn't get a number
 			g.setColor(Color.WHITE);
 			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
 			
