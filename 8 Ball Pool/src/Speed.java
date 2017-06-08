@@ -7,6 +7,10 @@ class Speed {
 		this.x = x;
 		this.y = y;
 	}
+	public Speed(){
+		x=0;
+		y=0;
+	}
 	
 	public double getX () {
 		return x;
@@ -34,6 +38,12 @@ class Speed {
 	
 	public void subtractY (double speed) {
 		y -= speed;
+	}
+	public void setX(double xSpeed){
+		x=xSpeed;
+	}
+	public void setY(double ySpeed){
+		y=ySpeed;
 	}
 	
 	public void addComponent (double theta, double speed) {

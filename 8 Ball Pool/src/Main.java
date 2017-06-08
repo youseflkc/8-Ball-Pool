@@ -117,7 +117,7 @@ public class Main implements ActionListener {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					bgMusic.playSound();
+					//bgMusic.playSound(); so music doesn't annoy lazar
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
@@ -271,7 +271,8 @@ public class Main implements ActionListener {
 				}
 			}
 		});
-
+		
+		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
