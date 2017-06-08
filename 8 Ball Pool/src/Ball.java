@@ -1,122 +1,131 @@
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.geom.Ellipse2D;
-import java.io.IOException;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Ball {
 	private double x;
 	private double y;
 	private double radius = 10;
 	private double mass = 1;
-	private Speed speed;
-	private Speed initialSpeed = new Speed();
-	double deceleration = 0;
-	boolean posSpeedX = true;
-	boolean posSpeedY=true;
+	private Speed speed;	
 	private Color color;
 	private boolean solid;
 	private int ballNumber;
-	Sound ballHit = new Sound();
+	
+	private Speed initialSpeed = new Speed();
+	double deceleration = 0;
+	boolean posSpeedX = true;
+	boolean posSpeedY = true;
 	Ellipse2D.Double perimeter;
 	
+	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
+	
+	int distance = 100;//this sets the boundaries for the balls to bounce 
+					   //off the walls inside of the playing area and not the JFrame.
+	
 
-	int distence = 100;// this sets the boundaries for the balls to bounce
-						// off the walls inside of the playing area and not the
-						// JFrame.
-
+	
+	
+	
 	// Constructor
-	public Ball(double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid,
-			int ballNumber) {
+	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid, int ballNumber) {
 		this.x = x;
 		this.y = y;
-		setRadius(radius);
-		setMass(mass);
+		setRadius (radius);
+		setMass (mass);
 		this.speed = speed;
 		this.color = ballColor;
 		this.solid = solid;
 		this.ballNumber = ballNumber;
 	}
-
+	
 	// Getters and Setters
-	public Speed getSpeed() {
+	public Speed getSpeed () {
 		return speed;
 	}
-
+	
+	public double getX () {
+		return x;
+	}
+	
+	public double getY () {
+		return y;
+	}
+	
+	public double getRadius () {
+		return radius;
+	}
+	
+	public void setRadius (double radius) {
+		if (radius > 0)
+			this.radius = radius;
+	}
+	
+	public double getMass () {
+		return mass;
+	}
+	
+	public void setMass (double mass) {
+		this.mass = mass;
+	}
+	
+	public void setColor (Color ballColor) {
+		this.color = ballColor;
+	}
+	
+	public Color getColor () {
+		return color;
+	}
+	
+	public void setSolid (boolean solid) {
+		this.solid = solid;
+	}
+	
+	public boolean getSolid () {
+		return solid;
+	}
+	
+	public void setBallNumber (int ballNumber) {
+		this.ballNumber = ballNumber;
+	}
+	
+	public int getBallNumber () {
+		return ballNumber;
+	}
+	
 	public void setInitialSpeed(double x, double y) {
 		initialSpeed.setX(x);
 		initialSpeed.setY(y);
 	}
-
-	public double getX() {
-		return x;
+	
+	public void move (double time) {
+		move (speed.getX () * time, speed.getY () * time);
 	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getRadius() {
-		return radius;
-	}
-
-	public void setRadius(double radius) {
-		if (radius > 0)
-			this.radius = radius;
-	}
-
-	public double getMass() {
-		return mass;
-	}
-
-	public void setMass(double mass) {
-		this.mass = mass;
-	}
-
-	public void setColor(Color ballColor) {
-		this.color = ballColor;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setSolid(boolean solid) {
-		this.solid = solid;
-	}
-
-	public boolean getSolid() {
-		return solid;
-	}
-
-	public void setBallNumber(int ballNumber) {
-		this.ballNumber = ballNumber;
-	}
-
-	public int getBallNumber() {
-		return ballNumber;
-	}
-
 	// Move
-
-	public void move(double x, double y, Ball[] balls) {
+	public void move(double x, double y) {
 		// Gets the ball to move
-		if(posSpeedX==true){
+		if (posSpeedX == true) {
 			this.x += x;
-		}else if(posSpeedX==false){
-			this.x-=x;
+		} else if (posSpeedX == false) {
+			this.x -= x;
 		}
-		
-		if(posSpeedY==true){
-			this.y+=y;
-		}else if(posSpeedY==false){
+
+		if (posSpeedY == true) {
+			this.y += y;
+		} else if (posSpeedY == false) {
 			this.y -= y;
 		}
-		
-		deceleration+=0.2;		
-		if (initialSpeed.getX() > 0&&speed.getX()>0) {
-			speed.setX(Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getX()+0.2)) / Math.log10(1.1)))-0.2);
-		}else if(speed.getX()<0){
+
+		deceleration += 0.2;
+		if (initialSpeed.getX() > 0 && speed.getX() > 0) {
+			speed.setX(
+					Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getX() + 0.2)) / Math.log10(1.1))) - 0.2);
+		} else if (speed.getX() < 0) {
 			speed.setX(0);
 		}
 		
@@ -129,22 +138,16 @@ public class Ball {
 		
 
 		// These 4 variables hold the play area for the balls
-		double playX = this.x - distence;
-		double playY = this.y - distence;
-		double playX2 = Main.WIDTH - distence;
-		double playY2 = Main.HEIGHT - distence;
+		double playX = this.x - distance;
+		double playY = this.y - distance;
+		double playX2 = Main.WIDTH - distance;
+		double playY2 = Main.HEIGHT - distance;
 
 		// Following statements check if the ball hits the play area boundaries
 		// to reverse the direction
 		// as if it hit the wall, mimicking a wall bounce.
 		
-		for(int i=0;i<balls.length;i++){
-			if(perimeter.contains(balls[i].perimeter.getX(), balls[i].perimeter.getY())&&balls[i]!= this){
-				collide(balls[i],balls);
-			}
-		}
-		
-
+	
 		if (playX < radius) {// Left wall
 			playX = 2 * radius - playX;
 			posSpeedX = true;
@@ -153,7 +156,7 @@ public class Ball {
 
 		if (this.x > playX2 - radius) {// Right wall
 			this.x = 2 * (playX2 - radius) - this.x;
-			posSpeedX=false;
+			posSpeedX = false;
 			Level.queue_collision_update();
 		}
 
@@ -243,60 +246,25 @@ public class Ball {
 
 	
 	// Collide
-	
-	public void collide(){
+	public void collide (Ball next, double time) {
+		move (speed.getX () * time, speed.getY () * time);
+		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
 		
-	}
-	
-	public void collide(Ball next, Ball[] balls) {
-		initialSpeed = speed;
-		deceleration=0;
+		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 		
-		System.out.println("hit");
-		double theta = Math.atan2(next.getY() - getY(), next.getX() - getX());
-
-		double v_1 = speed.getComponent(theta);
-		double v_2 = next.getSpeed().getComponent(theta);
-
-
-	
-
-//		speed.addComponent(theta, -v_1);
+		double v_1 = speed.getComponent (theta);
+		double v_2 = next.getSpeed ().getComponent (theta);
 		
-		if(speed.getX()<0){
-			speed.setX(speed.getX()*-1);
-			posSpeedX=false;
-		}else{
-			posSpeedX=true;
-		}
-		if(speed.getY()<0){
-			speed.setY(speed.getY()*-1);
-			posSpeedY=false;
-		}else{
-			posSpeedY=true;
-		}
-//		move(speed.getX(),speed.getY(),balls);
-		next.getSpeed().addComponent(theta, -v_2);
+		double m_1 = getMass ();
+		double m_2 = next.getMass ();
 		
-		if(next.getSpeed().getX()<0){
-			next.getSpeed().setX(next.getSpeed().getX()*-1);
-			next.posSpeedX=false;
-		}else{
-			posSpeedX=true;
-		}
-		if(next.getSpeed().getY()<0){
-			next.getSpeed().setY(next.getSpeed().getY()*-1);
-			next.posSpeedY=false;
-		}else{
-			next.posSpeedY=true;
-		}
+		double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
+		double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
 		
+		speed.addComponent (theta, - v_1 + w_1);
+		next.getSpeed ().addComponent (theta, - v_2 + w_2);
 		
-		next.initialSpeed = next.getSpeed();
-//		next.move(next.getSpeed().getX(),next.getSpeed().getY(), balls);
-		
-		// move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
-		// next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed
-		// ().getY () * (1.0 - time));
+//		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
+//		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
 	}
 }
