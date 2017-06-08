@@ -117,7 +117,7 @@ public class Main implements ActionListener {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					bgMusic.playSound();
+					//bgMusic.playSound();
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
