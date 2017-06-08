@@ -21,9 +21,6 @@ public class Ball {
 	Ellipse2D.Double perimeter;
 	
 
-	double slowDownSpeed = 0.015;// Double sets the slow down speed for each of
-									// the balls
-
 	int distence = 100;// this sets the boundaries for the balls to bounce
 						// off the walls inside of the playing area and not the
 						// JFrame.
