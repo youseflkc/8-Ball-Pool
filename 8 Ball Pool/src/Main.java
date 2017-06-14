@@ -181,7 +181,10 @@ public class Main implements ActionListener {
 		playButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(Box.createRigidArea(new Dimension(0, 50)));
 		menuPane.add(playButton);
-
+		
+		//you can click enter on the mainscreen to play
+		menuPane.getRootPane().setDefaultButton(playButton);
+		
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Removes shutter issue (check method header for details)
