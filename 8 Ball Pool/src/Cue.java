@@ -94,7 +94,7 @@ public class Cue implements MouseListener
             System.out.println("Ran");
             drawnBack = false;
 
-            Ball cue = new Ball(xPos, yPos, 15, Level.INIT_MASS, new Speed(20, 0), Color.WHITE, true, 0);
+            Ball cue = new Ball(xPos, yPos, 15, Level.INIT_MASS, new Speed(50, 0), Color.WHITE, true, 0);
             Ball cueBall = Main.content.getBall(0);
 
             cue.collide(cueBall, 15);
