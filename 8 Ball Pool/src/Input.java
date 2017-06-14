@@ -4,12 +4,16 @@ import java.awt.event.*;
 /**
  * Created by Thomas on 2017-06-02.
  */
-public class Input implements MouseListener, MouseMotionListener, KeyListener {
+public class Input implements MouseMotionListener, KeyListener {
 
     private JFrame frame;
 
     public static int MOUSE_X_POS;
     public static int MOUSE_Y_POS;
+
+    public static boolean MOUSE_PRESSED;
+    public static boolean MOUSE_RELEASED;
+    public static long MOUSE_HOLD_DOWN_TIME;
 
     public static boolean MOUSE_CLICKED;
 
@@ -17,33 +21,11 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener {
     {
         this.frame = frame;
 
-        frame.addMouseListener(this);
         frame.addMouseMotionListener(this);
         frame.addKeyListener(this);
-    }
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        MOUSE_CLICKED = !MOUSE_CLICKED;
-    }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
+        MOUSE_PRESSED = false;
+        MOUSE_RELEASED = false;
     }
 
     @Override

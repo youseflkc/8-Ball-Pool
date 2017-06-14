@@ -20,7 +20,7 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
-	private Level content;
+	public static Level content;
 
 	String helpString = "\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "

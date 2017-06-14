@@ -6,130 +6,139 @@ import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Ball {
 	private double x;
 	private double y;
 	private double radius = 10;
 	private double mass = 1;
-	private Speed speed;
+	private Speed speed;	
 	private Color color;
 	private boolean solid;
 	private int ballNumber;
-	boolean posSpeedX=true, posSpeedY=true;
-	private Speed initialSpeed = new Speed();
 	
-	Sound ballHit = new Sound();
-
-	double deceleration = 0.2;
+	private Speed initialSpeed = new Speed();
+	double deceleration = 0;
+	boolean posSpeedX = true;
+	boolean posSpeedY = true;
 	Ellipse2D.Double perimeter;
+	
+	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
+	
+	int distance = 100;//this sets the boundaries for the balls to bounce 
+					   //off the walls inside of the playing area and not the JFrame.
+	
 
-	int distance = 100;// this sets the boundaries for the balls to bounce
-						// off the walls inside of the playing area and not the
-						// JFrame.
+	public Ball()
+	{
 
+	}
+	
+	
 	// Constructor
-	public Ball(double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid,
-			int ballNumber) {
+	public Ball (double x, double y, double radius, double mass, Speed speed, Color ballColor, boolean solid, int ballNumber) {
 		this.x = x;
 		this.y = y;
-		setRadius(radius);
-		setMass(mass);
+		setRadius (radius);
+		setMass (mass);
 		this.speed = speed;
 		this.color = ballColor;
 		this.solid = solid;
 		this.ballNumber = ballNumber;
 	}
-
+	
 	// Getters and Setters
-	public Speed getSpeed() {
+	public Speed getSpeed () {
 		return speed;
 	}
-
-	public double getX() {
+	
+	public double getX () {
 		return x;
 	}
-
-	public double getY() {
+	
+	public double getY () {
 		return y;
 	}
-
-	public double getRadius() {
+	
+	public double getRadius () {
 		return radius;
 	}
-
-	public void setRadius(double radius) {
+	
+	public void setRadius (double radius) {
 		if (radius > 0)
 			this.radius = radius;
 	}
-
-	public double getMass() {
+	
+	public double getMass () {
 		return mass;
 	}
-
-	public void setMass(double mass) {
+	
+	public void setMass (double mass) {
 		this.mass = mass;
 	}
-
-	public void setColor(Color ballColor) {
+	
+	public void setColor (Color ballColor) {
 		this.color = ballColor;
 	}
-
-	public Color getColor() {
+	
+	public Color getColor () {
 		return color;
 	}
-
-	public void setSolid(boolean solid) {
+	
+	public void setSolid (boolean solid) {
 		this.solid = solid;
 	}
-
-	public boolean getSolid() {
+	
+	public boolean getSolid () {
 		return solid;
 	}
-
-	public void setBallNumber(int ballNumber) {
+	
+	public void setBallNumber (int ballNumber) {
 		this.ballNumber = ballNumber;
 	}
-
-	public int getBallNumber() {
+	
+	public int getBallNumber () {
 		return ballNumber;
 	}
-
+	
 	public void setInitialSpeed(double x, double y) {
 		initialSpeed.setX(x);
 		initialSpeed.setY(y);
 	}
-
+	
+	public void move (double time) {
+		move (speed.getX () * time, speed.getY () * time);
+	}
 	// Move
-	public void move() {
+	public void move(double x, double y) {
 		// Gets the ball to move
 		if (posSpeedX == true) {
-			this.x += speed.getX();
+			this.x += x;
 		} else if (posSpeedX == false) {
-			this.x -= speed.getX();
+			this.x -= x;
 		}
 
 		if (posSpeedY == true) {
-			this.y += speed.getY();
+			this.y += y;
 		} else if (posSpeedY == false) {
-			this.y -= speed.getY();
+			this.y -= y;
 		}
 
-		deceleration += 0.15;
+		deceleration += 0.2;
 		if (initialSpeed.getX() > 0 && speed.getX() > 0) {
 			speed.setX(
 					Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getX() + 0.2)) / Math.log10(1.1))) - 0.2);
-		} else{
+		} else if (speed.getX() < 0) {
 			speed.setX(0);
 		}
-
-		if (initialSpeed.getY() > 0 && speed.getY() > 0) {
-			speed.setY(
-					Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getY()) + 0.2) / Math.log10(1.1))) - 0.2);
-		} else{
+		
+		if(initialSpeed.getY()>0&&speed.getY()>0){
+			speed.setY(Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getY())+0.2) / Math.log10(1.1)))-0.2);
+		}else if(speed.getY()<0){
 			speed.setY(0);
 		}
+
+		
 
 		// These 4 variables hold the play area for the balls
 		double playX = this.x - distance;
@@ -140,39 +149,43 @@ public class Ball {
 		// Following statements check if the ball hits the play area boundaries
 		// to reverse the direction
 		// as if it hit the wall, mimicking a wall bounce.
-
+		
+	
 		if (playX < radius) {// Left wall
 			playX = 2 * radius - playX;
 			posSpeedX = true;
+			Level.queue_collision_update();
 		}
 
 		if (this.x > playX2 - radius) {// Right wall
 			this.x = 2 * (playX2 - radius) - this.x;
 			posSpeedX = false;
+			Level.queue_collision_update();
 		}
 
 		if (playY < radius) {// Top wall
 			playY = 2 * radius - playY;
 			posSpeedY = true;
+			Level.queue_collision_update();
 		}
 
 		if (this.y > playY2 - radius) {// Bottom wall
-			this.y = 2 * (playY2 - radius) - this.y;
+			this.y = 2 * (playY2 - radius) - this.y;			
 			posSpeedY = false;
+			Level.queue_collision_update();
 		}
-
 	}
 
 	// Paint
 	public void paint(Graphics2D g) {// This is where i should make it stripped
 		if (solid) {
 			g.setColor(this.color);
-			perimeter = new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius);
+			perimeter=new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius);
 			g.fill(perimeter);
 
 		} else {
 			g.setColor(Color.WHITE);
-			perimeter = new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius);
+			perimeter=new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius);
 			g.fill(perimeter);
 
 			// What sets it as a stripe
@@ -202,92 +215,59 @@ public class Ball {
 	}
 
 	// Next collision
-	public boolean next_collision(Ball next) {
-		double d_x = Math.abs(getX() - next.getX());
-		double d_y = Math.abs(getY() - next.getY());
+	public double next_collision(Ball next) {
+		double d_x = getX() - next.getX();
+		double d_y = getY() - next.getY();
+		double d_vx = speed.getX() - next.getSpeed().getX();
+		double d_vy = speed.getY() - next.getSpeed().getY();
 
-		if (Math.sqrt(d_x * d_x + d_y * d_y) < (radius * 2) && Math.sqrt(d_x * d_x + d_y * d_y) != 0) {
-			System.out.println("hit!");
-			return true;
-		}
-		return false;
+		if (d_vx == 0 && d_vy == 0)
+			return Double.POSITIVE_INFINITY;
+
+		double a = d_vx * d_vx + d_vy * d_vy;
+		double b_mezzi = d_vx * d_x + d_vy * d_y;
+		double delta_quarti = Math.pow(radius + next.getRadius(), 2) * a - Math.pow(d_vx * d_y - d_vy * d_x, 2);
+
+		if (delta_quarti < 0)
+			return Double.POSITIVE_INFINITY;
+
+		double inizio = (-b_mezzi - Math.sqrt(delta_quarti)) / a;
+		double fine = (-b_mezzi + Math.sqrt(delta_quarti)) / a;
+
+		if (fine < 0)
+			return Double.POSITIVE_INFINITY;
+
+		if (inizio < (inizio - fine) / 2) // Large approximation, but it should
+											// work
+			return Double.POSITIVE_INFINITY;
+
+		if (inizio < 0)
+			return 0.0;
+
+		return inizio;
 	}
 
+	
 	// Collide
-	public void collide(Ball next) {
-		try {
-			ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
-			ballHit.playSound();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+	public void collide (Ball next, double time) {
+		move (speed.getX () * time, speed.getY () * time);
+		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
 		
-		double totalVelA = Math.sqrt(speed.getX() * speed.getX() + speed.getY() * speed.getY());
-		double totalVelB = Math.sqrt(
-				next.getSpeed().getX() * next.getSpeed().getX() + next.getSpeed().getY() * next.getSpeed().getY());
-
-		double Atheta = Math.atan2(speed.getY(), speed.getX());
-		double Btheta = Math.atan2(next.getSpeed().getY(), next.getSpeed().getX());
-
-		double dx = speed.getX() - next.getSpeed().getX();
-		double dy = speed.getY() - next.getSpeed().getY();
-
-		double dxx = x - next.getX();
-		double dyy = y - next.getY();
-
-		double angle = Math.atan2(dyy, dxx);
-
-		double newAx = totalVelB * Math.cos(Btheta - angle) * Math.cos(angle)
-				+ totalVelA * Math.sin(Atheta - angle) * Math.cos(angle + 45);
-		double newAy = totalVelB * Math.cos(Btheta - angle) * Math.sin(angle)
-				+ totalVelA * Math.sin(Atheta - angle) * Math.sin(angle + 45);
-
-		double newBx = totalVelA * Math.cos(Atheta - angle) * Math.cos(angle)
-				+ totalVelB * Math.sin(Btheta - angle) * Math.cos(angle + 45);
-		double newBy = totalVelA * Math.cos(Atheta - angle) * Math.sin(angle)
-				+ totalVelB * Math.sin(Btheta - angle) * Math.sin(angle + 45);
-
-		speed.setX(-newAx);
-		speed.setY(newAy);
-		setInitialSpeed(-newAx, newAy);
-		if (speed.getX() < 0) {
-			speed.setX(speed.getX()*-1);
-			setInitialSpeed(-newAx*-1,newAy);
-			posSpeedX = false;
-		} else {
-			posSpeedX = true;
-		}
-		if (speed.getY() < 0) {
-			speed.setY(speed.getY()*-1);
-			setInitialSpeed(-newAx,newAy*-1);
-			posSpeedY = false;
-		} else {
-			posSpeedY = true;
-		}
-
-		next.getSpeed().setX(newBx);
-		next.getSpeed().setY(newBy);
-		next.setInitialSpeed(newBx, newBy);
-		if (next.getSpeed().getX() < 0) {
-			next.speed.setX(next.getSpeed().getX()*-1);
-			next.setInitialSpeed(newBx*-1, newBy);
-			next.posSpeedX = false;
-		} else {
-			next.posSpeedX = true;
-		}
-		if (next.getSpeed().getY() < 0) {
-			next.speed.setY(next.getSpeed().getY()*-1);
-			next.setInitialSpeed(newBx, newBy*-1);
-			next.posSpeedY = false;
-		} else {
-			next.posSpeedY = true;
-		}
+		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 		
-		move();
-		next.move();
+		double v_1 = speed.getComponent (theta);
+		double v_2 = next.getSpeed ().getComponent (theta);
 		
-
+		double m_1 = getMass ();
+		double m_2 = next.getMass ();
+		
+		double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
+		double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
+		
+		speed.addComponent (theta, - v_1 + w_1);
+		next.getSpeed ().addComponent (theta, - v_2 + w_2);
+		
+//		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
+//		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
 	}
 }
