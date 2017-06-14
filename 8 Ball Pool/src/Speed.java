@@ -1,4 +1,3 @@
-
 class Speed {
 	private double x = 0;
 	private double y = 0;
@@ -6,6 +5,11 @@ class Speed {
 	public Speed (double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Speed(){
+		x=0;
+		y=0;
 	}
 	
 	public double getX () {
@@ -34,6 +38,20 @@ class Speed {
 	
 	public void subtractY (double speed) {
 		y -= speed;
+	}
+	public void setX(double xSpeed){
+		x=xSpeed;
+	}
+	public void setY(double ySpeed){
+		y=ySpeed;
+	}
+	
+	public boolean isEmpty(){
+		if(x==0&&y==0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public void addComponent (double theta, double speed) {
