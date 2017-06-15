@@ -20,7 +20,7 @@ import javax.swing.Timer;
 
 public class Main implements ActionListener {
 
-	private Level content;
+	public static Level content;
 
 	String helpString = "\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
@@ -181,7 +181,10 @@ public class Main implements ActionListener {
 		playButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(Box.createRigidArea(new Dimension(0, 50)));
 		menuPane.add(playButton);
-
+		
+		//you can click enter on the mainscreen to play
+		menuPane.getRootPane().setDefaultButton(playButton);
+		
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Removes shutter issue (check method header for details)
@@ -271,7 +274,8 @@ public class Main implements ActionListener {
 				}
 			}
 		});
-
+		
+		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
@@ -284,6 +288,7 @@ public class Main implements ActionListener {
 
 	}
 
+	
 	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
 	 * inside of the addActionListener of the play button
@@ -302,7 +307,7 @@ public class Main implements ActionListener {
 
 		playScreen.getGlassPane().setVisible(true);
 
-		Timer timer = new Timer(20, this);
+		Timer timer = new Timer(10, this);
 		timer.start();
 	}
 

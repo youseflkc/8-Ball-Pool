@@ -21,7 +21,7 @@ public class Level extends JPanel
     
     
 	Sound ballHit = new Sound();
-	private Cue cue = new Cue();
+	private Cue cue = new Cue(this);
     
     
     
@@ -35,7 +35,7 @@ public class Level extends JPanel
 	public static final int HEIGHT = (int) screenSize.getHeight();//600;
 	
 	
-	public static final int BALLS = 1;
+	public static final int BALLS = 16;
 	public static Ball ball[] = new Ball[BALLS];
 	
 	private double next_collision;
@@ -46,8 +46,8 @@ public class Level extends JPanel
 	private static boolean queued_collision_update = false;
 	
 	
-	double init_radius = 15;
-	double init_mass = 5;
+	public static final double INIT_RADIUS = 15;
+	public static final double INIT_MASS = 5;
 	
 
 	
@@ -75,8 +75,8 @@ public class Level extends JPanel
 	int HEIGHT_GAP = (TABLE_HEIGHT - PLAY_HEIGHT);
 	
 	
-	double dx = WIDTH_GAP / 6 + init_radius;
-	double dy = HEIGHT_GAP / 6 + init_radius;
+	double dx = WIDTH_GAP / 6 + INIT_RADIUS;
+	double dy = HEIGHT_GAP / 6 + INIT_RADIUS;
 	
 
 	double centerX = WIDTH_GAP / 2 + PLAY_WIDTH / 2;
@@ -123,35 +123,36 @@ public class Level extends JPanel
 
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, init_mass, new Speed(20, 1), WHITE, true, 0);
-		ball[0].setInitialSpeed(50, 1);
+		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, INIT_MASS, new Speed(0, 0), WHITE, true, 0);
+		
 		//First ball in the triangle
-//		ball[1] = new Ball(initialPosX, initialPosY, init_radius, init_mass, new Speed(0, 0), YELLOW, false, 9);
-//
-//		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, init_radius, init_mass, new Speed(0, 0), RED, true, 7);
-//		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, init_radius, init_mass, new Speed(0, 0), PURPLE, false, 12);
-//		
-//		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), RED, false,15);
-//		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, init_radius, init_mass, new Speed(0, 0), BLACK, true, 8);
-//		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), YELLOW, true, 1);
-//		
-//		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN, true, 6);
-//		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, init_radius, init_mass, new Speed(0, 0), BLUE, false, 10);
-//		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, init_radius, init_mass, new Speed(0, 0), RED, true, 3);
-//		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, init_radius, init_mass, new Speed(0, 0), GREEN, false, 14);
-//		
-//		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, init_radius, init_mass, new Speed(0, 0), RED, false, 11);
-//		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, init_radius, init_mass, new Speed(0, 0), BLUE, true, 2);
-//		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, init_radius, init_mass, new Speed(0, 0), ORANGE, false, 13);
-//		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, init_radius, init_mass, new Speed(0, 0), PURPLE, true, 4);
-//		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, init_radius, init_mass, new Speed(0, 0), ORANGE, true, 5);
-//		
+		ball[1] = new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9);
+
+		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 7);
+		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, false, 12);
+		
+		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false,15);
+		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLACK, true, 8);
+		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, true, 1);
+		
+		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, true, 6);
+		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, false, 10);
+		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 3);
+		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, false, 14);
+		
+		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false, 11);
+		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, true, 2);
+		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, false, 13);
+		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, true, 4);
+		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, true, 5);
+		
 	
 		
 		repaint();
+		//Fix the colors
 
 	    
-		//fix the slow movement 
+		//fix the look of the balls 
     }
 
     public BufferedImage loadTextures(String path)
@@ -205,10 +206,9 @@ public class Level extends JPanel
 		g.drawImage(black_dot, Main.WIDTH - 150, Main.HEIGHT - 150, 100, 100, this);
 
         // RENDERING FOR CUE
-        cue.update();
+        cue.updatePosition((int) ball[0].getX(), (int) ball[0].getY());
+		cue.drawBack();
         cue.render(g2d);
-		
-		
 
 		if (!paused) {
 			double passed = 0.0;
@@ -308,4 +308,9 @@ public class Level extends JPanel
  		
  		queued_collision_update = false;
  	}
+
+	public Ball getBall(int key)
+	{
+		return ball[key];
+	}
 }

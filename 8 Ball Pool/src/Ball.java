@@ -1,4 +1,3 @@
-
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -23,10 +22,6 @@ public class Ball {
 	int distence = 100;//this sets the boundaries for the balls to bounce 
 					   //off the walls inside of the playing area and not the JFrame.
 	
-	private Speed initialSpeed = new Speed();
-	double deceleration = 0;
-	boolean posSpeedX = true;
-	boolean posSpeedY = true;
 
 	
 	
@@ -103,153 +98,63 @@ public class Ball {
 		move (speed.getX () * time, speed.getY () * time);
 	}
 	
-	public void setInitialSpeed(double x, double y) {
-		initialSpeed.setX(x);
-		initialSpeed.setY(y);
-	}
-	
-	
-	//Look up 8 ball github and see if i can find a full game with nice code
-	
-	public void move(double x, double y) {
-		// Gets the ball to move
-		if (posSpeedX == true) {
-			this.x += x;
-		} else if (posSpeedX == false) {
-			this.x -= x;
+	public void move (double x, double y) {
+		//Gets the ball to move
+		this.x += x;
+		this.y += y;
+		
+		
+	    //Makes the balls slow down better and look more realistic
+		if (speed.getX() > 1 || speed.getY()  > 1) {
+			slowDownSpeed += 0.0075;
 		}
-
-		if (posSpeedY == true) {
-			this.y += y;
-		} else if (posSpeedY == false) {
-			this.y -= y;
+		else{			
+			slowDownSpeed = 0.015;
 		}
-
-		deceleration += 0.2;
-		if (initialSpeed.getX() > 0 && speed.getX() > 0) {
-			speed.setX(
-					Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getX() + 0.2)) / Math.log10(1.1))) - 0.2);
-		} else if (speed.getX() < 0) {
-			speed.setX(0);
-		}
-
-		if (initialSpeed.getY() > 0 && speed.getY() > 0) {
-			speed.setY(
-					Math.pow(1.1, (-deceleration + (Math.log10(initialSpeed.getY()) + 0.2) / Math.log10(1.1))) - 0.2);
-		} else if (speed.getY() < 0) {
-			speed.setY(0);
-		}
-
-		// These 4 variables hold the play area for the balls
+		
+		
+		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
-
-		// Following statements check if the ball hits the play area boundaries
-		// to reverse the direction
-		// as if it hit the wall, mimicking a wall bounce.
-
-
-		if (playX < radius) {// Left wall
+		
+		
+		//Following statements check the value of the X and Y values to slow down the ball accordingly 
+		if (speed.getX() > 0) speed.subtractX(slowDownSpeed);
+		if (speed.getX() < 0) speed.addX(slowDownSpeed);
+		if (speed.getY() > 0) speed.subtractY(slowDownSpeed);
+		if (speed.getY() < 0) speed.addY(slowDownSpeed);
+		
+			
+		
+		//Following statements check if the ball hits the play area boundaries to reverse the direction 
+		//as if it hit the wall, mimicking a wall bounce.
+		if (playX < radius) {//Left wall
 			playX = 2 * radius - playX;
-			posSpeedX = true;
-			Level.queue_collision_update();
+			speed.addX (-2 * speed.getX ());
+			Level.queue_collision_update ();
 		}
-
-		if (this.x > playX2 - radius) {// Right wall
+		
+		if (this.x > playX2 - radius) {//Right wall
 			this.x = 2 * (playX2 - radius) - this.x;
-			posSpeedX = false;
-			Level.queue_collision_update();
+			speed.addX (-2 * speed.getX ());
+			Level.queue_collision_update ();
 		}
-
-		if (playY < radius) {// Top wall
+		
+		if (playY < radius) {//Top wall
 			playY = 2 * radius - playY;
-			posSpeedY = true;
-			Level.queue_collision_update();
+			speed.addY (-2 * speed.getY ());
+			Level.queue_collision_update ();
 		}
-
-		if (this.y > playY2 - radius) {// Bottom wall
+		
+		if (this.y > playY2 - radius) {//Bottom wall
 			this.y = 2 * (playY2 - radius) - this.y;
-			posSpeedY = false;
-			Level.queue_collision_update();
+			speed.addY (-2 * speed.getY ());
+			Level.queue_collision_update ();
 		}
 	}
 	
-	
-	
-//	public void move (double x, double y) {
-//		//Gets the ball to move
-//		
-//
-//		this.x += x;
-//		this.y += y;
-//
-//		
-////		//Makes the balls slow down better and look more realistic
-////		if (speed.getX() > 1 || speed.getY()  > 1) {
-////			slowDownSpeed += 0.0075;
-////		}
-////		else{			
-////			slowDownSpeed = 0.015;
-////		}
-//		
-//		//uncomment this and it fucks up
-////	
-//		
-//		//These 4 variables hold the play area for the balls
-//		double playX = this.x - distence;
-//		double playY = this.y - distence;
-//		double playX2 = Main.WIDTH - distence;
-//		double playY2 = Main.HEIGHT - distence;
-//		
-//		
-//		//Following statements check the value of the X and Y values to slow down the ball accordingly 
-//		if (speed.getX() > 0) speed.subtractX(slowDownSpeed);
-//		if (speed.getX() < 0) speed.addX(slowDownSpeed);
-//		if (speed.getY() > 0) speed.subtractY(slowDownSpeed);
-//		if (speed.getY() < 0) speed.addY(slowDownSpeed);
-//		
-//		
-//		
-//		
-//		//(ballNumber == 0 && speed.getX() == 0 && speed.getY() == 0
-//		if (speed.getX() < 0.005 && speed.getX() > 0.0001 || speed.getY() < 0.005 && speed.getY() > 0.0001) {
-//			//Level.pause();
-//			
-//			speed.setX(0.0);
-//			speed.setY(0.0);
-//		}
-//		
-//			
-//		
-//		//Following statements check if the ball hits the play area boundaries to reverse the direction 
-//		//as if it hit the wall, mimicking a wall bounce.
-//		if (playX < radius) {//Left wall
-//			playX = 2 * radius - playX;
-//			speed.addX (-2 * speed.getX ());
-//			Level.queue_collision_update ();
-//		}
-//		
-//		if (this.x > playX2 - radius) {//Right wall
-//			this.x = 2 * (playX2 - radius) - this.x;
-//			speed.addX (-2 * speed.getX ());
-//			Level.queue_collision_update ();
-//		}
-//		
-//		if (playY < radius) {//Top wall
-//			playY = 2 * radius - playY;
-//			speed.addY (-2 * speed.getY ());
-//			Level.queue_collision_update ();
-//		}
-//		
-//		if (this.y > playY2 - radius) {//Bottom wall
-//			this.y = 2 * (playY2 - radius) - this.y;
-//			speed.addY (-2 * speed.getY ());
-//			Level.queue_collision_update ();
-//		}
-//	}
-//	
 	
 	
 	
