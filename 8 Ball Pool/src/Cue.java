@@ -23,8 +23,6 @@ public class Cue implements MouseListener
 
     private boolean drawnBack;
 
-    private int power;
-
     private static boolean MOUSE_RIGHT_CLICK;
     private static boolean MOUSE_HELD_DOWN;
 
@@ -72,27 +70,20 @@ public class Cue implements MouseListener
 
     public void drawBack()
     {
-
         if (MOUSE_HELD_DOWN)
         {
             drawBack_xPos += 3;
-
-            if (drawBack_xPos >= 150)
-                drawBack_xPos = 150;
 
             drawnBack = true;
         }
         else
         {
-            if (drawBack_xPos > power)
-                power = drawBack_xPos;
-
             if (drawBack_xPos > 0)
             {
-                if (drawBack_xPos < 16)
+                if (drawBack_xPos > 16)
                     drawBack_xPos -= 25;
-                else
-                    drawBack_xPos -= 15;
+
+                drawBack_xPos -= 15;
             }
             else
                 drawBack_xPos = 0;
@@ -101,16 +92,12 @@ public class Cue implements MouseListener
         if (drawnBack == true && drawBack_xPos <= 0)
         {
             System.out.println("Ran");
+            drawnBack = false;
 
-            Speed cueSpeed = new Speed(-5, -5);
-
-            Ball cue = new Ball(xPos + 20, yPos, 15, Level.INIT_MASS, cueSpeed, Color.WHITE, true, 0);
+            Ball cue = new Ball(xPos, yPos, 15, Level.INIT_MASS, new Speed(50, 0), Color.WHITE, true, 0);
             Ball cueBall = Main.content.getBall(0);
 
             cue.collide(cueBall, 15);
-
-            drawnBack = false;
-            power = 0;
         }
     }
 
