@@ -58,7 +58,6 @@ public class Cue implements MouseListener {
 			angle = 360 - remainder;
 		}
 		System.out.println(angle);
-
 	}
 
 	public void drawBack() {

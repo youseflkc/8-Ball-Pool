@@ -16,9 +16,9 @@ public class Level extends JPanel
     private BufferedImage wooden_tile_rotated90;
     private BufferedImage black_dot;
     private BufferedImage table_grass;
+    public LinkList ballList;
     
-    
-    
+    public Ball[] ball=new Ball[BALLS];
     
 	Sound ballHit = new Sound();
 	private Cue cue = new Cue(this);
@@ -36,7 +36,6 @@ public class Level extends JPanel
 	
 	
 	public static final int BALLS = 16;
-	public static Ball ball[] = new Ball[BALLS];
 	
 	private double next_collision;
 	private Ball first;
@@ -120,31 +119,31 @@ public class Level extends JPanel
 			}
 		});
 		
-
+		ballList= new LinkList();
 
 		//Cue Ball
-		ball[0] = new Ball(initialPosX / 2.7, initialPosY, 15, INIT_MASS, new Speed(0, 0), WHITE, true, 0);
+		ballList.insert(new Ball(initialPosX / 2.7, initialPosY, 15, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 		
 		//First ball in the triangle
-		ball[1] = new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9);
+		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
 
-		ball[2] = new Ball(initialPosX + dx, initialPosY + dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 7);
-		ball[3] = new Ball(initialPosX + dx, initialPosY - dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, false, 12);
+		ballList.insert( new Ball(initialPosX + dx, initialPosY + dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 7));
+		ballList.insert( new Ball(initialPosX + dx, initialPosY - dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, false, 12));
 		
-		ball[4] = new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false,15);
-		ball[5] = new Ball(initialPosX + 2 * dx, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLACK, true, 8);
-		ball[6] = new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, true, 1);
+		ballList.insert(new Ball(initialPosX + 2 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false,15));
+		ballList.insert(new Ball(initialPosX + 2 * dx, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLACK, true, 8));
+		ballList.insert( new Ball(initialPosX + 2 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, true, 1));
 		
-		ball[7] = new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, true, 6);
-		ball[8] = new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, false, 10);
-		ball[9] = new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 3);
-		ball[10] = new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, false, 14);
+		ballList.insert( new Ball(initialPosX + 3 * dx, initialPosY + 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, true, 6));
+		ballList.insert(new Ball(initialPosX + 3 * dx, initialPosY + 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, false, 10));
+		ballList.insert( new Ball(initialPosX + 3 * dx, initialPosY - 1 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, true, 3));
+		ballList.insert( new Ball(initialPosX + 3 * dx, initialPosY - 3 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), GREEN, false, 14));
 		
-		ball[11] = new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false, 11);
-		ball[12] = new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, true, 2);
-		ball[13] = new Ball(initialPosX + 4 * dy, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, false, 13);
-		ball[14] = new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, true, 4);
-		ball[15] = new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, true, 5);
+		ballList.insert(new Ball(initialPosX + 4 * dx, initialPosY + 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), RED, false, 11));
+		ballList.insert( new Ball(initialPosX + 4 * dx, initialPosY + 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), BLUE, true, 2));
+		ballList.insert( new Ball(initialPosX + 4 * dy, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, false, 13));
+		ballList.insert( new Ball(initialPosX + 4 * dx, initialPosY - 2 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), PURPLE, true, 4));
+		ballList.insert( new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0), ORANGE, true, 5));
 		
 	
 		
@@ -174,7 +173,7 @@ public class Level extends JPanel
     
     
     public void paintComponent(Graphics g){
-        
+        ball=ballList.getElements();
         //Lazar code
         Graphics2D g2d = (Graphics2D) g;
         
