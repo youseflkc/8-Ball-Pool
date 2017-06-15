@@ -1,5 +1,4 @@
 import javafx.scene.transform.NonInvertibleTransformException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -10,138 +9,129 @@ import java.awt.geom.Path2D;
 /**
  * Created by Thomas on 2017-06-02.
  */
-public class Cue implements MouseListener
-{
-    private static final int CUE_WIDTH = 400;
-    private static final int CUE_HEIGHT = 10;
 
-    private int xPos;
-    private int yPos;
+public class Cue implements MouseListener {
+	private static final int CUE_WIDTH = 400;
+	private static final int CUE_HEIGHT = 10;
 
-    private int drawBack_xPos;
-    private int drawBack_yPos;
+	private int xPos;
+	private int yPos;
 
-    private boolean drawnBack;
+	private int drawBack_xPos;
+	private int drawBack_yPos;
 
-    private static boolean MOUSE_RIGHT_CLICK;
-    private static boolean MOUSE_HELD_DOWN;
+	private boolean drawnBack;
 
-    private Rectangle cue;
+	private static boolean MOUSE_RIGHT_CLICK;
+	private static boolean MOUSE_HELD_DOWN;
 
-    // Value between 0 and 360
-    private static int angle;
+	private Rectangle cue;
 
-    private Color color = Color.BLACK;
+	// Value between 0 and 360
+	private static int angle;
 
-    public Cue(JPanel frame)
-    {
-        MOUSE_HELD_DOWN = false;
-        frame.addMouseListener(this);
+	private Color color = Color.BLACK;
 
-        drawnBack = false;
+	public Cue(JPanel frame) {
+		MOUSE_HELD_DOWN = false;
+		frame.addMouseListener(this);
 
-        drawBack_xPos = 0;
-        drawBack_yPos = 0;
-    }
+		drawnBack = false;
 
-    public void updatePosition(int xPos, int yPos)
-    {
-        this.xPos = xPos;
-        this.yPos = yPos;
-    }
+		drawBack_xPos = 0;
+		drawBack_yPos = 0;
+	}
 
-    public static void updateAngle(int increment)
-    {
-        angle += increment;
+	public void updatePosition(int xPos, int yPos) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+	}
 
-        if (angle > 360)
-        {
-            int remainder = (angle - 360);
-            angle = 0 + remainder;
-        }
-        else if (angle < 0)
-        {
-            int remainder = Math.abs(angle - 0);
-            angle = 360 - remainder;
-        }
+	public static void updateAngle(int increment) {
+		angle += increment;
 
+		if (angle > 360) {
+			int remainder = (angle - 360);
+			angle = 0 + remainder;
+		} else if (angle < 0) {
+			int remainder = Math.abs(angle - 0);
+			angle = 360 - remainder;
+		}
+		System.out.println(angle);
 
-    }
+	}
 
-    public void drawBack()
-    {
-        if (MOUSE_HELD_DOWN)
-        {
-            drawBack_xPos += 3;
+	public void drawBack() {
+		if (MOUSE_HELD_DOWN) {
+			drawBack_xPos += 3;
 
-            drawnBack = true;
-        }
-        else
-        {
-            if (drawBack_xPos > 0)
-            {
-                if (drawBack_xPos > 16)
-                    drawBack_xPos -= 25;
+			drawnBack = true;
+		} else {
+			if (drawBack_xPos > 0) {
+				if (drawBack_xPos > 16)
+					drawBack_xPos -= 25;
 
-                drawBack_xPos -= 15;
-            }
-            else
-                drawBack_xPos = 0;
-        }
+				drawBack_xPos -= 15;
+			} else
+				drawBack_xPos = 0;
+		}
 
-        if (drawnBack == true && drawBack_xPos <= 0)
-        {
-            System.out.println("Ran");
-            drawnBack = false;
+		if (drawnBack == true && drawBack_xPos <= 0) {
+			System.out.println("Ran");
+			drawnBack = false;
 
-            Ball cue = new Ball(xPos, yPos, 15, Level.INIT_MASS, new Speed(50, 0), Color.WHITE, true, 0);
-            Ball cueBall = Main.content.getBall(0);
+			Ball cue = Main.content.getBall(0);
 
-            cue.collide(cueBall, 15);
-        }
-    }
+			if (angle > 270 && angle < 1) {
+				cue.getSpeed().setX(drawBack_xPos * -1);
+			} else {
+				cue.getSpeed().setX(drawBack_xPos);
+			}
+			if (angle < 180 && angle > 360) {
+				cue.getSpeed().setY(drawBack_xPos * -1);
+			} else {
+				cue.getSpeed().setY(drawBack_xPos);
+			}
+			cue.move(15);
+		}
+	}
 
-    public void render(Graphics g)
-    {
-        Graphics2D g2d = (Graphics2D) g.create();
+	public void render(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g.create();
 
-        g2d.setColor(this.color);
-        cue = new Rectangle(xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT);
+		g2d.setColor(this.color);
+		cue = new Rectangle(xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT);
 
-        g2d.rotate(Math.toRadians(angle), xPos, yPos);
+		g2d.rotate(Math.toRadians(angle), xPos, yPos);
 
-        g2d.draw(cue);
-        g2d.fill(cue);
+		g2d.draw(cue);
+		g2d.fill(cue);
 
-    }
+	}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3)
-            drawBack_xPos = 0;
-    }
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON3)
+			drawBack_xPos = 0;
+	}
 
-    @Override
-    public void mousePressed(MouseEvent e)
-    {
-        MOUSE_HELD_DOWN = true;
-        System.out.println("Pressed - " + MOUSE_HELD_DOWN);
-    }
+	@Override
+	public void mousePressed(MouseEvent e) {
+		MOUSE_HELD_DOWN = true;
+		System.out.println("Pressed - " + MOUSE_HELD_DOWN);
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        MOUSE_HELD_DOWN = false;
-        System.out.println("Released - " + MOUSE_HELD_DOWN);
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		MOUSE_HELD_DOWN = false;
+		System.out.println("Released - " + MOUSE_HELD_DOWN);
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent e)
-    {
-    }
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
 }

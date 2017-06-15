@@ -17,7 +17,7 @@ public class Ball {
 	private int ballNumber;
 
 
-	double slowDownSpeed = 0.015;//Double sets the slow down speed for each of the balls
+	double slowDownSpeed = 0.02;//Double sets the slow down speed for each of the balls
 
 	int distence = 100;//this sets the boundaries for the balls to bounce 
 	//off the walls inside of the playing area and not the JFrame.
@@ -100,8 +100,7 @@ public class Ball {
 
 	public void move (double x, double y) {
 		//Gets the ball to move
-		this.x += x;
-		this.y += y;
+		
 
 
 		//Makes the balls slow down better and look more realistic
@@ -112,7 +111,7 @@ public class Ball {
 			slowDownSpeed = 0.015;
 		}
 
-
+		
 		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
@@ -121,11 +120,20 @@ public class Ball {
 
 
 		//Following statements check the value of the X and Y values to slow down the ball accordingly 
-		if (speed.getX() > 0) speed.subtractX(slowDownSpeed);
-		if (speed.getX() < 0) speed.addX(slowDownSpeed);
-		if (speed.getY() > 0) speed.subtractY(slowDownSpeed);
-		if (speed.getY() < 0) speed.addY(slowDownSpeed);
-
+		if(speed.getX()<1&&speed.getX()>0){
+			speed.setX(0);
+		}else if(speed.getX()>-1&&speed.getX()<0){
+			speed.setX(0);
+		}else{
+			speed.subtractX(slowDownSpeed);
+		}
+		if(speed.getY()<1&&speed.getY()>0){
+			speed.setY(0);
+		}else if(speed.getY()>-1&&speed.getY()<0){
+			speed.setY(0);
+		}else{
+			speed.subtractY(slowDownSpeed);
+		}
 
 
 		//Following statements check if the ball hits the play area boundaries to reverse the direction 
@@ -153,6 +161,9 @@ public class Ball {
 			speed.addY (-2 * speed.getY ());
 			Level.queue_collision_update ();
 		}
+		
+		this.x += x;
+		this.y += y;
 	}
 
 
