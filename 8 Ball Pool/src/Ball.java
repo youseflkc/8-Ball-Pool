@@ -6,17 +6,18 @@ import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Ball {
 	private double x;
 	private double y;
-	private double radius = 10;
+	private double radius = 15;
 	private double mass = 1;
 	private Speed speed;
 	private Color color;
 	private boolean solid;
 	private int ballNumber;
-
+	Sound ballHit = new Sound();
 
 	double slowDownSpeed = 0.02;//Double sets the slow down speed for each of the balls
 
@@ -167,6 +168,7 @@ public class Ball {
 			Level.queue_collision_update ();
 		}
 		
+		Level.queue_collision_update();
 	}
 
 
@@ -240,6 +242,16 @@ public class Ball {
 
 	// Collide
 	public void collide (Ball next, double time) {
+		try {
+			ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
+			ballHit.playSound();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		move (speed.getX () * time, speed.getY () * time);
 		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
 		

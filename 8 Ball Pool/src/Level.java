@@ -20,7 +20,6 @@ public class Level extends JPanel
     
     public Ball[] ball=new Ball[BALLS];
     
-	Sound ballHit = new Sound();
 	private Cue cue = new Cue(this);
     
     
@@ -119,7 +118,7 @@ public class Level extends JPanel
 		ballList= new LinkList();
 		
 		//Cue Ball
-		ballList.insert(new Ball(initialPosX / 2.7, initialPosY, 15, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
+		ballList.insert(new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 		
 		//First ball in the triangle
 		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
@@ -242,17 +241,6 @@ public class Level extends JPanel
 		
 		if (queued_collision_update){
 			collision_update ();
-			
-			try {
-				ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
-				ballHit.playSound();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
     }
     
