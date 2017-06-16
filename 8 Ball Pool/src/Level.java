@@ -112,15 +112,12 @@ public class Level extends JPanel
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					
 					System.exit(0);//Makes my life easy
-					
-					//SwingUtilities.getWindowAncestor(Level.this).dispose();
-					//grabs the parent of the panel and closes it
 				}
 			}
 		});
 		
 		ballList= new LinkList();
-
+		
 		//Cue Ball
 		ballList.insert(new Ball(initialPosX / 2.7, initialPosY, 15, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 		

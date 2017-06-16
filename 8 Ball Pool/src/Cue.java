@@ -78,20 +78,50 @@ public class Cue implements MouseListener {
 		if (drawnBack == true && drawBack_xPos <= 0) {
 			System.out.println("Ran");
 			drawnBack = false;
-
 			Ball cue = Main.content.getBall(0);
-
-			if (angle > 270 && angle < 1) {
-				cue.getSpeed().setX(drawBack_xPos * -1);
-			} else {
-				cue.getSpeed().setX(drawBack_xPos);
+			double angleSp=0;
+			if(angle>0&&angle<90){
+				angleSp=angle;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(angleSp)*20);
+				cue.getSpeed().setX(-Math.sin(90-angleSp)*20);
+			}else if(angle>90&&angle<180){
+				angleSp=angle-90;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(angleSp)*20);
+				cue.getSpeed().setX(Math.sin(90-angleSp)*20);
+			}else if(angle>180&&angle<270){
+				angleSp=angle-180;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(angleSp)*20);
+				cue.getSpeed().setX(Math.sin(90-angleSp)*20);
+			}else if(angle>270&&angle<360){
+				angleSp=angle-270;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(90-angleSp)*20);
+				cue.getSpeed().setX(-Math.sin(angleSp)*20);
+			}else if(angle==0||angle==360){
+				angleSp=0;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(angleSp)*20);
+				cue.getSpeed().setX(-Math.sin(90-angleSp)*20);
+			}else if(angle==270){
+				angleSp=0;
+				cue.getSpeed().setY(Math.sin(90-angleSp)*20);
+				cue.getSpeed().setX(Math.sin(angleSp)*20);
+			}else if(angle==180){
+				angleSp=0;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(angleSp)*20);
+				cue.getSpeed().setX(Math.sin(90-angleSp)*20);
+			}else if(angle==90){
+				angleSp=0;
+				angleSp=Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(90-angleSp)*20);
+				cue.getSpeed().setX(Math.sin(angleSp)*20);
 			}
-			if (angle < 180 && angle > 360) {
-				cue.getSpeed().setY(drawBack_xPos * -1);
-			} else {
-				cue.getSpeed().setY(drawBack_xPos);
-			}
-			cue.move(15);
+			cue.move(5);
+			
 		}
 	}
 

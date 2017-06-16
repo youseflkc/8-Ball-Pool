@@ -112,30 +112,34 @@ public class Ball {
 			slowDownSpeed = 0.015;
 		}
 
+		//Following statements check the value of the X and Y values to slow down the ball accordingly 
+		if(speed.getX()<1&&speed.getX()>0){
+			speed.setX(0);
+		}else if(speed.getX()>-1&&speed.getX()<0){
+			speed.setX(0);
+		}else if(speed.getX()>0){
+			speed.subtractX(slowDownSpeed);
+		}else if(speed.getX()<0){
+			speed.addX(slowDownSpeed);
+		}
+		if(speed.getY()<1&&speed.getY()>0){
+			speed.setY(0);
+		}else if(speed.getY()>-1&&speed.getY()<0){
+			speed.setY(0);
+		}else if(speed.getY()>0){
+			speed.subtractY(slowDownSpeed);
+		}else if(speed.getY()<0){
+			speed.addY(slowDownSpeed);
+		}
+		
+		this.x += x;
+		this.y += y;
 		
 		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
-
-
-		//Following statements check the value of the X and Y values to slow down the ball accordingly 
-		if(speed.getX()<1&&speed.getX()>0){
-			speed.setX(0);
-		}else if(speed.getX()>-1&&speed.getX()<0){
-			speed.setX(0);
-		}else{
-			speed.subtractX(slowDownSpeed);
-		}
-		if(speed.getY()<1&&speed.getY()>0){
-			speed.setY(0);
-		}else if(speed.getY()>-1&&speed.getY()<0){
-			speed.setY(0);
-		}else{
-			speed.subtractY(slowDownSpeed);
-		}
-
 
 		//Following statements check if the ball hits the play area boundaries to reverse the direction 
 		//as if it hit the wall, mimicking a wall bounce.
@@ -163,8 +167,6 @@ public class Ball {
 			Level.queue_collision_update ();
 		}
 		
-		this.x += x;
-		this.y += y;
 	}
 
 
@@ -240,7 +242,7 @@ public class Ball {
 	public void collide (Ball next, double time) {
 		move (speed.getX () * time, speed.getY () * time);
 		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
-
+		
 		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 
 		double v_1 = speed.getComponent (theta);
