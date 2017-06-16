@@ -18,11 +18,9 @@ public class Cue implements MouseListener {
 	private int yPos;
 
 	private int drawBack_xPos;
-	private int drawBack_yPos;
 
 	private boolean drawnBack;
 
-	private static boolean MOUSE_RIGHT_CLICK;
 	private static boolean MOUSE_HELD_DOWN;
 
 	private Rectangle cue;
@@ -39,7 +37,6 @@ public class Cue implements MouseListener {
 		drawnBack = false;
 
 		drawBack_xPos = 0;
-		drawBack_yPos = 0;
 	}
 
 	public void updatePosition(int xPos, int yPos) {
@@ -79,62 +76,62 @@ public class Cue implements MouseListener {
 			System.out.println("Ran");
 			drawnBack = false;
 			Ball cue = Main.content.getBall(0);
-			double angleSp=0;
-			if(angle>0&&angle<90){
-				angleSp=angle;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(-Math.sin(angleSp)*20);
-				cue.getSpeed().setX(-Math.sin(Math.PI/2-angleSp)*20);
-			}else if(angle>90&&angle<180){
-				angleSp=angle-90;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(-Math.sin(angleSp)*20);
-				cue.getSpeed().setX(Math.sin(Math.PI/2-angleSp)*20);
-			}else if(angle>180&&angle<270){
-				angleSp=angle-180;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(Math.sin(angleSp)*20);
-				cue.getSpeed().setX(Math.sin(Math.PI/2-angleSp)*20);
-			}else if(angle>270&&angle<360){
-				angleSp=angle-270;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(Math.sin(Math.PI/2-angleSp)*20);
-				cue.getSpeed().setX(-Math.sin(angleSp)*20);
-			}else if(angle==0||angle==360){
-				angleSp=0;
-				cue.getSpeed().setY(Math.sin(angleSp)*20);
-				cue.getSpeed().setX(-Math.sin(Math.PI/2-angleSp)*20);
-			}else if(angle==270){
-				angleSp=0;
-				cue.getSpeed().setY(Math.sin(Math.PI/2-angleSp)*20);
-				cue.getSpeed().setX(Math.sin(angleSp)*20);
-			}else if(angle==180){
-				angleSp=0;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(Math.sin(angleSp)*20);
-				cue.getSpeed().setX(Math.sin(Math.PI/2-angleSp)*20);
-			}else if(angle==90){
-				angleSp=0;
-				angleSp=Math.toRadians(angleSp);
-				cue.getSpeed().setY(-Math.sin(Math.PI/2-angleSp)*20);
-				cue.getSpeed().setX(Math.sin(angleSp)*20);
+			double angleSp = 0;
+			if (angle > 0 && angle < 90) {
+				angleSp = angle;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(angleSp) * 20);
+				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * 20);
+			} else if (angle > 90 && angle < 180) {
+				angleSp = angle - 90;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(angleSp) * 20);
+				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * 20);
+			} else if (angle > 180 && angle < 270) {
+				angleSp = angle - 180;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(angleSp) * 20);
+				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * 20);
+			} else if (angle > 270 && angle < 360) {
+				angleSp = angle - 270;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * 20);
+				cue.getSpeed().setX(-Math.sin(angleSp) * 20);
+			} else if (angle == 0 || angle == 360) {
+				angleSp = 0;
+				cue.getSpeed().setY(Math.sin(angleSp) * 20);
+				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * 20);
+			} else if (angle == 270) {
+				angleSp = 0;
+				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * 20);
+				cue.getSpeed().setX(Math.sin(angleSp) * 20);
+			} else if (angle == 180) {
+				angleSp = 0;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(Math.sin(angleSp) * 20);
+				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * 20);
+			} else if (angle == 90) {
+				angleSp = 0;
+				angleSp = Math.toRadians(angleSp);
+				cue.getSpeed().setY(-Math.sin(Math.PI / 2 - angleSp) * 20);
+				cue.getSpeed().setX(Math.sin(angleSp) * 20);
 			}
 			cue.move(5);
-			
 		}
 	}
 
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-
 		g2d.setColor(this.color);
 		cue = new Rectangle(xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT);
 
 		g2d.rotate(Math.toRadians(angle), xPos, yPos);
+		if (Main.content.getBall(0).moving()) {
 
-		g2d.draw(cue);
-		g2d.fill(cue);
-
+		} else if(Main.content.getBall(0).moving()==false){
+			g2d.draw(cue);
+			g2d.fill(cue);
+		}
 	}
 
 	@Override

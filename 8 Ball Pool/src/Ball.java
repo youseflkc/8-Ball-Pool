@@ -94,6 +94,12 @@ public class Ball {
 		return ballNumber;
 	}
 
+	public boolean moving(){
+		if(speed.getX()==0&&speed.getY()==0){
+			return false;
+		}
+		return true;
+	}
 
 	// Move
 	public void move (double time) {
