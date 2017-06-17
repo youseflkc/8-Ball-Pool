@@ -258,8 +258,6 @@ public class Ball {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		move (speed.getX () * time, speed.getY () * time);
-		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
 		
 		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 
@@ -275,7 +273,7 @@ public class Ball {
 		speed.addComponent (theta, - v_1 + w_1);
 		next.getSpeed ().addComponent (theta, - v_2 + w_2);
 
-//		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
-//		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
+		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
+		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
 	}
 }
