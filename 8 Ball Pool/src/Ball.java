@@ -6,17 +6,18 @@ import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Ball {
 	private double x;
 	private double y;
-	private double radius = 10;
+	private double radius = 15;
 	private double mass = 1;
 	private Speed speed;
 	private Color color;
 	private boolean solid;
 	private int ballNumber;
-
+	Sound ballHit = new Sound();
 
 	double slowDownSpeed = 0.02;//Double sets the slow down speed for each of the balls
 
@@ -93,6 +94,12 @@ public class Ball {
 		return ballNumber;
 	}
 
+	public boolean moving(){
+		if(speed.getX()==0&&speed.getY()==0){
+			return false;
+		}
+		return true;
+	}
 
 	// Move
 	public void move (double time) {
@@ -112,30 +119,34 @@ public class Ball {
 			slowDownSpeed = 0.015;
 		}
 
+		//Following statements check the value of the X and Y values to slow down the ball accordingly 
+		if(speed.getX()<1&&speed.getX()>0){
+			speed.setX(0);
+		}else if(speed.getX()>-1&&speed.getX()<0){
+			speed.setX(0);
+		}else if(speed.getX()>0){
+			speed.subtractX(slowDownSpeed);
+		}else if(speed.getX()<0){
+			speed.addX(slowDownSpeed);
+		}
+		if(speed.getY()<1&&speed.getY()>0){
+			speed.setY(0);
+		}else if(speed.getY()>-1&&speed.getY()<0){
+			speed.setY(0);
+		}else if(speed.getY()>0){
+			speed.subtractY(slowDownSpeed);
+		}else if(speed.getY()<0){
+			speed.addY(slowDownSpeed);
+		}
+		
+		this.x += x;
+		this.y += y;
 		
 		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
-
-
-		//Following statements check the value of the X and Y values to slow down the ball accordingly 
-		if(speed.getX()<1&&speed.getX()>0){
-			speed.setX(0);
-		}else if(speed.getX()>-1&&speed.getX()<0){
-			speed.setX(0);
-		}else{
-			speed.subtractX(slowDownSpeed);
-		}
-		if(speed.getY()<1&&speed.getY()>0){
-			speed.setY(0);
-		}else if(speed.getY()>-1&&speed.getY()<0){
-			speed.setY(0);
-		}else{
-			speed.subtractY(slowDownSpeed);
-		}
-
 
 		//Following statements check if the ball hits the play area boundaries to reverse the direction 
 		//as if it hit the wall, mimicking a wall bounce.
@@ -163,8 +174,7 @@ public class Ball {
 			Level.queue_collision_update ();
 		}
 		
-		this.x += x;
-		this.y += y;
+		Level.queue_collision_update();
 	}
 
 
@@ -238,9 +248,17 @@ public class Ball {
 
 	// Collide
 	public void collide (Ball next, double time) {
-		move (speed.getX () * time, speed.getY () * time);
-		next.move (next.getSpeed ().getX () * time, next.getSpeed ().getY () * time);
-
+		try {
+			ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
+			ballHit.playSound();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 
 		double v_1 = speed.getComponent (theta);
@@ -255,7 +273,7 @@ public class Ball {
 		speed.addComponent (theta, - v_1 + w_1);
 		next.getSpeed ().addComponent (theta, - v_2 + w_2);
 
-//		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
-//		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
+		move (speed.getX () * (1.0 - time), speed.getY () * (1.0 - time));
+		next.move (next.getSpeed ().getX () * (1.0 - time), next.getSpeed ().getY () * (1.0 - time));
 	}
 }
