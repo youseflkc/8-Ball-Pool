@@ -12,14 +12,6 @@ class Speed {
 		y=0;
 	}
 	
-	public void setX(double xSpeed){
-		x=xSpeed;
-	}
-	
-	public void setY(double ySpeed){
-		y=ySpeed;
-	}
-	
 	public double getX () {
 		return x;
 	}
@@ -46,6 +38,12 @@ class Speed {
 	
 	public void subtractY (double speed) {
 		y -= speed;
+	}
+	public void setX(double xSpeed){
+		x=xSpeed;
+	}
+	public void setY(double ySpeed){
+		y=ySpeed;
 	}
 	
 	public boolean isEmpty(){

@@ -288,7 +288,6 @@ public class Main implements ActionListener {
 
 	}
 
-	
 	/**
 	 * Method is used to avoid shutter when code inside of this method is placed
 	 * inside of the addActionListener of the play button
@@ -307,7 +306,7 @@ public class Main implements ActionListener {
 
 		playScreen.getGlassPane().setVisible(true);
 
-		Timer timer = new Timer(10, this);
+		Timer timer = new Timer(20, this);
 		timer.start();
 	}
 
