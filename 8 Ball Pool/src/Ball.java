@@ -162,8 +162,7 @@ public class Ball {
 		double playY2 = Main.HEIGHT - distence;
 
 		// Following statements check if the ball hits the play area boundaries
-		// to reverse the direction
-		// as if it hit the wall, mimicking a wall bounce.
+		// to reverse the direction as if it hit the wall, mimicking a wall bounce.
 		if (playX < radius) {// Left wall
 			playX = 2 * radius - playX;
 			speed.addX(-2 * speed.getX());

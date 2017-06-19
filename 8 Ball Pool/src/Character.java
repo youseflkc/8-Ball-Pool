@@ -1,4 +1,6 @@
-
+/**Character class
+ * 
+ */
 public class Character {
 	String name;
 	boolean turn;

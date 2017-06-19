@@ -10,6 +10,7 @@ import java.io.IOException;
 /**
  * Created by Thomas on 2017-05-30.
  */
+
 public class Level extends JPanel {
 	private BufferedImage wooden_tile;
 	private BufferedImage wooden_tile_rotated90;
@@ -87,7 +88,7 @@ public class Level extends JPanel {
 
 		JLabel p1=new JLabel("Player 1: "+player1.points);
 		JLabel p2=new JLabel("Player 2: "+ player2.points);
-		p1.setFont(new Font("Magneto", Font.BOLD, 26));
+		p1.setFont(new Font("Magneto", Font.BOLD, 26)); 	
 		p2.setFont(new Font("Magneto", Font.BOLD, 26));
 		if(player1.turn==true){
 			p1.setForeground(Color.GREEN);

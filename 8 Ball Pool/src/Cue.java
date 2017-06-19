@@ -58,6 +58,7 @@ public class Cue implements MouseListener {
 	}
 
 	double power=0;
+	
 	public void drawBack() {
 		
 		if (MOUSE_HELD_DOWN) {
