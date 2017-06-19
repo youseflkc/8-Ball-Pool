@@ -100,7 +100,7 @@ public class Level extends JPanel {
 
 		// Cue Ball
 		ballList.insert(
-				new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(35, 13), WHITE, true, 0));
+				new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 
 		 //First ball in the triangle
 		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
@@ -142,19 +142,19 @@ public class Level extends JPanel {
 		
 		
 		//Top Pockets
-		ballList.insert(new Ball(100, 100, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), 100, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, 110, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
 		
 		//Bottom Pockets
-		ballList.insert(new Ball(100, Main.HEIGHT - 110, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 1, 0, new Speed(0, 0),
+		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
 				ORANGE, true, 77));
 		
 		
@@ -221,7 +221,7 @@ public class Level extends JPanel {
 			while (passed + next_collision < 1.0) {
 				for (int i = 0; i < BALLS; i++) {
 					if (ball[i] == first) {
-						if (ball[i].getBallNumber() != 77) {
+						if (second.getBallNumber() == 77) {
 							first.setX(10000000.0);
 							first.setY(10000000.0);
 							first.setSpeedZero();
