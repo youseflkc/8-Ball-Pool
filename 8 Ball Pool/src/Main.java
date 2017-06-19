@@ -207,6 +207,11 @@ public class Main implements ActionListener {
 		menuPane.add(settingsButton);
 
 		menuPane.add(Box.createRigidArea(new Dimension(0, 75)));
+		
+		JButton loadButton=button("Load");//button for thomas
+		loadButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
+		menuPane.add(loadButton);
+		menuPane.add(Box.createRigidArea(new Dimension(0, 75)));
 
 		JButton exitButton = button("Exit");
 		exitButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);

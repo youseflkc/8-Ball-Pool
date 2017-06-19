@@ -128,7 +128,7 @@ public class Ball {
 		if (speed.getX() > 1 && speed.getY() > 1) {
 			slowDownSpeed += 0.0075;
 		} else {
-			slowDownSpeed = 0.015;
+			slowDownSpeed = 0.03;
 		}
 
 		// Following statements check the value of the X and Y values to slow

@@ -134,6 +134,7 @@ public class Cue implements MouseListener {
 				a++;
 			}
 		}
+		//checks if all balls are stopped
 		if (a == 16) {
 			ballsMoving = false;
 		} else {

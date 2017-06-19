@@ -11,6 +11,7 @@ public class Character {
 		this.turn = turn;
 		this.points = points;
 		this.striped=striped;
+		
 	}
 	
 }
