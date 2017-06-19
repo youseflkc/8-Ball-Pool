@@ -22,7 +22,6 @@ public class Level extends JPanel {
 	public Ball[] ball = new Ball[BALLS];
 
 	private Cue cue = new Cue(this);
-
 	
 	Character player1=new Character("Player 1",true, 0,true, 0);
 	Character player2=new Character("Player 2",false, 0,false, 0);
@@ -96,6 +95,7 @@ public class Level extends JPanel {
 		p1.setFont(new Font("Magneto", Font.BOLD, 26));
 		p2.setFont(new Font("Magneto", Font.BOLD, 26));
 		
+
 
 		add(p1);
 		add(Box.createRigidArea(new Dimension(25,0)));
