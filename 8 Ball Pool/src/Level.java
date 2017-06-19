@@ -10,8 +10,6 @@ import java.io.IOException;
 /**
  * Created by Thomas on 2017-05-30.
  */
-
-
 public class Level extends JPanel {
 	private BufferedImage wooden_tile;
 	private BufferedImage wooden_tile_rotated90;
@@ -20,7 +18,7 @@ public class Level extends JPanel {
 	public LinkList ballList;
 
 	public Ball[] ball = new Ball[BALLS];
-	
+
 	private Cue cue = new Cue(this);
 	
 	Character player1=new Character("Player 1",true,0,true);
@@ -32,8 +30,8 @@ public class Level extends JPanel {
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();// 800;
 	public static final int HEIGHT = (int) screenSize.getHeight();// 600;
-	
-	public static final int BALLS = 16;
+
+	public static final int BALLS = 22;
 
 	private double next_collision;
 	private Ball first;
@@ -114,14 +112,14 @@ public class Level extends JPanel {
 				}
 			}
 		});
-		
+
 		ballList = new LinkList();
 
 		// Cue Ball
 		ballList.insert(
 				new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 
-		// First ball in the triangle
+		 //First ball in the triangle
 		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
 
 		ballList.insert(
@@ -155,7 +153,25 @@ public class Level extends JPanel {
 				PURPLE, true, 4));
 		ballList.insert(new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0),
 				ORANGE, true, 5));
+		
+		
 
+		
+		//Top Pockets
+		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		
+		//Bottom Pockets
+		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
 		repaint();
 		// Fix the colors
 
@@ -215,7 +231,15 @@ public class Level extends JPanel {
 			while (passed + next_collision < 1.0) {
 				for (int i = 0; i < BALLS; i++) {
 					if (ball[i] == first) {
-						ball[i].collide(second, next_collision);
+						if (second.getBallNumber() == 77) {
+							first.setX(10000000.0);
+							first.setY(10000000.0);
+							first.setSpeedZero();
+							first.pocketed();
+						}else{
+							ball[i].collide(second, next_collision);
+						}
+						
 					} else if (ball[i] != second) {
 						ball[i].move(next_collision);
 					}

@@ -1,4 +1,3 @@
-
 public class LinkList {
 	// node points to the beginning of the list
 	private Node first;

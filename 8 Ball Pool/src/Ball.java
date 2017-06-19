@@ -1,4 +1,3 @@
-
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -17,9 +16,8 @@ public class Ball {
 	private Color color;
 	private boolean solid;
 	private int ballNumber;
-
-	private boolean pocketed = false;
 	Sound ballHit = new Sound();
+	Boolean pocketed = false;
 
 	double slowDownSpeed = 0.02;// Double sets the slow down speed for each of
 								// the balls
@@ -43,6 +41,15 @@ public class Ball {
 	// Getters and Setters
 	public Speed getSpeed() {
 		return speed;
+	}
+
+	public void setSpeedZero() {
+		this.speed.setX(0.0);
+		this.speed.setY(0.0);
+	}
+
+	public void pocketed() {
+		this.pocketed = true;
 	}
 
 	public double getX() {
@@ -74,6 +81,14 @@ public class Ball {
 		this.color = ballColor;
 	}
 
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
+	}
+
 	public Color getColor() {
 		return color;
 	}
@@ -94,11 +109,6 @@ public class Ball {
 		return ballNumber;
 	}
 
-	public void remove() {
-		speed = new Speed();
-		pocketed = true;
-	}
-
 	public boolean moving() {
 		if (speed.getX() == 0 && speed.getY() == 0) {
 			return false;
@@ -115,7 +125,7 @@ public class Ball {
 		// Gets the ball to move
 
 		// Makes the balls slow down better and look more realistic
-		if (speed.getX() > 1 || speed.getY() > 1) {
+		if (speed.getX() > 1 && speed.getY() > 1) {
 			slowDownSpeed += 0.0075;
 		} else {
 			slowDownSpeed = 0.015;
@@ -151,20 +161,6 @@ public class Ball {
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
 
-		if (this.x < 115 && this.y < 115) {
-			pocketed=true;
-		}else if(this.x<115&&this.y>Main.HEIGHT-85){
-			pocketed=true;
-		}else if(this.x==Main.WIDTH/2+15&& this.y==115){
-			pocketed=true;
-		}else if(this.x<Main.WIDTH/2+15&&this.y>Main.HEIGHT-85){
-			pocketed=true;
-		}else if(this.x>Main.WIDTH-85&&this.y<115){
-			pocketed=true;
-		}else if(this.x>Main.WIDTH-85&&this.y>Main.HEIGHT-85){
-			pocketed=true;
-		}
-
 		// Following statements check if the ball hits the play area boundaries
 		// to reverse the direction
 		// as if it hit the wall, mimicking a wall bounce.
@@ -197,10 +193,14 @@ public class Ball {
 
 	// Paint
 	public void paint(Graphics2D g) {// This is where i should make it stripped
-		if (pocketed == false) { 
 			if (solid) {
-				g.setColor(this.color);
-				g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+				if (ballNumber == 77) {
+					g.setColor(Color.BLACK);
+					g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+				} else {
+					g.setColor(this.color);
+					g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+				}
 
 			} else {
 				g.setColor(Color.WHITE);
@@ -212,27 +212,27 @@ public class Ball {
 			}
 
 			// Setting the numbers for each ball
-			if (ballNumber > 0 && ballNumber < 10) {
+			if (ballNumber > 0 && ballNumber < 10 && ballNumber != 77) {
 				g.setColor(Color.WHITE);
 				g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
 
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(this.ballNumber), (int) (x - 6.3), (int) (y + 4));
 
-			} else if (ballNumber >= 10) {// When the number is larger than 10
-											// it messes up the position of the
-											// inner white circle to show off
-											// the number, also its making sure
-											// the cue ball doesn't get a number
+				// When the number is larger than 10 it messes up the position
+				// of the inner
+				// white circle to show off the number, also its making sure the
+				// cue ball doesn't get a number
+			} else if (ballNumber >= 10 && ballNumber != 77) {
 				g.setColor(Color.WHITE);
 				g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
 
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(this.ballNumber), (int) (x - 10), (int) (y + 4));
 			}
-		}
+		
 	}
-	
+
 	// Next collision
 	public double next_collision(Ball next) {
 		double d_x = getX() - next.getX();
@@ -268,34 +268,32 @@ public class Ball {
 
 	// Collide
 	public void collide(Ball next, double time) {
-		if (pocketed == false) {
-			try {
-				ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
-				ballHit.playSound();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			double theta = Math.atan2(next.getY() - getY(), next.getX() - getX());
-
-			double v_1 = speed.getComponent(theta);
-			double v_2 = next.getSpeed().getComponent(theta);
-
-			double m_1 = getMass();
-			double m_2 = next.getMass();
-
-			double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
-			double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
-
-			speed.addComponent(theta, -v_1 + w_1);
-			next.getSpeed().addComponent(theta, -v_2 + w_2);
-
-			move(speed.getX() * (1.0 - time), speed.getY() * (1.0 - time));
-			next.move(next.getSpeed().getX() * (1.0 - time), next.getSpeed().getY() * (1.0 - time));
+		try {
+			ballHit.loadSound("8 Ball Pool/resource/Music/pool Ball hit.wav");
+			ballHit.playSound();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		double theta = Math.atan2(next.getY() - getY(), next.getX() - getX());
+
+		double v_1 = speed.getComponent(theta);
+		double v_2 = next.getSpeed().getComponent(theta);
+
+		double m_1 = getMass();
+		double m_2 = next.getMass();
+
+		double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
+		double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
+
+		speed.addComponent(theta, -v_1 + w_1);
+		next.getSpeed().addComponent(theta, -v_2 + w_2);
+
+		move(speed.getX() * (1.0 - time), speed.getY() * (1.0 - time));
+		next.move(next.getSpeed().getX() * (1.0 - time), next.getSpeed().getY() * (1.0 - time));
 	}
 }
