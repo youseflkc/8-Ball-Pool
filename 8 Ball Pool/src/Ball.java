@@ -17,6 +17,7 @@ public class Ball {
 	private boolean solid;
 	private int ballNumber;
 	Sound ballHit = new Sound();
+	Boolean pocketed = false;
 
 	double slowDownSpeed = 0.02;//Double sets the slow down speed for each of the balls
 
@@ -42,6 +43,15 @@ public class Ball {
 	// Getters and Setters
 	public Speed getSpeed () {
 		return speed;
+	}
+	
+	public void setSpeedZero(){
+		this.speed.setX(0.0);
+		this.speed.setY(0.0);
+	}
+	
+	public void pocketed(){
+		this.pocketed = true;
 	}
 
 	public double getX () {
@@ -71,6 +81,14 @@ public class Ball {
 
 	public void setColor (Color ballColor) {
 		this.color = ballColor;
+	}
+	
+	public void setX (Double x) {
+		this.x = x;
+	}
+	
+	public void setY (Double y) {
+		this.y = y;
 	}
 
 	public Color getColor () {
@@ -181,11 +199,16 @@ public class Ball {
 
 
 	// Paint
-	public void paint (Graphics2D g) {//This is where i should make it stripped
+	public void paint (Graphics2D g) {
 		if (solid) {
-			g.setColor(this.color);
-			g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
-
+			if (ballNumber == 77) {
+				g.setColor(Color.BLACK);
+				g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+			} else {
+				g.setColor(this.color);
+				g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
+			}
+			
 		}else{
 			g.setColor(Color.WHITE);
 			g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
@@ -197,14 +220,14 @@ public class Ball {
 
 
 		//Setting the numbers for each ball
-		if (ballNumber > 0 && ballNumber < 10) {
+		if (ballNumber > 0 && ballNumber < 10 && ballNumber != 77) {
 			g.setColor(Color.WHITE);
 			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
 
 			g.setColor(Color.BLACK);
 			g.drawString(String.valueOf(this.ballNumber), (int) (x - 6.3), (int) (y + 4));
 
-		}else if(ballNumber >= 10){//When the number is larger than 10 it messes up the position of the inner white circle to show off the number, also its making sure the cue ball doesn't get a number
+		}else if(ballNumber >= 10 && ballNumber != 77){//When the number is larger than 10 it messes up the position of the inner white circle to show off the number, also its making sure the cue ball doesn't get a number
 			g.setColor(Color.WHITE);
 			g.fillOval((int) (x - 9), (int) (y - 7.3), 15, 15);
 
