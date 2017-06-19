@@ -19,18 +19,19 @@ import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 public class Main implements ActionListener {
-
+	
 	public static Level content;
-
+	
 	String helpString = "\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
 			+ " \n -A player is randomly chosen to break\n -If a ball is sunk, the player keeps playing until they miss "
 			+ "\n -Once they miss, it's the next player's turn \n -Sink all of the designated balls, and then shoot"
-			+ " at the 8-ball last to win \n\n -The 8-ball must be sunk last-sinking it before then will result"
+			+ " at the 8-ball last to win \n-The 8-ball must be sunk last-sinking it before then will result"
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
-			+ " or the cue ball must touch a side of the table";
+			+ " or the cue ball must touch a side of the table\n\nUse the left and right arrow keys to rotate the cue\n"
+			+ "Click and hold the mouse to power up the cue. The longer you hold, the more power in your shot\n Let go to release the cue";
 
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();
@@ -246,7 +247,7 @@ public class Main implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				helpPane.removeAll();
 				helpPane.setOpaque(true);
-
+				
 				checkMusic.setBackground(Color.black);
 				checkMusic.setForeground(Color.white);
 				checkMusic.setFont(new Font("Impact", Font.PLAIN, 28));
@@ -284,8 +285,6 @@ public class Main implements ActionListener {
 				}
 			}
 		});
-
-
 	}
 
 	/**
@@ -309,7 +308,7 @@ public class Main implements ActionListener {
 		Timer timer = new Timer(20, this);
 		timer.start();
 	}
-
+	
 	// Added when Lazar added "implements ActionListener" to this class
 	@Override
 	public void actionPerformed(ActionEvent e) {

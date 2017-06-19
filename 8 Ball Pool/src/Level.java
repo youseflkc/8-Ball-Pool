@@ -10,6 +10,8 @@ import java.io.IOException;
 /**
  * Created by Thomas on 2017-05-30.
  */
+
+
 public class Level extends JPanel {
 	private BufferedImage wooden_tile;
 	private BufferedImage wooden_tile_rotated90;
@@ -18,17 +20,19 @@ public class Level extends JPanel {
 	public LinkList ballList;
 
 	public Ball[] ball = new Ball[BALLS];
-
+	
 	private Cue cue = new Cue(this);
-
+	
+	Character player1=new Character("Player 1",true,0,true);
+	Character player2=new Character("Player 2",false,0,false);
 
 	// Lazar variables
-
+	
 	// Sets the bounds for the balls (the walls the ball hits)
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();// 800;
 	public static final int HEIGHT = (int) screenSize.getHeight();// 600;
-
+	
 	public static final int BALLS = 16;
 
 	private double next_collision;
@@ -81,8 +85,23 @@ public class Level extends JPanel {
 		black_dot = loadTextures("8 Ball Pool/resource/Images/black_dot.png");
 		table_grass = loadTextures("8 Ball Pool/resource/Images/table_grass.png");
 
-		// Lazar Code
-		// setLayout(new FlowLayout(FlowLayout.RIGHT));
+		JLabel p1=new JLabel("Player 1: "+player1.points);
+		JLabel p2=new JLabel("Player 2: "+ player2.points);
+		p1.setFont(new Font("Magneto", Font.BOLD, 26));
+		p2.setFont(new Font("Magneto", Font.BOLD, 26));
+		if(player1.turn==true){
+			p1.setForeground(Color.GREEN);
+			p2.setForeground(Color.RED);
+		}else{
+			p1.setForeground(Color.RED);
+			p2.setForeground(Color.green);
+		}
+		
+		add(p1);
+		add(Box.createRigidArea(new Dimension(25,0)));
+		add(p2);
+		add(Box.createRigidArea(new Dimension(25,0)));
+		
 		JButton exit = Main.button("Exit");
 
 		add(exit);
@@ -90,12 +109,12 @@ public class Level extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-
+					
 					System.exit(0);// Makes my life easy
 				}
 			}
 		});
-
+		
 		ballList = new LinkList();
 
 		// Cue Ball
@@ -180,7 +199,7 @@ public class Level extends JPanel {
 		g.drawImage(black_dot, 50, 50, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, 50, 100, 100, this);
 		g.drawImage(black_dot, Main.WIDTH - 150, 50, 100, 100, this);
-
+		
 		// Bottom Holes
 		g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
@@ -269,10 +288,9 @@ public class Level extends JPanel {
 			}
 
 		}
-
 		queued_collision_update = false;
 	}
-
+	
 	public Ball getBall(int key) {
 		return ball[key];
 	}

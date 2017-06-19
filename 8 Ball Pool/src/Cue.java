@@ -8,14 +8,15 @@ import java.awt.event.MouseListener;
  */
 
 public class Cue implements MouseListener {
+	
 	private static final int CUE_WIDTH = 400;
 	private static final int CUE_HEIGHT = 10;
-
+	
 	private int xPos;
 	private int yPos;
-
+	
 	private int drawBack_xPos;
-
+	
 	private boolean drawnBack;
 	private boolean ballsMoving = false;
 
@@ -55,14 +56,14 @@ public class Cue implements MouseListener {
 		System.out.println(angle);
 	}
 
+	double power=0;
 	public void drawBack() {
-		double power=0;
+		
 		if (MOUSE_HELD_DOWN) {
 			drawBack_xPos += 3;
-
+			power+=1;
 			drawnBack = true;
 		} else {
-			power=drawBack_xPos;
 			if (drawBack_xPos > 0) {
 				if (drawBack_xPos > 16)
 					drawBack_xPos -= 25;
@@ -117,6 +118,7 @@ public class Cue implements MouseListener {
 				cue.getSpeed().setX(Math.sin(angleSp) * power/1.35);
 			}
 			cue.move(5);
+			power=0;
 		}
 	}
 
