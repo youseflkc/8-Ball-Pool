@@ -22,9 +22,10 @@ public class Level extends JPanel {
 	public Ball[] ball = new Ball[BALLS];
 
 	private Cue cue = new Cue(this);
+
 	
-	Character player1=new Character("Player 1",true,0,true);
-	Character player2=new Character("Player 2",false,0,false);
+	Character player1=new Character("Player 1",true, 0,true, 0);
+	Character player2=new Character("Player 2",false, 0,false, 0);
 
 	// Lazar variables
 	
@@ -38,6 +39,9 @@ public class Level extends JPanel {
 	private double next_collision;
 	private Ball first;
 	private Ball second;
+
+	JLabel p1;
+	JLabel p2;
 
 	private static boolean paused = false;
 	private static boolean queued_collision_update = false;
@@ -86,18 +90,13 @@ public class Level extends JPanel {
 		table_grass = loadTextures("8 Ball Pool/resource/Images/table_grass.png");
 		graphic_cue = loadTextures("8 Ball Pool/resource/Images/cue.png");
 
-		JLabel p1=new JLabel("Player 1: "+player1.points);
-		JLabel p2=new JLabel("Player 2: "+ player2.points);
-		p1.setFont(new Font("Magneto", Font.BOLD, 26)); 	
-		p2.setFont(new Font("Magneto", Font.BOLD, 26));
-		if(player1.turn==true){
-			p1.setForeground(Color.GREEN);
-			p2.setForeground(Color.RED);
-		}else{
-			p1.setForeground(Color.RED);
-			p2.setForeground(Color.green);
-		}
 		
+		p1=new JLabel("Player 1: "+player1.points);
+		p2=new JLabel("Player 2: "+ player2.points);
+		p1.setFont(new Font("Magneto", Font.BOLD, 26));
+		p2.setFont(new Font("Magneto", Font.BOLD, 26));
+		
+
 		add(p1);
 		add(Box.createRigidArea(new Dimension(25,0)));
 		add(p2);
@@ -110,7 +109,7 @@ public class Level extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					
+
 					System.exit(0);// Makes my life easy
 				}
 			}
@@ -122,7 +121,7 @@ public class Level extends JPanel {
 		ballList.insert(
 				new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 
-		 //First ball in the triangle
+		// First ball in the triangle
 		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
 
 		ballList.insert(
@@ -158,23 +157,8 @@ public class Level extends JPanel {
 				ORANGE, true, 5));
 		
 		
+		addPocketBalls();
 
-		
-		//Top Pockets
-		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		
-		//Bottom Pockets
-		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
 		repaint();
 		// Fix the colors
 
@@ -183,8 +167,34 @@ public class Level extends JPanel {
 
 	public void loadGame(String path)
 	{
-		for (int i = 0; i < BALLS; i++)
-			ball = SaveFile.read(path);
+		ball = SaveFile.read(path);
+		ballList = new LinkList();
+
+		for (int i = 0; i < 16; i++)
+			ballList.insert(ball[i]);
+
+		addPocketBalls();
+
+		System.out.println("Loaded");
+	}
+
+	public void addPocketBalls()
+	{
+		//Top Pockets
+		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+
+		//Bottom Pockets
+		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
+				ORANGE, true, 77));
 	}
 
 	public BufferedImage loadTextures(String path) {
@@ -235,6 +245,14 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
+		if(player1.turn==true){
+			p1.setForeground(Color.GREEN);
+			p2.setForeground(Color.RED);
+		}else{
+			p1.setForeground(Color.RED);
+			p2.setForeground(Color.green);
+		}
+
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -243,6 +261,20 @@ public class Level extends JPanel {
 						if (second.getBallNumber() == 77) {
 							first.setX(10000000.0);
 							first.setY(10000000.0);
+
+							if (first.getSolid() == true)
+							{
+								player1.incrementScore();
+
+								if (player1.turn != true)
+									swapPlayerTurn(player1, player2);
+							}
+							else
+								player2.incrementScore();
+
+								if (player2.turn != true)
+									swapPlayerTurn(player2, player1);
+
 							first.setSpeedZero();
 							first.pocketed();
 						}else{
@@ -280,6 +312,16 @@ public class Level extends JPanel {
 		if (queued_collision_update) {
 			collision_update();
 
+		}
+
+		// Character turn code
+		p1.setText("Player 1: "+player1.points);
+		p2.setText("Player 2: "+player2.points);
+
+		if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
+				ball[0].getX() < 0 || ball[0].getY() < 0)
+		{
+			ball[0].setX((double) Main.WIDTH / 2);
 		}
 	}
 
@@ -322,6 +364,12 @@ public class Level extends JPanel {
 
 		}
 		queued_collision_update = false;
+	}
+
+	public void swapPlayerTurn(Character nextTurn, Character lastTurn)
+	{
+		nextTurn.setTurn(true);
+		lastTurn.setTurn(false);
 	}
 	
 	public Ball getBall(int key) {

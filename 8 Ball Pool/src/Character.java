@@ -6,13 +6,20 @@ public class Character {
 	boolean turn;
 	int points;
 	boolean striped;
+	int betAmount;
 	
-	public Character(String name, boolean turn, int points,boolean striped) {
+	public Character(String name, boolean turn, int points, boolean striped, int betAmount) {
 		super();
 		this.name = name;
 		this.turn = turn;
 		this.points = points;
 		this.striped=striped;
+		this.betAmount = betAmount;
+	}
+
+	public void incrementScore()
+	{
+		points += 1;
 	}
 
 	public String getName() {
