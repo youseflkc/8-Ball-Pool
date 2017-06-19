@@ -213,6 +213,14 @@ public class Main implements ActionListener {
 		menuPane.add(loadButton);
 		menuPane.add(Box.createRigidArea(new Dimension(0, 75)));
 
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startBalls();
+				content.loadGame("8 Ball Pool/resource/saveFile.txt");
+			}
+		});
+
 		JButton exitButton = button("Exit");
 		exitButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(exitButton);

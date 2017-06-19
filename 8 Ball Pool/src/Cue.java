@@ -64,6 +64,12 @@ public class Cue implements MouseListener {
 		if (MOUSE_HELD_DOWN) {
 			drawBack_xPos += 3;
 			power+=1;
+
+			if (drawBack_xPos > 150)
+			{
+				drawBack_xPos = 150;
+				power = 50;
+			}
 			drawnBack = true;
 		} else {
 			if (drawBack_xPos > 0) {
