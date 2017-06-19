@@ -8,6 +8,8 @@ public class Input implements MouseMotionListener, KeyListener {
 
     private JFrame frame;
 
+    SaveFile saveFile;
+
     public static int MOUSE_X_POS;
     public static int MOUSE_Y_POS;
 
@@ -56,6 +58,10 @@ public class Input implements MouseMotionListener, KeyListener {
         else if (e.getKeyCode() == 37)
         {
             Cue.updateAngle(-1);
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_0)
+        {
+            saveFile = new SaveFile(Main.content, "8 Ball Pool/resource/saveFile.txt");
         }
     }
 

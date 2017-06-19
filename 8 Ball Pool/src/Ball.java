@@ -1,4 +1,3 @@
-
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -21,7 +20,7 @@ public class Ball {
 
 	double slowDownSpeed = 0.02;//Double sets the slow down speed for each of the balls
 
-	int distence = 100;//this sets the boundaries for the balls to bounce 
+	int distence = 100;//this sets the boundaries for the balls to bounce
 	//off the walls inside of the playing area and not the JFrame.
 
 
@@ -108,7 +107,7 @@ public class Ball {
 
 	public void move (double x, double y) {
 		//Gets the ball to move
-		
+
 
 
 		//Makes the balls slow down better and look more realistic
@@ -119,7 +118,7 @@ public class Ball {
 			slowDownSpeed = 0.015;
 		}
 
-		//Following statements check the value of the X and Y values to slow down the ball accordingly 
+		//Following statements check the value of the X and Y values to slow down the ball accordingly
 		if(speed.getX()<1&&speed.getX()>0){
 			speed.setX(0);
 		}else if(speed.getX()>-1&&speed.getX()<0){
@@ -138,17 +137,17 @@ public class Ball {
 		}else if(speed.getY()<0){
 			speed.addY(slowDownSpeed);
 		}
-		
+
 		this.x += x;
 		this.y += y;
-		
+
 		//These 4 variables hold the play area for the balls
 		double playX = this.x - distence;
 		double playY = this.y - distence;
 		double playX2 = Main.WIDTH - distence;
 		double playY2 = Main.HEIGHT - distence;
 
-		//Following statements check if the ball hits the play area boundaries to reverse the direction 
+		//Following statements check if the ball hits the play area boundaries to reverse the direction
 		//as if it hit the wall, mimicking a wall bounce.
 		if (playX < radius) {//Left wall
 			playX = 2 * radius - playX;
@@ -173,7 +172,7 @@ public class Ball {
 			speed.addY (-2 * speed.getY ());
 			Level.queue_collision_update ();
 		}
-		
+
 		Level.queue_collision_update();
 	}
 
@@ -258,7 +257,7 @@ public class Ball {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		double theta = Math.atan2 (next.getY () - getY(), next.getX () - getX());
 
 		double v_1 = speed.getComponent (theta);

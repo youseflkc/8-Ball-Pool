@@ -15,6 +15,7 @@ public class Level extends JPanel {
 	private BufferedImage wooden_tile_rotated90;
 	private BufferedImage black_dot;
 	private BufferedImage table_grass;
+	private BufferedImage graphic_cue;
 	public LinkList ballList;
 
 	public Ball[] ball = new Ball[BALLS];
@@ -54,9 +55,9 @@ public class Level extends JPanel {
 
 	double METER_TO_PIXEL = (800 / 2.84);
 	int TABLE_WIDTH = (int) (1.624 * METER_TO_PIXEL);// PLay with values to
-														// figure out
-														// exactly how to get
-														// the balls ordered
+	// figure out
+	// exactly how to get
+	// the balls ordered
 	int TABLE_HEIGHT = (int) (3.048 * METER_TO_PIXEL);
 	int PLAY_WIDTH = (int) (1.42 * METER_TO_PIXEL);
 	int PLAY_HEIGHT = (int) (2.84 * METER_TO_PIXEL);
@@ -80,6 +81,7 @@ public class Level extends JPanel {
 		wooden_tile_rotated90 = loadTextures("8 Ball Pool/resource/Images/wooden_tile_rotated90.png");
 		black_dot = loadTextures("8 Ball Pool/resource/Images/black_dot.png");
 		table_grass = loadTextures("8 Ball Pool/resource/Images/table_grass.png");
+		graphic_cue = loadTextures("8 Ball Pool/resource/Images/cue.png");
 
 		// Lazar Code
 		// setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -143,6 +145,12 @@ public class Level extends JPanel {
 		// fix the look of the balls
 	}
 
+	public void loadGame(String path)
+	{
+		for (int i = 0; i < BALLS; i++)
+			ball = SaveFile.read(path);
+	}
+
 	public BufferedImage loadTextures(String path) {
 		BufferedImage image = null;
 		try {
@@ -189,7 +197,7 @@ public class Level extends JPanel {
 		// RENDERING FOR CUE
 		cue.updatePosition((int) ball[0].getX(), (int) ball[0].getY());
 		cue.drawBack();
-		cue.render(g2d);
+		cue.render(g2d, graphic_cue, this);
 
 		if (!paused) {
 			double passed = 0.0;
@@ -213,7 +221,7 @@ public class Level extends JPanel {
 		int a = 0;
 		for (int i = 0; i < BALLS; i++) {
 			ball[i].paint(g2d);
-			
+
 		}
 
 		/*

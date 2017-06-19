@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by Thomas on 2017-06-02.
@@ -53,7 +54,6 @@ public class Cue implements MouseListener {
 			angle = 360 - remainder;
 		}
 		System.out.println(angle);
-
 	}
 
 	public void drawBack() {
@@ -121,10 +121,10 @@ public class Cue implements MouseListener {
 		}
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g, BufferedImage cue, Level level) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(this.color);
-		cue = new Rectangle(xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT);
+		//cue = new Rectangle(xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT);
 
 		g2d.rotate(Math.toRadians(angle), xPos, yPos);
 		int a = 0;
@@ -139,8 +139,9 @@ public class Cue implements MouseListener {
 			ballsMoving = true;
 		}
 		if (ballsMoving == false) {
-			g2d.draw(cue);
-			g2d.fill(cue);
+			//g2d.draw(cue);
+			g2d.drawImage(cue, xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT, level);
+//			g2d.fill(cue);
 		}
 	}
 
