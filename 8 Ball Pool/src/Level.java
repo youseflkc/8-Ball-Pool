@@ -79,6 +79,8 @@ public class Level extends JPanel {
 	double initialPosX = Main.WIDTH - 400;
 	double initialPosY = Main.HEIGHT / 2;
 
+	boolean collisionOccured = false;
+
 	public Level() {
 
 		setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -247,8 +249,6 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
-		boolean notInPocket = false;
-
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -340,7 +340,7 @@ public class Level extends JPanel {
 						}else{
 							ball[i].collide(second, next_collision);
 
-							notInPocket = true;
+							collisionOccured = true;
 						}
 						
 					} else if (ball[i] != second) {
@@ -371,9 +371,10 @@ public class Level extends JPanel {
 			}
 		}
 
-		if (keys == 16 && notInPocket == true)
+		if (keys == 16 && collisionOccured == true)
 		{
 			System.out.println("Swapped");
+			collisionOccured = false;
 			swapPlayerTurn();
 		}
 
