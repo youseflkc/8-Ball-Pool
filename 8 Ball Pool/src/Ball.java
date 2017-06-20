@@ -42,16 +42,7 @@ public class Ball {
 	public Speed getSpeed() {
 		return speed;
 	}
-
-	public void setSpeedZero() {
-		this.speed.setX(0.0);
-		this.speed.setY(0.0);
-	}
-
-	public void pocketed() {
-		this.pocketed = true;
-	}
-
+	
 	public double getX() {
 		return x;
 	}
@@ -109,6 +100,22 @@ public class Ball {
 		return ballNumber;
 	}
 
+	
+	
+	
+	
+	
+	public void setSpeedZero() {
+		this.speed.setX(0.0);
+		this.speed.setY(0.0);
+	}
+
+	//Sets the current ball to "pocket" once ball has been detected inside of a pocket
+	public void pocketed() {
+		this.pocketed = true;
+	}
+	
+	//Checks to see if the current ball is moving
 	public boolean moving() {
 		if (speed.getX() == 0 && speed.getY() == 0) {
 			return false;
@@ -116,13 +123,13 @@ public class Ball {
 		return true;
 	}
 
-	// Move
+	//Method is used to have the ball moving at a current speed using the time
 	public void move(double time) {
 		move(speed.getX() * time, speed.getY() * time);
 	}
 
+	//
 	public void move(double x, double y) {
-		// Gets the ball to move
 
 		// Makes the balls slow down better and look more realistic
 		if (speed.getX() > 1 && speed.getY() > 1) {
@@ -131,6 +138,7 @@ public class Ball {
 			slowDownSpeed = 0.04;
 		}
 
+		
 		// Following statements check the value of the X and Y values to slow
 		// down the ball accordingly
 		if (speed.getX() < 1 && speed.getX() > 0) {
@@ -152,6 +160,7 @@ public class Ball {
 			speed.addY(slowDownSpeed);
 		}
 
+		//Updates object variables
 		this.x += x;
 		this.y += y;
 
@@ -163,25 +172,25 @@ public class Ball {
 
 		// Following statements check if the ball hits the play area boundaries
 		// to reverse the direction as if it hit the wall, mimicking a wall bounce.
-		if (playX < radius) {// Left wall
+		if (playX < radius + 2) {// Left wall
 			playX = 2 * radius - playX;
 			speed.addX(-2 * speed.getX());
 			Level.queue_collision_update();
 		}
 
-		if (this.x > playX2 - radius) {// Right wall
+		if (this.x > playX2 - radius + 2) {// Right wall
 			this.x = 2 * (playX2 - radius) - this.x;
 			speed.addX(-2 * speed.getX());
 			Level.queue_collision_update();
 		}
 
-		if (playY < radius) {// Top wall
+		if (playY < radius + 2) {// Top wall
 			playY = 2 * radius - playY;
 			speed.addY(-2 * speed.getY());
 			Level.queue_collision_update();
 		}
 
-		if (this.y > playY2 - radius) {// Bottom wall
+		if (this.y > playY2 - radius + 2) {// Bottom wall
 			this.y = 2 * (playY2 - radius) - this.y;
 			speed.addY(-2 * speed.getY());
 			Level.queue_collision_update();
@@ -190,9 +199,12 @@ public class Ball {
 		Level.queue_collision_update();
 	}
 
-	// Paint
-	public void paint(Graphics2D g) {// This is where i should make it stripped
+	//Called once when the ball object is first being created
+	public void paint(Graphics2D g) {
+		
+		//Makes sure to color the ball correctly if its striped or solid
 			if (solid) {
+				//Checks to see if the current ball is the pocket ball and draws the ball appropriately.
 				if (ballNumber == 77) {
 					g.setColor(Color.BLACK);
 					g.fill(new Ellipse2D.Double(x - radius, y - radius, 2 * radius, 2 * radius));
@@ -218,6 +230,7 @@ public class Ball {
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(this.ballNumber), (int) (x - 6.3), (int) (y + 4));
 
+				
 				// When the number is larger than 10 it messes up the position
 				// of the inner
 				// white circle to show off the number, also its making sure the
@@ -232,37 +245,47 @@ public class Ball {
 		
 	}
 
-	// Next collision
+	//Finds the next collision that will occur
 	public double next_collision(Ball next) {
+		
+		//Grabs the position of the ball and angle of speed
 		double d_x = getX() - next.getX();
 		double d_y = getY() - next.getY();
 		double d_vx = speed.getX() - next.getSpeed().getX();
 		double d_vy = speed.getY() - next.getSpeed().getY();
 
+		//Makes sure ball has velocity
 		if (d_vx == 0 && d_vy == 0)
 			return Double.POSITIVE_INFINITY;
 
+		//Creates the top range angle 
 		double a = d_vx * d_vx + d_vy * d_vy;
+		
+		//Creates the bottom range angle
 		double b_mezzi = d_vx * d_x + d_vy * d_y;
+		
+		//The range which the bounce angle can go into
 		double delta_quarti = Math.pow(radius + next.getRadius(), 2) * a - Math.pow(d_vx * d_y - d_vy * d_x, 2);
 
 		if (delta_quarti < 0)
 			return Double.POSITIVE_INFINITY;
 
-		double inizio = (-b_mezzi - Math.sqrt(delta_quarti)) / a;
-		double fine = (-b_mezzi + Math.sqrt(delta_quarti)) / a;
+		//Both points calculate the point which will cause the next next collision
+		double beginning = (-b_mezzi - Math.sqrt(delta_quarti)) / a;
+		double end = (-b_mezzi + Math.sqrt(delta_quarti)) / a;
 
-		if (fine < 0)
+		if (end < 0)
 			return Double.POSITIVE_INFINITY;
 
-		if (inizio < (inizio - fine) / 2) // Large approximation, but it should
-											// work
+		//Makes sure a proper collision will occur, if not return "nothing" (positive value, 
+		//but doesn't have a significant purpose besides not throwing errors)
+		if (beginning < (beginning - end) / 2) // Large approximation, but it should work
 			return Double.POSITIVE_INFINITY;
 
-		if (inizio < 0)
+		if (beginning < 0)
 			return 0.0;
 
-		return inizio;
+		return beginning;
 	}
 
 	// Collide
@@ -278,21 +301,25 @@ public class Ball {
 			e.printStackTrace();
 		}
 
+		//Sets the angle for the bounce
 		double theta = Math.atan2(next.getY() - getY(), next.getX() - getX());
 		
+		//Finds both current angles both balls are following
 		double v_1 = speed.getComponent(theta);
 		double v_2 = next.getSpeed().getComponent(theta);
 
 		double m_1 = getMass();
 		double m_2 = next.getMass();
 		
+		//Determines the bounce angles for both balls
 		double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
 		double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
 		
+		//Set each ball and their new angles to follow
 		speed.addComponent(theta, -v_1 + w_1);
 		next.getSpeed().addComponent(theta, -v_2 + w_2);
 		
-		move(speed.getX() * (1.0 - time), speed.getY() * (1.0 - time));
-		next.move(next.getSpeed().getX() * (1.0 - time), next.getSpeed().getY() * (1.0 - time));
+//		move(speed.getX() * (1.0 - time), speed.getY() * (1.0 - time));
+//		next.move(next.getSpeed().getX() * (1.0 - time), next.getSpeed().getY() * (1.0 - time));
 	}
 }

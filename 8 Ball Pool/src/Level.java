@@ -7,34 +7,47 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Thomas on 2017-05-30.
- */
+/*
+ * Description: Level.java is used to display the look of the playing table. Also it check for collisions and
+ * handles them appropriately.
+ * 
+ * Created by: LYT Studios
+ * 
+ * date: June, 20th, 2017
+*/
 
 public class Level extends JPanel {
+	
+	//BufferedImages hold the images for the look of the pool table.
 	private BufferedImage wooden_tile;
 	private BufferedImage wooden_tile_rotated90;
 	private BufferedImage black_dot;
 	private BufferedImage table_grass;
 	private BufferedImage graphic_cue;
+	
+	//Linked list holds the balls in a data structure
 	public LinkList ballList;
 
+	//Uses an Array of Ball objects to easily check for collisions
 	public Ball[] ball = new Ball[BALLS];
-
+	
+	//Created Cue object to render out on the pool table
 	private Cue cue = new Cue(this);
 
+	
 	Character player1 = new Character("Player 1", true, 0, true, 0);
 	Character player2 = new Character("Player 2", false, 0, false, 0);
 
-	// Lazar variables
 
 	// Sets the bounds for the balls (the walls the ball hits)
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();// 800;
 	public static final int HEIGHT = (int) screenSize.getHeight();// 600;
 
+	//used to set the amount of balls in play and size of Ball[] ball
 	public static final int BALLS = 22;
 
+	//
 	private double next_collision;
 	private Ball first;
 	private Ball second;
