@@ -93,18 +93,19 @@ public class Level extends JPanel {
 		p2 = new JLabel("Player 2: " + player2.points);
 		p1.setFont(new Font("Magneto", Font.BOLD, 26));
 		p2.setFont(new Font("Magneto", Font.BOLD, 26));
-		do{
-		try {
-			player1.betAmount = Integer.parseInt(
-					JOptionPane.showInputDialog(this, "Place your bet:", "Player 1", JOptionPane.QUESTION_MESSAGE));
-			player2.betAmount = Integer.parseInt(
-					JOptionPane.showInputDialog(this, "Place your bet:", "Player 2", JOptionPane.QUESTION_MESSAGE));
-			break;
-			
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Please enter in a valid number", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		}while(true);
+		do {
+			try {
+				player1.betAmount = Integer.parseInt(
+						JOptionPane.showInputDialog(this, "Place your bet:", "Player 1", JOptionPane.QUESTION_MESSAGE));
+				player2.betAmount = Integer.parseInt(
+						JOptionPane.showInputDialog(this, "Place your bet:", "Player 2", JOptionPane.QUESTION_MESSAGE));
+				break;
+
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Please enter in a valid number", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} while (true);
 		add(p1);
 		add(Box.createRigidArea(new Dimension(25, 0)));
 		add(p2);
@@ -328,7 +329,7 @@ public class Level extends JPanel {
 
 							first.setSpeedZero();
 							first.pocketed();
-						} else {
+						} else{
 							ball[i].collide(second, next_collision);
 
 							notInPocket = true;
