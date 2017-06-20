@@ -151,6 +151,7 @@ public class Cue implements MouseListener {
 		if (ballsMoving == false) {
 			//g2d.draw(cue);
 			g2d.drawImage(cue, xPos + 20 + drawBack_xPos, yPos, CUE_WIDTH, CUE_HEIGHT, level);
+			g2d.drawLine(xPos, yPos, xPos-900, yPos);
 //			g2d.fill(cue);
 		}
 	}
