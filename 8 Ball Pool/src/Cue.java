@@ -82,7 +82,6 @@ public class Cue implements MouseListener {
 		}
 
 		if (drawnBack == true && drawBack_xPos <= 0 && ballsMoving == false) {
-			System.out.println("Ran");
 			drawnBack = false;
 			Ball cue = Main.content.getBall(0);
 			double angleSp = 0;
@@ -164,13 +163,11 @@ public class Cue implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		MOUSE_HELD_DOWN = true;
-		System.out.println("Pressed - " + MOUSE_HELD_DOWN);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		MOUSE_HELD_DOWN = false;
-		System.out.println("Released - " + MOUSE_HELD_DOWN);
 	}
 
 	@Override
