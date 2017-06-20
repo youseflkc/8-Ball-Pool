@@ -247,14 +247,6 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
-		if(player1.turn==true){
-			p1.setForeground(Color.GREEN);
-			p2.setForeground(Color.RED);
-		}else{
-			p1.setForeground(Color.RED);
-			p2.setForeground(Color.green);
-		}
-
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -264,18 +256,82 @@ public class Level extends JPanel {
 							first.setX(10000000.0);
 							first.setY(10000000.0);
 
-							if (first.getSolid() == true)
+
+							if (first.getBallNumber() == 0)
+							{
+								ball[0].setX((double) Main.WIDTH / 2);
+								ball[0].setY((double) Main.HEIGHT / 2);
+
+								swapPlayerTurn();
+							}else if(first.getBallNumber()==8){
+								if(player1.turn==true){
+									if(player1.points==7){
+										//game won
+										JFrame win=new JFrame("WINNER");
+										win.setSize(500,500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel=new JLabel("Player 1 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel,BorderLayout.CENTER);
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+										
+									}else {
+										//game over
+										JFrame win=new JFrame("WINNER");
+										win.setSize(500,500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel=new JLabel("Player 2 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel,BorderLayout.CENTER); 
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+									}
+								}else if(player2.turn){
+									if(player2.points==7){
+										//game won
+										JFrame win=new JFrame("WINNER");
+										win.setSize(500,500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel=new JLabel("Player 2 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel,BorderLayout.CENTER);
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+
+									}else{
+										//game over
+										JFrame win=new JFrame("WINNER");
+										win.setSize(500,500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel=new JLabel("Player 1 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel,BorderLayout.CENTER);
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+									}
+								}
+							}
+							else if (first.getSolid() == true)
 							{
 								player1.incrementScore();
 
 								if (player1.turn != true)
-									swapPlayerTurn(player1, player2);
+									swapPlayerTurn();
 							}
 							else
 								player2.incrementScore();
 
 								if (player2.turn != true)
-									swapPlayerTurn(player2, player1);
+									swapPlayerTurn();
 
 							first.setSpeedZero();
 							first.pocketed();
@@ -316,15 +372,23 @@ public class Level extends JPanel {
 
 		}
 
-		// Character turn code
-		p1.setText("Player 1: "+player1.points);
-		p2.setText("Player 2: "+player2.points);
-
-		if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
-				ball[0].getX() < 0 || ball[0].getY() < 0)
-		{
-			ball[0].setX((double) Main.WIDTH / 2);
+		if(player1.turn == true){
+			p1.setForeground(Color.GREEN);
+			p2.setForeground(Color.RED);
+		}else{
+			p1.setForeground(Color.RED);
+			p2.setForeground(Color.green);
 		}
+
+		// Character turn code
+		p1.setText("Player 1: " + player1.points);
+		p2.setText("Player 2: " + player2.points);
+
+//		if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
+//				ball[0].getX() < 0 || ball[0].getY() < 0)
+//		{
+//
+//		}
 		
 	}
 
@@ -369,10 +433,17 @@ public class Level extends JPanel {
 		queued_collision_update = false;
 	}
 
-	public void swapPlayerTurn(Character nextTurn, Character lastTurn)
+	public void swapPlayerTurn()
 	{
-		nextTurn.setTurn(true);
-		lastTurn.setTurn(false);
+		boolean turn;
+
+		turn = !player1.isTurn();
+		player1.setTurn(turn);
+		System.out.println("Turn player 1 = " + player1.isTurn());
+
+		turn = !player2.isTurn();
+		player2.setTurn(turn);
+		System.out.println("Turn player 2 = " + player2.isTurn());
 	}
 	
 	public Ball getBall(int key) {
