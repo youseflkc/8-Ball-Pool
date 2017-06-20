@@ -325,6 +325,7 @@ public class Level extends JPanel {
 		{
 			ball[0].setX((double) Main.WIDTH / 2);
 		}
+		
 	}
 
 	// Lazar code
