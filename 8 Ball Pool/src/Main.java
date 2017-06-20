@@ -31,7 +31,7 @@ public class Main implements ActionListener {
 			+ " in an automatic loss \n -If the cue ball is sunk, the next player gets their turn with the ball in hand \n"
 			+ " -The cue ball must touch that player's type of ball (striped or solid), and the coloured ball that was hit"
 			+ " or the cue ball must touch a side of the table\n\nUse the left and right arrow keys to rotate the cue\n"
-			+ "Click and hold the mouse to power up the cue. The longer you hold, the more power in your shot\n Let go to release the cue";
+			+ "Click and hold the mouse to power up the cue. The longer you hold, the more power in your shot\nLet go to release the cue";
 
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();
@@ -118,7 +118,7 @@ public class Main implements ActionListener {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
 				try {
-					//bgMusic.playSound();
+					bgMusic.playSound();
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
@@ -213,6 +213,14 @@ public class Main implements ActionListener {
 		menuPane.add(loadButton);
 		menuPane.add(Box.createRigidArea(new Dimension(0, 75)));
 
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startBalls();
+				content.loadGame("8 Ball Pool/resource/saveFile.txt");
+			}
+		});
+
 		JButton exitButton = button("Exit");
 		exitButton.setAlignmentX(menuPane.CENTER_ALIGNMENT);
 		menuPane.add(exitButton);
@@ -231,7 +239,7 @@ public class Main implements ActionListener {
 				helpText.setFont(new Font("High Tower Text", Font.PLAIN, 20));
 				helpText.setForeground(Color.WHITE);
 				helpText.setHighlighter(null);
-				helpText.setBackground(new Color(0, 0, 0, 0));
+				helpText.setBackground(Color.BLACK);
 				helpText.setLineWrap(true);
 				helpText.setWrapStyleWord(true);
 				JScrollPane helpScroll = new JScrollPane(helpText);

@@ -128,7 +128,7 @@ public class Ball {
 		if (speed.getX() > 1 && speed.getY() > 1) {
 			slowDownSpeed += 0.0075;
 		} else {
-			slowDownSpeed = 0.03;
+			slowDownSpeed = 0.04;
 		}
 
 		// Following statements check the value of the X and Y values to slow
@@ -279,19 +279,19 @@ public class Ball {
 		}
 
 		double theta = Math.atan2(next.getY() - getY(), next.getX() - getX());
-
+		
 		double v_1 = speed.getComponent(theta);
 		double v_2 = next.getSpeed().getComponent(theta);
 
 		double m_1 = getMass();
 		double m_2 = next.getMass();
-
+		
 		double w_1 = ((m_1 - m_2) * v_1 + 2 * m_2 * v_2) / (m_1 + m_2);
 		double w_2 = ((m_2 - m_1) * v_2 + 2 * m_1 * v_1) / (m_1 + m_2);
-
+		
 		speed.addComponent(theta, -v_1 + w_1);
 		next.getSpeed().addComponent(theta, -v_2 + w_2);
-
+		
 		move(speed.getX() * (1.0 - time), speed.getY() * (1.0 - time));
 		next.move(next.getSpeed().getX() * (1.0 - time), next.getSpeed().getY() * (1.0 - time));
 	}
