@@ -247,6 +247,8 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
+		boolean notInPocket = false;
+
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -328,15 +330,19 @@ public class Level extends JPanel {
 									swapPlayerTurn();
 							}
 							else
+							{
 								player2.incrementScore();
 
 								if (player2.turn != true)
 									swapPlayerTurn();
+							}
 
 							first.setSpeedZero();
 							first.pocketed();
 						}else{
 							ball[i].collide(second, next_collision);
+
+							notInPocket = true;
 						}
 						
 					} else if (ball[i] != second) {
@@ -358,6 +364,21 @@ public class Level extends JPanel {
 
 		}
 
+		int keys = 0;
+		for (int i = 0; i < 16; i++)
+		{
+			if (ball[i].moving() == false)
+			{
+				keys += 1;
+			}
+		}
+
+		if (keys == 16 && notInPocket == true)
+		{
+			System.out.println("Swapped");
+			swapPlayerTurn();
+		}
+
 		/*
 		 * g2d.setColor (new Color (0, 0, 0)); if (next_collision < 1000 &&
 		 * first != null && second != null) g2d.drawLine ((int)(first.getX() +
@@ -371,6 +392,8 @@ public class Level extends JPanel {
 			collision_update();
 
 		}
+
+//		System.out.println(player1.turn);
 
 		if(player1.turn == true){
 			p1.setForeground(Color.GREEN);

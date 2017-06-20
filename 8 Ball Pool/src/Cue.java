@@ -55,7 +55,6 @@ public class Cue implements MouseListener {
 			int remainder = Math.abs(angle - 0);
 			angle = 360 - remainder;
 		}
-		System.out.println(angle);
 	}
 
 	double power = 0;

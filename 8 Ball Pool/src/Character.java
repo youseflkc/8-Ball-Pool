@@ -19,6 +19,7 @@ public class Character {
 
 	public void incrementScore()
 	{
+		System.out.println("!");
 		points += 1;
 	}
 
