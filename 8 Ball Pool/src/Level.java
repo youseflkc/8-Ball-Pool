@@ -295,7 +295,6 @@ public class Level extends JPanel {
 									}
 								}else if(player2.turn){
 									if(player2.points==7){
-										//game won
 										JFrame win=new JFrame("WINNER");
 										win.setSize(500,500);
 										win.setLayout(new BorderLayout());
@@ -308,7 +307,6 @@ public class Level extends JPanel {
 										SwingUtilities.getWindowAncestor(Level.this).dispose();
 
 									}else{
-										//game over
 										JFrame win=new JFrame("WINNER");
 										win.setSize(500,500);
 										win.setLayout(new BorderLayout());

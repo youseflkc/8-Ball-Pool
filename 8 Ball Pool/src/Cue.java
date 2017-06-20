@@ -96,7 +96,7 @@ public class Cue implements MouseListener {
 				angleSp = Math.toRadians(angleSp);
 				cue.getSpeed().setY(-Math.sin(angleSp) * power / 1.35);
 				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
-			} else if (angle > 180 && angle < 270) {
+			} else if (angle > 180 && angle < 270) { 
 				angleSp = angle - 180;
 				angleSp = Math.toRadians(angleSp);
 				cue.getSpeed().setY(Math.sin(angleSp) * power / 1.35);
