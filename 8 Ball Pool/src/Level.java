@@ -272,15 +272,19 @@ public class Level extends JPanel {
 									swapPlayerTurn();
 							}
 							else
+							{
 								player2.incrementScore();
 
 								if (player2.turn != true)
 									swapPlayerTurn();
+							}
 
 							first.setSpeedZero();
 							first.pocketed();
 						}else{
 							ball[i].collide(second, next_collision);
+
+
 						}
 						
 					} else if (ball[i] != second) {
@@ -315,6 +319,8 @@ public class Level extends JPanel {
 			collision_update();
 
 		}
+
+//		System.out.println(player1.turn);
 
 		if(player1.turn == true){
 			p1.setForeground(Color.GREEN);
