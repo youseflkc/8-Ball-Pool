@@ -129,7 +129,7 @@ public class Level extends JPanel {
 		add(exit);
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 					System.exit(0);// Makes my life easy
@@ -461,11 +461,9 @@ public class Level extends JPanel {
 
 		turn = !player1.isTurn();
 		player1.setTurn(turn);
-		System.out.println("Turn player 1 = " + player1.isTurn());
 
 		turn = !player2.isTurn();
 		player2.setTurn(turn);
-		System.out.println("Turn player 2 = " + player2.isTurn());
 	}
 
 	public Ball getBall(int key) {
