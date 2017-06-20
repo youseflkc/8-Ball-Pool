@@ -86,14 +86,17 @@ public class Cue implements MouseListener {
 			Ball cue = Main.content.getBall(0);
 			double angleSp = 0;
 
+			//checks which quadrant the cue is in
 			if (angle > 0 && angle < 90) {
 				angleSp = angle;
 				angleSp = Math.toRadians(angleSp);
 				cue.getSpeed().setY(-Math.sin(angleSp) * power / 1.35);
 				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle > 90 && angle < 180) {
+				//calculates raa and converts to radians
 				angleSp = angle - 90;
 				angleSp = Math.toRadians(angleSp);
+				//trigonometry to calculate speed
 				cue.getSpeed().setX(Math.sin(angleSp) * power / 1.35);
 				cue.getSpeed().setY(-Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle > 180 && angle < 270) { 

@@ -2,11 +2,11 @@
  * 
  */
 public class Character {
-	String name;
-	boolean turn;
-	int points;
-	boolean striped;
-	int betAmount;
+	String name; //persons name
+	boolean turn;//true if its that players turn
+	int points;	//total balls pocketed for that player
+	boolean striped; //if the players target is striped or solid balls
+	int betAmount; 
 	
 	public Character(String name, boolean turn, int points, boolean striped, int betAmount) {
 		super();
