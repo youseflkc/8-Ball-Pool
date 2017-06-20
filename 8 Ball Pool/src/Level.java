@@ -22,12 +22,12 @@ public class Level extends JPanel {
 	public Ball[] ball = new Ball[BALLS];
 
 	private Cue cue = new Cue(this);
-	
-	Character player1=new Character("Player 1",true, 0,true, 0);
-	Character player2=new Character("Player 2",false, 0,false, 0);
+
+	Character player1 = new Character("Player 1", true, 0, true, 0);
+	Character player2 = new Character("Player 2", false, 0, false, 0);
 
 	// Lazar variables
-	
+
 	// Sets the bounds for the balls (the walls the ball hits)
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();// 800;
@@ -70,16 +70,14 @@ public class Level extends JPanel {
 	int WIDTH_GAP = (TABLE_WIDTH - PLAY_WIDTH);
 	int HEIGHT_GAP = (TABLE_HEIGHT - PLAY_HEIGHT);
 
-	double dx = WIDTH_GAP / 6 + INIT_RADIUS+4;
-	double dy = HEIGHT_GAP / 6 + INIT_RADIUS+4;
+	double dx = WIDTH_GAP / 6 + INIT_RADIUS + 4;
+	double dy = HEIGHT_GAP / 6 + INIT_RADIUS + 4;
 
 	double centerX = WIDTH_GAP / 2 + PLAY_WIDTH / 2;
 	double centerY = HEIGHT_GAP / 2 + PLAY_HEIGHT / 2;
 
 	double initialPosX = Main.WIDTH - 400;
 	double initialPosY = Main.HEIGHT / 2;
-
-	boolean collisionOccured = false;
 
 	public Level() {
 
@@ -91,21 +89,27 @@ public class Level extends JPanel {
 		table_grass = loadTextures("8 Ball Pool/resource/Images/table_grass.png");
 		graphic_cue = loadTextures("8 Ball Pool/resource/Images/cue.png");
 
-		
-		p1=new JLabel("Player 1: "+player1.points);
-		p2=new JLabel("Player 2: "+ player2.points);
+		p1 = new JLabel("Player 1: " + player1.points);
+		p2 = new JLabel("Player 2: " + player2.points);
 		p1.setFont(new Font("Magneto", Font.BOLD, 26));
 		p2.setFont(new Font("Magneto", Font.BOLD, 26));
-		
-		
-		player1.betAmount=Integer.parseInt(JOptionPane.showInputDialog(this, "Place your bet:", "Player 1", JOptionPane.QUESTION_MESSAGE));
-		player2.betAmount=Integer.parseInt(JOptionPane.showInputDialog(this, "Place your bet:", "Player 2", JOptionPane.QUESTION_MESSAGE));
-		
+		do{
+		try {
+			player1.betAmount = Integer.parseInt(
+					JOptionPane.showInputDialog(this, "Place your bet:", "Player 1", JOptionPane.QUESTION_MESSAGE));
+			player2.betAmount = Integer.parseInt(
+					JOptionPane.showInputDialog(this, "Place your bet:", "Player 2", JOptionPane.QUESTION_MESSAGE));
+			break;
+			
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Please enter in a valid number", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		}while(true);
 		add(p1);
-		add(Box.createRigidArea(new Dimension(25,0)));
+		add(Box.createRigidArea(new Dimension(25, 0)));
 		add(p2);
-		add(Box.createRigidArea(new Dimension(25,0)));
-		
+		add(Box.createRigidArea(new Dimension(25, 0)));
+
 		JButton exit = Main.button("Exit");
 
 		add(exit);
@@ -159,8 +163,7 @@ public class Level extends JPanel {
 				PURPLE, true, 4));
 		ballList.insert(new Ball(initialPosX + 4 * dx, initialPosY - 4 * dy, INIT_RADIUS, INIT_MASS, new Speed(0, 0),
 				ORANGE, true, 5));
-		
-		
+
 		addPocketBalls();
 
 		repaint();
@@ -169,8 +172,7 @@ public class Level extends JPanel {
 		// fix the look of the balls
 	}
 
-	public void loadGame(String path)
-	{
+	public void loadGame(String path) {
 		ball = SaveFile.read(path);
 		ballList = new LinkList();
 
@@ -182,23 +184,16 @@ public class Level extends JPanel {
 		System.out.println("Loaded");
 	}
 
-	public void addPocketBalls()
-	{
-		//Top Pockets
-		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
+	public void addPocketBalls() {
+		// Top Pockets
+		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0), ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), 100, 5, 0, new Speed(0, 0), ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, 110, 5, 0, new Speed(0, 0), ORANGE, true, 77));
 
-		//Bottom Pockets
-		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
-		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0),
-				ORANGE, true, 77));
+		// Bottom Pockets
+		ballList.insert(new Ball(100, Main.HEIGHT - 110, 5, 0, new Speed(0, 0), ORANGE, true, 77));
+		ballList.insert(new Ball((Main.WIDTH / 2), Main.HEIGHT - 110, 5, 0, new Speed(0, 0), ORANGE, true, 77));
+		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0), ORANGE, true, 77));
 	}
 
 	public BufferedImage loadTextures(String path) {
@@ -238,7 +233,7 @@ public class Level extends JPanel {
 		g.drawImage(black_dot, 50, 50, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, 50, 100, 100, this);
 		g.drawImage(black_dot, Main.WIDTH - 150, 50, 100, 100, this);
-		
+
 		// Bottom Holes
 		g.drawImage(black_dot, 50, Main.HEIGHT - 150, 100, 100, this);
 		g.drawImage(black_dot, (Main.WIDTH / 2) - 50, Main.HEIGHT - 150, 100, 100, this);
@@ -249,6 +244,8 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
+		boolean notInPocket = false;
+
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -258,77 +255,71 @@ public class Level extends JPanel {
 							first.setX(10000000.0);
 							first.setY(10000000.0);
 
-
-							if (first.getBallNumber() == 0)
-							{
+							if (first.getBallNumber() == 0) {
 								ball[0].setX((double) Main.WIDTH / 2);
 								ball[0].setY((double) Main.HEIGHT / 2);
 
 								swapPlayerTurn();
-							}else if(first.getBallNumber()==8){
-								if(player1.turn==true){
-									if(player1.points==7){
-										//game won
-										JFrame win=new JFrame("WINNER");
-										win.setSize(500,500);
+							} else if (first.getBallNumber() == 8) {
+								if (player1.turn == true) {
+									if (player1.points == 7) {
+										// game won
+										JFrame win = new JFrame("WINNER");
+										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel=new JLabel("Player 1 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										JLabel winnerLabel = new JLabel("Player 1 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
-										win.add(winnerLabel,BorderLayout.CENTER);
-										win.setVisible(true);
-										SwingUtilities.getWindowAncestor(Level.this).dispose();
-										
-									}else {
-										//game over
-										JFrame win=new JFrame("WINNER");
-										win.setSize(500,500);
-										win.setLayout(new BorderLayout());
-										JLabel winnerLabel=new JLabel("Player 2 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
-										win.getContentPane().setBackground(Color.GREEN);
-										winnerLabel.setBackground(Color.GREEN);
-										win.add(winnerLabel,BorderLayout.CENTER); 
-										win.setVisible(true);
-										SwingUtilities.getWindowAncestor(Level.this).dispose();
-									}
-								}else if(player2.turn){
-									if(player2.points==7){
-										JFrame win=new JFrame("WINNER");
-										win.setSize(500,500);
-										win.setLayout(new BorderLayout());
-										JLabel winnerLabel=new JLabel("Player 2 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
-										win.getContentPane().setBackground(Color.GREEN);
-										winnerLabel.setBackground(Color.GREEN);
-										win.add(winnerLabel,BorderLayout.CENTER);
+										win.add(winnerLabel, BorderLayout.CENTER);
 										win.setVisible(true);
 										SwingUtilities.getWindowAncestor(Level.this).dispose();
 
-									}else{
-										JFrame win=new JFrame("WINNER");
-										win.setSize(500,500);
+									} else {
+										// game over
+										JFrame win = new JFrame("WINNER");
+										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel=new JLabel("Player 1 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text",Font.BOLD,60));
+										JLabel winnerLabel = new JLabel("Player 2 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
-										win.add(winnerLabel,BorderLayout.CENTER);
+										win.add(winnerLabel, BorderLayout.CENTER);
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+									}
+								} else if (player2.turn) {
+									if (player2.points == 7) {
+										JFrame win = new JFrame("WINNER");
+										win.setSize(500, 500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel = new JLabel("Player 2 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel, BorderLayout.CENTER);
+										win.setVisible(true);
+										SwingUtilities.getWindowAncestor(Level.this).dispose();
+
+									} else {
+										JFrame win = new JFrame("WINNER");
+										win.setSize(500, 500);
+										win.setLayout(new BorderLayout());
+										JLabel winnerLabel = new JLabel("Player 1 WINS!");
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										win.getContentPane().setBackground(Color.GREEN);
+										winnerLabel.setBackground(Color.GREEN);
+										win.add(winnerLabel, BorderLayout.CENTER);
 										win.setVisible(true);
 										SwingUtilities.getWindowAncestor(Level.this).dispose();
 									}
 								}
-							}
-							else if (first.getSolid() == true)
-							{
+							} else if (first.getSolid() == true) {
 								player1.incrementScore();
 
 								if (player1.turn != true)
 									swapPlayerTurn();
-							}
-							else
-							{
+							} else {
 								player2.incrementScore();
 
 								if (player2.turn != true)
@@ -337,12 +328,12 @@ public class Level extends JPanel {
 
 							first.setSpeedZero();
 							first.pocketed();
-						}else{
+						} else {
 							ball[i].collide(second, next_collision);
 
-							collisionOccured = true;
+							notInPocket = true;
 						}
-						
+
 					} else if (ball[i] != second) {
 						ball[i].move(next_collision);
 					}
@@ -363,18 +354,14 @@ public class Level extends JPanel {
 		}
 
 		int keys = 0;
-		for (int i = 0; i < 16; i++)
-		{
-			if (ball[i].moving() == false)
-			{
+		for (int i = 0; i < 16; i++) {
+			if (ball[i].moving() == false) {
 				keys += 1;
 			}
 		}
 
-		if (keys == 16 && collisionOccured == true)
-		{
+		if (keys == 16 && notInPocket == true) {
 			System.out.println("Swapped");
-			collisionOccured = false;
 			swapPlayerTurn();
 		}
 
@@ -392,12 +379,12 @@ public class Level extends JPanel {
 
 		}
 
-//		System.out.println(player1.turn);
+		// System.out.println(player1.turn);
 
-		if(player1.turn == true){
+		if (player1.turn == true) {
 			p1.setForeground(Color.GREEN);
 			p2.setForeground(Color.RED);
-		}else{
+		} else {
 			p1.setForeground(Color.RED);
 			p2.setForeground(Color.green);
 		}
@@ -406,12 +393,12 @@ public class Level extends JPanel {
 		p1.setText("Player 1: " + player1.points);
 		p2.setText("Player 2: " + player2.points);
 
-//		if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
-//				ball[0].getX() < 0 || ball[0].getY() < 0)
-//		{
-//
-//		}
-		
+		// if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
+		// ball[0].getX() < 0 || ball[0].getY() < 0)
+		// {
+		//
+		// }
+
 	}
 
 	// Lazar code
@@ -455,8 +442,7 @@ public class Level extends JPanel {
 		queued_collision_update = false;
 	}
 
-	public void swapPlayerTurn()
-	{
+	public void swapPlayerTurn() {
 		boolean turn;
 
 		turn = !player1.isTurn();
@@ -467,7 +453,7 @@ public class Level extends JPanel {
 		player2.setTurn(turn);
 		System.out.println("Turn player 2 = " + player2.isTurn());
 	}
-	
+
 	public Ball getBall(int key) {
 		return ball[key];
 	}
