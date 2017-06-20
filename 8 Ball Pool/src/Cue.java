@@ -9,24 +9,25 @@ import java.awt.image.BufferedImage;
  */
 
 public class Cue implements MouseListener {
-	
+
 	private static final int CUE_WIDTH = 400;
 	private static final int CUE_HEIGHT = 10;
-	
+
 	private int xPos;
 	private int yPos;
-	
+
 	private int drawBack_xPos;
-	
+
 	private boolean drawnBack;
 	private boolean ballsMoving = false;
+	public boolean pocketedTurn;
 
 	private static boolean MOUSE_HELD_DOWN;
 
 	private Rectangle cue;
 
 	// Value between 0 and 360
-	private static int angle=180;
+	private static int angle = 180;
 
 	private Color color = Color.BLACK;
 
@@ -57,10 +58,10 @@ public class Cue implements MouseListener {
 		System.out.println(angle);
 	}
 
-	double power=0;
-	
+	double power = 0;
+
 	public void drawBack() {
-		
+
 		if (MOUSE_HELD_DOWN) {
 			drawBack_xPos += 3;
 			power+=1;
@@ -85,34 +86,35 @@ public class Cue implements MouseListener {
 			drawnBack = false;
 			Ball cue = Main.content.getBall(0);
 			double angleSp = 0;
+
 			if (angle > 0 && angle < 90) {
 				angleSp = angle;
 				angleSp = Math.toRadians(angleSp);
-				cue.getSpeed().setY(-Math.sin(angleSp) * power/1.35);
-				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * power/1.35);
+				cue.getSpeed().setY(-Math.sin(angleSp) * power / 1.35);
+				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle > 90 && angle < 180) {
 				angleSp = angle - 90;
 				angleSp = Math.toRadians(angleSp);
-				cue.getSpeed().setY(-Math.sin(angleSp) * power/1.35);
-				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * power/1.35);
+				cue.getSpeed().setY(-Math.sin(angleSp) * power / 1.35);
+				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle > 180 && angle < 270) {
 				angleSp = angle - 180;
 				angleSp = Math.toRadians(angleSp);
-				cue.getSpeed().setY(Math.sin(angleSp) * power/1.35);
-				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * power/1.35);
+				cue.getSpeed().setY(Math.sin(angleSp) * power / 1.35);
+				cue.getSpeed().setX(Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle > 270 && angle < 360) {
 				angleSp = angle - 270;
 				angleSp = Math.toRadians(angleSp);
-				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * power/1.35);
-				cue.getSpeed().setX(-Math.sin(angleSp) * power/1.35);
+				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
+				cue.getSpeed().setX(-Math.sin(angleSp) * power / 1.35);
 			} else if (angle == 0 || angle == 360) {
 				angleSp = 0;
-				cue.getSpeed().setY(Math.sin(angleSp) * power/1.35);
-				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * power/1.35);
+				cue.getSpeed().setY(Math.sin(angleSp) * power / 1.35);
+				cue.getSpeed().setX(-Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
 			} else if (angle == 270) {
 				angleSp = 0;
-				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * power/1.35);
-				cue.getSpeed().setX(Math.sin(angleSp) * power/1.35);
+				cue.getSpeed().setY(Math.sin(Math.PI / 2 - angleSp) * power / 1.35);
+				cue.getSpeed().setX(Math.sin(angleSp) * power / 1.35);
 			} else if (angle == 180) {
 				angleSp = 0;
 				angleSp = Math.toRadians(angleSp);

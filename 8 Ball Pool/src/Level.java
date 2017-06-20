@@ -89,11 +89,16 @@ public class Level extends JPanel {
 		table_grass = loadTextures("8 Ball Pool/resource/Images/table_grass.png");
 		graphic_cue = loadTextures("8 Ball Pool/resource/Images/cue.png");
 
+		
 		p1=new JLabel("Player 1: "+player1.points);
 		p2=new JLabel("Player 2: "+ player2.points);
 		p1.setFont(new Font("Magneto", Font.BOLD, 26));
 		p2.setFont(new Font("Magneto", Font.BOLD, 26));
-
+		
+		
+		player1.betAmount=Integer.parseInt(JOptionPane.showInputDialog(this, "Place your bet:", "Player 1", JOptionPane.QUESTION_MESSAGE));
+		player2.betAmount=Integer.parseInt(JOptionPane.showInputDialog(this, "Place your bet:", "Player 2", JOptionPane.QUESTION_MESSAGE));
+		
 		add(p1);
 		add(Box.createRigidArea(new Dimension(25,0)));
 		add(p2);
@@ -106,7 +111,7 @@ public class Level extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to return to the main menu?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					
+
 					System.exit(0);// Makes my life easy
 				}
 			}
@@ -118,7 +123,7 @@ public class Level extends JPanel {
 		ballList.insert(
 				new Ball(initialPosX / 2.7, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), WHITE, true, 0));
 
-		 //First ball in the triangle
+		// First ball in the triangle
 		ballList.insert(new Ball(initialPosX, initialPosY, INIT_RADIUS, INIT_MASS, new Speed(0, 0), YELLOW, false, 9));
 
 		ballList.insert(
