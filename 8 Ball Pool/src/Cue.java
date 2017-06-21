@@ -20,11 +20,8 @@ public class Cue implements MouseListener {
 
 	private boolean drawnBack;
 	private boolean ballsMoving = false;
-	public boolean pocketedTurn;
 
 	private static boolean MOUSE_HELD_DOWN;
-
-	private Rectangle cue;
 
 	// Value between 0 and 360
 	private static int angle = 180;

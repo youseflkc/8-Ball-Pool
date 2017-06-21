@@ -72,6 +72,8 @@ public class Level extends JPanel {
 	public static final Color WHITE = new Color(255, 255, 255);
 	public static final Color DARK_RED = new Color(63, 5, 14);
 
+	boolean collisionOccured = false;
+
 	double METER_TO_PIXEL = (800 / 2.84);
 	int TABLE_WIDTH = (int) (1.624 * METER_TO_PIXEL);// PLay with values to
 	// figure out
@@ -187,7 +189,10 @@ public class Level extends JPanel {
 	}
 
 	public void loadGame(String path) {
-		ball = SaveFile.read(path);
+		ball = SaveFile.readBallInfo(path);
+		Character[] characters = SaveFile.readCharacterInfo(path);
+		player1 = characters[0];
+		player2 = characters[1];
 		ballList = new LinkList();
 
 		for (int i = 0; i < 16; i++)
@@ -257,8 +262,6 @@ public class Level extends JPanel {
 		cue.updatePosition((int) ball[0].getX(), (int) ball[0].getY());
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
-
-		boolean notInPocket = false;
 
 		if (!paused) {
 			double passed = 0.0;
@@ -345,7 +348,7 @@ public class Level extends JPanel {
 						} else{
 							ball[i].collide(second, next_collision);
 
-							notInPocket = true;
+							collisionOccured = true;
 						}
 
 					} else if (ball[i] != second) {
@@ -374,8 +377,9 @@ public class Level extends JPanel {
 			}
 		}
 
-		if (keys == 16 && notInPocket == true) {
+		if (keys == 16 && collisionOccured == true) {
 			System.out.println("Swapped");
+			collisionOccured = false;
 			swapPlayerTurn();
 		}
 
