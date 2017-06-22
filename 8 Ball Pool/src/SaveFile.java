@@ -4,12 +4,20 @@ import java.io.RandomAccessFile;
 
 /**
  * Created by Thomas on 2017-06-17.
+ *
+ * Class is a representation of the data stored in a save file
  */
 public class SaveFile
 {
     private RandomAccessFile raf;
     private String path;
 
+    /**
+     * Constructor: Creates a random access file to write to
+     *
+     * @param game
+     * @param path
+     */
     public SaveFile(Level game, String path)
     {
         this.path = path;
@@ -26,6 +34,11 @@ public class SaveFile
         write(game);
     }
 
+    /**
+     * Writes game data to save file
+     *
+     * @param game
+     */
     public void write(Level game)
     {
 
@@ -57,6 +70,12 @@ public class SaveFile
         }
     }
 
+    /**
+     * Reads game data related to character when loading in new game
+     *
+     * @param path takes in the path of the file being read
+     * @return saved Character data
+     */
     public static Character[] readCharacterInfo(String path)
     {
         Character players[] = new Character[2];
@@ -92,6 +111,12 @@ public class SaveFile
         return players;
     }
 
+    /**
+     * Reads game data related to balls when loading in new game
+     *
+     * @param path takes in the path of the file being read
+     * @return saved Ball data
+     */
     public static Ball[] readBallInfo(String path)
     {
         Ball[] ball = new Ball[16];

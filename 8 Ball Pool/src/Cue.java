@@ -18,12 +18,17 @@ public class Cue implements MouseListener {
 	private static final int CUE_WIDTH = 400;
 	private static final int CUE_HEIGHT = 10;
 
+	// X and Y coordinates for the cue
 	private int xPos;
 	private int yPos;
 
+	// Value of how far the cue is drawn back
 	private int drawBack_xPos;
 
+	// Flag to determine if cue is drawn back
 	private boolean drawnBack;
+
+	//
 	private boolean ballsMoving = false;
 
 	private static boolean MOUSE_HELD_DOWN;
@@ -31,22 +36,38 @@ public class Cue implements MouseListener {
 	// Value between 0 and 360
 	private static int angle = 180;
 
+	double power = 0;
+
 	private Color color = Color.BLACK;
 
+	/**
+	 * Constructor: Sets initial variable states
+	 *
+	 * @param frame takes in the frame to add a MouseListener to it
+     */
 	public Cue(JPanel frame) {
 		MOUSE_HELD_DOWN = false;
 		frame.addMouseListener(this);
-
 		drawnBack = false;
-
 		drawBack_xPos = 0;
 	}
 
+	/**
+	 * Gets the position of the cue ball to set the position of the cue
+	 *
+	 * @param xPos of the cue ball
+	 * @param yPos of the cue ball
+     */
 	public void updatePosition(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
+	/**
+	 * Updates the angle at which the cue is at
+	 *
+	 * @param increment: increments the angle value by this value
+     */
 	public static void updateAngle(int increment) {
 		angle += increment;
 
@@ -59,8 +80,9 @@ public class Cue implements MouseListener {
 		}
 	}
 
-	double power = 0;
-
+	/**
+	 * Method to draw back cue when mouse button is held down
+	 */
 	public void drawBack() {
 
 		if (MOUSE_HELD_DOWN) {
@@ -83,6 +105,7 @@ public class Cue implements MouseListener {
 				drawBack_xPos = 0;
 		}
 
+		// Translation: If cue is released after being drawn back
 		if (drawnBack == true && drawBack_xPos <= 0 && ballsMoving == false) {
 			drawnBack = false;
 			Ball cue = Main.content.getBall(0);
@@ -135,6 +158,13 @@ public class Cue implements MouseListener {
 		}
 	}
 
+	/**
+	 * Rendering of cue
+	 *
+	 * @param g takes in the main graphics object to write to
+	 * @param cue takes in the image of the cue
+	 * @param level takes in the level being played
+     */
 	public void render(Graphics g, BufferedImage cue, Level level) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(this.color);
@@ -163,7 +193,9 @@ public class Cue implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		// If right mouse button is clicked
 		if (e.getButton() == MouseEvent.BUTTON3)
+			// Then terminate the cue draw back sequence
 			drawBack_xPos = 0;
 	}
 
