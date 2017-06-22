@@ -18,23 +18,23 @@ import java.io.IOException;
 
 public class Level extends JPanel {
 	
-	//BufferedImages hold the images for the look of the pool table.
+	// BufferedImages hold the images for the look of the pool table and the cue
 	private BufferedImage wooden_tile;
 	private BufferedImage wooden_tile_rotated90;
 	private BufferedImage black_dot;
 	private BufferedImage table_grass;
 	private BufferedImage graphic_cue;
 	
-	//Linked list holds the balls in a data structure
+	// Linked list holds the balls in a data structure
 	public LinkList ballList;
 
 	//Uses an Array of Ball objects to easily check for collisions
 	public Ball[] ball = new Ball[BALLS];
 	
-	//Created Cue object to render out on the pool table
+	// Created Cue object to render out on the pool table
 	private Cue cue = new Cue(this);
 
-	
+	// Two instances of characters to represent two-player mode
 	Character player1 = new Character("Player 1", true, 0, true, 0);
 	Character player2 = new Character("Player 2", false, 0, false, 0);
 
@@ -47,7 +47,10 @@ public class Level extends JPanel {
 	//used to set the amount of balls in play and size of Ball[] ball
 	public static final int BALLS = 22;
 
-	//
+	// Variable to hold save file
+	SaveFile saveFile;
+
+	// Collision Variables
 	private double next_collision;
 	private Ball first;
 	private Ball second;
@@ -94,6 +97,9 @@ public class Level extends JPanel {
 	double initialPosX = Main.WIDTH - 400;
 	double initialPosY = Main.HEIGHT / 2;
 
+	/**
+	 * Constructor: Loads up graphics files, sets button actions, creates game balls
+	 */
 	public Level() {
 
 		setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -127,14 +133,29 @@ public class Level extends JPanel {
 		add(Box.createRigidArea(new Dimension(25, 0)));
 
 		JButton exit = Main.button("Exit");
+		JButton save = Main.button("Save");
 
+		add(save);
 		add(exit);
+
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 					System.exit(0);// Makes my life easy
+				}
+			}
+		});
+
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(null, "Do you want to save the current game? Saving will overwrite any" +
+						"previous saves.", "Save", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				{
+					saveFile = new SaveFile(Main.content, "8 Ball Pool/resource/saveFile.txt");
+					System.out.println("Created");
 				}
 			}
 		});
@@ -183,18 +204,23 @@ public class Level extends JPanel {
 		addPocketBalls();
 
 		repaint();
-		// Fix the colors
-
-		// fix the look of the balls
 	}
 
-	public void loadGame(String path) {
+	/**
+	 * Method to load a previous save
+	 *
+	 * @param path of the file being saved to
+     */
+	public void loadGame(String path)
+	{
+		// Overwrites of existing variables
 		ball = SaveFile.readBallInfo(path);
 		Character[] characters = SaveFile.readCharacterInfo(path);
+
 		player1 = characters[0];
 		player2 = characters[1];
-		ballList = new LinkList();
 
+		ballList = new LinkList();
 		for (int i = 0; i < 16; i++)
 			ballList.insert(ball[i]);
 
@@ -203,6 +229,11 @@ public class Level extends JPanel {
 		System.out.println("Loaded");
 	}
 
+	/**
+	 * Adds [invisible] balls to the pockets; if these balls are hit, a collision is
+	 * detected, and it can be assumed that the moving ball is sufficiently in contact
+	 * with the pocket to be considered scored
+	 */
 	public void addPocketBalls() {
 		// Top Pockets
 		ballList.insert(new Ball(100, 100, 5, 0, new Speed(0, 0), ORANGE, true, 77));
@@ -215,6 +246,12 @@ public class Level extends JPanel {
 		ballList.insert(new Ball(Main.WIDTH - 110, Main.HEIGHT - 110, 5, 0, new Speed(0, 0), ORANGE, true, 77));
 	}
 
+	/**
+	 * Loads textures from .png images to BufferedImages
+	 *
+	 * @param path takes in the path of the .png file
+	 * @return BufferedImage of the original .png file
+     */
 	public BufferedImage loadTextures(String path) {
 		BufferedImage image = null;
 		try {
@@ -229,6 +266,7 @@ public class Level extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		ball = ballList.getElements();
+
 		// Lazar code
 		Graphics2D g2d = (Graphics2D) g;
 
@@ -263,6 +301,8 @@ public class Level extends JPanel {
 		cue.drawBack();
 		cue.render(g2d, graphic_cue, this);
 
+		// Following code detects whenever a ball collides with a pocket, and what action to
+		// take when the ball sinks
 		if (!paused) {
 			double passed = 0.0;
 			while (passed + next_collision < 1.0) {
@@ -364,12 +404,16 @@ public class Level extends JPanel {
 				ball[i].move(1.0 - passed);
 			}
 		}
+
+		// Rendering for balls
 		int a = 0;
 		for (int i = 0; i < BALLS; i++) {
 			ball[i].paint(g2d);
 
 		}
 
+		// Checks if balls are still; if yes, turns should be swapped,
+		// unless a ball was sunk
 		int keys = 0;
 		for (int i = 0; i < 16; i++) {
 			if (ball[i].moving() == false) {
@@ -383,22 +427,14 @@ public class Level extends JPanel {
 			swapPlayerTurn();
 		}
 
-		/*
-		 * g2d.setColor (new Color (0, 0, 0)); if (next_collision < 1000 &&
-		 * first != null && second != null) g2d.drawLine ((int)(first.getX() +
-		 * first.getSpeed().getX() * next_collision), (int)(first.getY() +
-		 * first.getSpeed().getY() * next_collision), (int)(second.getX() +
-		 * second.getSpeed().getX() * next_collision), (int)(second.getY() +
-		 * second.getSpeed().getY() * next_collision));
-		 */
-
+		// Method detects whenever a collision has occured
 		if (queued_collision_update) {
 			collision_update();
-
 		}
 
-		// System.out.println(player1.turn);
-
+		// CHARACTER TURN CODE
+		// Gives an indicator as to whose turn it is (green highlight means player turn,
+		// red means to wait until green)
 		if (player1.turn == true) {
 			p1.setForeground(Color.GREEN);
 			p2.setForeground(Color.RED);
@@ -407,36 +443,11 @@ public class Level extends JPanel {
 			p2.setForeground(Color.green);
 		}
 
-		// Character turn code
+		// Displays scores
 		p1.setText("Player 1: " + player1.points);
 		p2.setText("Player 2: " + player2.points);
-
-		// if (ball[0].getX() > Main.WIDTH || ball[0].getY() > Main.HEIGHT ||
-		// ball[0].getX() < 0 || ball[0].getY() < 0)
-		// {
-		//
-		// }
-
 	}
 
-	// Lazar code
-
-	// Pause
-	public static void pause() {
-		paused = true;
-	}
-
-	public static void play() {
-		paused = false;
-	}
-
-	public static void toggle_play_pause() {
-		paused = !paused;
-	}
-
-	public static boolean is_paused() {
-		return paused;
-	}
 
 	// Update
 	public static void queue_collision_update() {
@@ -460,6 +471,9 @@ public class Level extends JPanel {
 		queued_collision_update = false;
 	}
 
+	/**
+	 * Swaps player turn
+	 */
 	public void swapPlayerTurn() {
 		boolean turn;
 
@@ -470,6 +484,12 @@ public class Level extends JPanel {
 		player2.setTurn(turn);
 	}
 
+	/**
+	 * etter to get a single ball from this clas
+	 *
+	 * @param key index position of the ball
+	 * @return ball
+     */
 	public Ball getBall(int key) {
 		return ball[key];
 	}

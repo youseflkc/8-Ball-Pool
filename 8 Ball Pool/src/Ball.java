@@ -22,7 +22,7 @@ public class Ball {
 	double slowDownSpeed = 0.02;// Double sets the slow down speed for each of
 								// the balls
 
-	int distence = 100;// this sets the boundaries for the balls to bounce
+	int distance = 100;// this sets the boundaries for the balls to bounce
 	// off the walls inside of the playing area and not the JFrame.
 
 	// Constructor
@@ -165,10 +165,10 @@ public class Ball {
 		this.y += y;
 
 		// These 4 variables hold the play area for the balls
-		double playX = this.x - distence;
-		double playY = this.y - distence;
-		double playX2 = Main.WIDTH - distence;
-		double playY2 = Main.HEIGHT - distence;
+		double playX = this.x - distance;
+		double playY = this.y - distance;
+		double playX2 = Main.WIDTH - distance;
+		double playY2 = Main.HEIGHT - distance;
 
 		// Following statements check if the ball hits the play area boundaries
 		// to reverse the direction as if it hit the wall, mimicking a wall bounce.

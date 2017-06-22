@@ -61,8 +61,7 @@ public class Input implements MouseMotionListener, KeyListener {
         }
         else if (e.getKeyCode() == KeyEvent.VK_0)
         {
-            saveFile = new SaveFile(Main.content, "8 Ball Pool/resource/saveFile.txt");
-            System.out.println("Created");
+
         }
     }
 

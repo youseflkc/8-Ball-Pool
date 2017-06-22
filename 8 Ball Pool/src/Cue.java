@@ -6,10 +6,15 @@ import java.awt.image.BufferedImage;
 
 /**
  * Created by Thomas on 2017-06-02.
+ *
+ * Class is a representation of a pool cue. Handles positioning, mechanics
+ * and rendering
+ *
+ * <p> Implements MouseListener to listen for mouse button presses/releases</p>
  */
-
 public class Cue implements MouseListener {
 
+	// Dimensions of the cue
 	private static final int CUE_WIDTH = 400;
 	private static final int CUE_HEIGHT = 10;
 

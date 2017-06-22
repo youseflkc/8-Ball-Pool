@@ -18,11 +18,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
+/**
+ * Main class; handles all initial (main menu) graphics and loads up anything
+ * pre-game, inlcuding but not limited to
+ *
+ * <p> ActionListener listens for button presses on the "Play", "Help", Settings",
+ * "Load" and "Exit" buttons </p>
+ */
 public class Main implements ActionListener {
-	
+
+	// Instance of a game
 	public static Level content;
 	
-	//text for help menu
+	// Text for help menu
 	String helpString = "\n -There are 7 solid, and 7 striped balls, "
 			+ "a black 8-ball, and a white cue-ball \n The first player to sink a ball gets to play for the ball he sunk "
 			+ "ie. if player 1 sinks a striped ball first, then player 1 is stripes, and player 2 is solids"
@@ -34,21 +42,23 @@ public class Main implements ActionListener {
 			+ " or the cue ball must touch a side of the table\n\nUse the left and right arrow keys to rotate the cue\n"
 			+ "Click and hold the mouse to power up the cue. The longer you hold, the more power in your shot\nLet go to release the cue";
 
-	//screen dimensions
-	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	// Screen dimensions
+	private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int WIDTH = (int) screenSize.getWidth();
 	public static final int HEIGHT = (int) screenSize.getHeight();
 
-	final JFrame splashScreen = new JFrame();
-	public final JFrame mainScreen = new JFrame();
-	public final JFrame playScreen = new JFrame();
-
-	// Thomas' variables
-	public final JFrame levelScreen = new JFrame();
-	private Level level;
+	// All JFrames
+	private final JFrame splashScreen = new JFrame();
+	private final JFrame mainScreen = new JFrame();
+	private final JFrame playScreen = new JFrame();
 
 	private Input input = new Input(playScreen);
 
+	/**
+	 * Called when program first runs, initiates Main constructor
+	 *
+	 * @param args string data used to start program
+     */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,7 +66,6 @@ public class Main implements ActionListener {
 				Main start = new Main();
 			}
 		});
-
 	}
 
 	/**
@@ -79,10 +88,10 @@ public class Main implements ActionListener {
 
 	public Main() {
 		
-		//code for setting up splashscreen
-		splashScreen.setSize((int) WIDTH, (int) HEIGHT);
+		// Code for setting up JFrames
+		splashScreen.setSize(WIDTH, HEIGHT);
 		splashScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainScreen.setSize((int) WIDTH, (int) HEIGHT);
+		mainScreen.setSize(WIDTH, HEIGHT);
 		playScreen.setVisible(false);
 
 		mainScreen.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -100,14 +109,14 @@ public class Main implements ActionListener {
 		splashScreen.setUndecorated(true);
 		splashScreen.setVisible(true);
 		
-		//blinking label animation for splashscreen
+		// Blinking label animation for splashscreen
 		BlinkLabel anyKeyLabel = new BlinkLabel("PRESS ANY KEY TO CONTINUE...");
 		anyKeyLabel.setForeground(Color.WHITE);
 		anyKeyLabel.setFont(new Font("Impact", Font.PLAIN, 40));
 		splashScreen.getContentPane().add(anyKeyLabel, BorderLayout.PAGE_END);
 		anyKeyLabel.startBlinking();
 
-		//background music in the game
+		// Background music in the game
 		final Sound bgMusic = new Sound();
 		bgMusic.setVolume(-10);
 
@@ -123,15 +132,12 @@ public class Main implements ActionListener {
 			public void keyPressed(KeyEvent e) {
 				splashScreen.dispose();
 				mainScreen.setVisible(true);
+
 				try {
 					bgMusic.playSound();
 				} catch (Throwable e1) {
 					e1.printStackTrace();
 				}
-
-				// int keyCode = e.getKeyCode();
-				// if (keyCode == KeyEvent.VK_SPACE)
-				// System.exit(0);
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -316,17 +322,16 @@ public class Main implements ActionListener {
 	 * inside of the addActionListener of the play button
 	 */
 	public void startBalls() {
+		// Initialize playscreen
 		playScreen.setUndecorated(true);
 		playScreen.setVisible(true);
 		playScreen.setSize((int) WIDTH, (int) HEIGHT);
-		// mainScreen.setSize (Billiard.WIDTH + mainScreen.getInsets ().left +
-		// mainScreen.getInsets ().right,
-		// Billiard.HEIGHT + mainScreen.getInsets ().top + mainScreen.getInsets
-		// ().bottom);
 
+		// Create instance of the game
 		content = new Level();
-		playScreen.setContentPane(content);
 
+		// Sets the game pane (level) to the playScreen JFrame
+		playScreen.setContentPane(content);
 		playScreen.getGlassPane().setVisible(true);
 
 		Timer timer = new Timer(20, this);
