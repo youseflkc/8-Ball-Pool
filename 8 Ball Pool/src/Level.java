@@ -324,8 +324,9 @@ public class Level extends JPanel {
 										JFrame win = new JFrame("WINNER");
 										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel = new JLabel("Player 1 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										JLabel winnerLabel = new JLabel("Player 1 WINS!" +  " Earnings: " + (player1.betAmount
+												+ player2.betAmount));
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 30));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
 										win.add(winnerLabel, BorderLayout.CENTER);
@@ -337,8 +338,9 @@ public class Level extends JPanel {
 										JFrame win = new JFrame("WINNER");
 										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel = new JLabel("Player 2 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										JLabel winnerLabel = new JLabel("Player 1 WINS!" +  " Earnings: " + (player1.betAmount
+												+ player2.betAmount));
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 30));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
 										win.add(winnerLabel, BorderLayout.CENTER);
@@ -350,8 +352,9 @@ public class Level extends JPanel {
 										JFrame win = new JFrame("WINNER");
 										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel = new JLabel("Player 2 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										JLabel winnerLabel = new JLabel("Player 1 WINS!" +  " Earnings: " + (player1.betAmount
+												+ player2.betAmount));
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 30));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
 										win.add(winnerLabel, BorderLayout.CENTER);
@@ -362,8 +365,9 @@ public class Level extends JPanel {
 										JFrame win = new JFrame("WINNER");
 										win.setSize(500, 500);
 										win.setLayout(new BorderLayout());
-										JLabel winnerLabel = new JLabel("Player 1 WINS!");
-										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 60));
+										JLabel winnerLabel = new JLabel("Player 1 WINS!" +  "Earnings: " + (player1.betAmount
+												+ player2.betAmount));
+										winnerLabel.setFont(new Font("High Tower Text", Font.BOLD, 30));
 										win.getContentPane().setBackground(Color.GREEN);
 										winnerLabel.setBackground(Color.GREEN);
 										win.add(winnerLabel, BorderLayout.CENTER);
